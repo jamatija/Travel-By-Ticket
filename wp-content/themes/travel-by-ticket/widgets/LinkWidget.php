@@ -9,7 +9,7 @@ class LinkWidget extends \Elementor\Widget_Base
 {
     public function get_style_depends()
     {
-        return ['link-widget']; // tvoj CSS handle
+        return ['link-widget']; 
     }
 
     public function get_name()
