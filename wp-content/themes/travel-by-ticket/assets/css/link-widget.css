@@ -1,3 +1,7 @@
 .elementor-widget-link-widget .elementor-widget-container {
   line-height: 0;             
 }
+
+.elementor-widget-link-widget .tw-link {
+  vertical-align: top;       
+}
