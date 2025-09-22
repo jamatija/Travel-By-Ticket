@@ -8,7 +8,7 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     env:
-      # rsync će koristiti SSH s privatnim ključem i portom 222
+      # rsync će koristiti SSH ključ i port 222
       RSYNC_RSH: "ssh -i ~/.ssh/id_ed25519 -p 222"
 
     steps:
@@ -17,22 +17,23 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Write SSH key
+      - name: Setup SSH (write key)
         run: |
           mkdir -p ~/.ssh
           printf "%s" "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519
           chmod 600 ~/.ssh/id_ed25519
 
-      - name: Add known_hosts
+      - name: Add host key for the exact host:port
         run: |
           mkdir -p ~/.ssh
-          # koristi secret koji si već napravio
-          printf "%s\n" "${{ secrets.KNOWN_HOSTS }}" > ~/.ssh/known_hosts
+          ssh-keyscan -p 222 -H "${{ secrets.SERVER_HOST }}" >> ~/.ssh/known_hosts
           chmod 644 ~/.ssh/known_hosts
 
       - name: Ensure remote directory exists
         run: |
-          ssh -i ~/.ssh/id_ed25519 -p 222 ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} \
+          ssh -i ~/.ssh/id_ed25519 -p 222 \
+            -o StrictHostKeyChecking=yes \
+            ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} \
             "mkdir -p ${{ secrets.REMOTE_DIR }}/wp-content"
 
       - name: Rsync wp-content to server
@@ -42,8 +43,9 @@ jobs:
           rsync -az --delete \
             --exclude='.git' \
             --exclude='.github' \
-            --exclude='node_modules' \
+            --exclude='uploads' \
+            --exclude='cache' \
+            --exclude='upgrade' \
             --exclude='*.sql' \
             --exclude='*.sql.gz' \
-            --exclude='uploads' \
             "$SRC" "$DEST"
