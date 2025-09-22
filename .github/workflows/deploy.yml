@@ -7,9 +7,6 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    env:
-      # rsync
-      RSYNC_RSH: "ssh -i ~/.ssh/id_ed25519 -p 222"
 
     steps:
       - name: Checkout
@@ -17,22 +14,17 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Setup SSH (write key)
+      - name: Setup SSH
         run: |
           mkdir -p ~/.ssh
           printf "%s" "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519
           chmod 600 ~/.ssh/id_ed25519
-
-      - name: Add host key for the exact host:port
-        run: |
-          mkdir -p ~/.ssh
           ssh-keyscan -p 222 -H "${{ secrets.SERVER_HOST }}" >> ~/.ssh/known_hosts
           chmod 644 ~/.ssh/known_hosts
 
       - name: Ensure remote directory exists
         run: |
           ssh -i ~/.ssh/id_ed25519 -p 222 \
-            -o StrictHostKeyChecking=yes \
             ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} \
             "mkdir -p ${{ secrets.REMOTE_DIR }}/wp-content"
 
@@ -40,12 +32,4 @@ jobs:
         run: |
           SRC="./wp-content/"
           DEST="${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }}:${{ secrets.REMOTE_DIR }}/wp-content/"
-          rsync -az --delete \
-            --exclude='.git' \
-            --exclude='.github' \
-            --exclude='uploads' \
-            --exclude='cache' \
-            --exclude='upgrade' \
-            --exclude='*.sql' \
-            --exclude='*.sql.gz' \
-            "$SRC" "$DEST"
+          rsync -az --delete -e "ssh -i ~/.ssh/id_ed25519 -p 222" \
