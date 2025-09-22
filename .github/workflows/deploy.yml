@@ -14,23 +14,24 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Setup SSH
+      - name: Setup SSH Agent
+        uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      - name: Add SSH known hosts
         run: |
-          mkdir -p ~/.ssh
-          printf "%s" "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519
-          chmod 600 ~/.ssh/id_ed25519
           ssh-keyscan -p 222 -H "${{ secrets.SERVER_HOST }}" >> ~/.ssh/known_hosts
-          chmod 644 ~/.ssh/known_hosts
 
       - name: Test SSH connection
         run: |
-          ssh -i ~/.ssh/id_ed25519 -p 222 \
+          ssh -p 222 \
             ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} \
             "echo 'SSH connection successful'"
 
       - name: Ensure remote directory exists
         run: |
-          ssh -i ~/.ssh/id_ed25519 -p 222 \
+          ssh -p 222 \
             ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} \
             "mkdir -p public_html/travelbyticket-staging/wp-content"
 
@@ -43,12 +44,12 @@ jobs:
             --exclude='node_modules' \
             --exclude='*.log' \
             --exclude='cache/' \
-            -e "ssh -i ~/.ssh/id_ed25519 -p 222" \
+            -e "ssh -p 222" \
             "$SRC" "$DEST"
 
       - name: Set correct permissions
         run: |
-          ssh -i ~/.ssh/id_ed25519 -p 222 \
+          ssh -p 222 \
             ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} \
             "find public_html/travelbyticket-staging/wp-content -type d -exec chmod 755 {} \; && \
              find public_html/travelbyticket-staging/wp-content -type f -exec chmod 644 {} \;"
