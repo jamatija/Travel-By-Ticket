@@ -22,14 +22,36 @@ jobs:
           ssh-keyscan -p 222 -H "${{ secrets.SERVER_HOST }}" >> ~/.ssh/known_hosts
           chmod 644 ~/.ssh/known_hosts
 
+      - name: Test SSH connection
+        run: |
+          ssh -i ~/.ssh/id_ed25519 -p 222 \
+            ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} \
+            "echo 'SSH connection successful'"
+
       - name: Ensure remote directory exists
         run: |
           ssh -i ~/.ssh/id_ed25519 -p 222 \
             ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} \
-            "mkdir -p ${{ secrets.REMOTE_DIR }}/wp-content"
+            "mkdir -p public_html/travelbyticket-staging/wp-content"
 
       - name: Rsync wp-content to server
         run: |
           SRC="./wp-content/"
-          DEST="${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }}:${{ secrets.REMOTE_DIR }}/wp-content/"
-          rsync -az --delete -e "ssh -i ~/.ssh/id_ed25519 -p 222" \
+          DEST="${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }}:public_html/travelbyticket-staging/wp-content/"
+          rsync -avz --delete \
+            --exclude='.git*' \
+            --exclude='node_modules' \
+            --exclude='*.log' \
+            --exclude='cache/' \
+            -e "ssh -i ~/.ssh/id_ed25519 -p 222" \
+            "$SRC" "$DEST"
+
+      - name: Set correct permissions
+        run: |
+          ssh -i ~/.ssh/id_ed25519 -p 222 \
+            ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} \
+            "find public_html/travelbyticket-staging/wp-content -type d -exec chmod 755 {} \; && \
+             find public_html/travelbyticket-staging/wp-content -type f -exec chmod 644 {} \;"
+
+      - name: Deploy complete
+        run: echo "Deployment to Hetzner completed successfully!"
