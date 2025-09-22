@@ -8,7 +8,7 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     env:
-      # rsync će koristiti SSH ključ i port 222
+      # rsync
       RSYNC_RSH: "ssh -i ~/.ssh/id_ed25519 -p 222"
 
     steps:
