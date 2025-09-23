@@ -12,7 +12,7 @@ class LinkWidget extends \Elementor\Widget_Base
         return ['link-widget']; 
     }
 
-    public function get_name()
+    public function get_name()  
     {
         return 'link-widget';
     }
@@ -54,7 +54,7 @@ class LinkWidget extends \Elementor\Widget_Base
                 'label'         => __('Link', 'travel'),
                 'type'          => Controls_Manager::URL,
                 'placeholder'   => __('https://example.com', 'travel'),
-                'show_external' => true, // prikazuje "Open in new window" i "nofollow"
+                'show_external' => true, 
                 'default'       => [
                     'url'         => '',
                     'is_external' => false,
@@ -190,7 +190,6 @@ class LinkWidget extends \Elementor\Widget_Base
 
         $this->end_controls_section();
 
-        // Background (optional, ako želiš dugme-stil linka)
         $this->start_controls_section(
             'section_bg',
             [
