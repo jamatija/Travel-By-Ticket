@@ -28,7 +28,7 @@ jobs:
         run: |
           SRC="./wp-content/"
           DEST="${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }}:public_html/travelbyticket-staging/wp-content/"
-          rsync -uvzr -e "ssh -p 222" --exclude='.git' --exclude='.github/' --exclude='.htaccess' ./ ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }}:@${{ secrets.REMOTE_DIR }}
+          rsync -uvzr -e "ssh -p 222" --exclude='.git' --exclude='.github/' --exclude='.htaccess' ./ ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }}:${{ secrets.REMOTE_DIR }}
 
 
       - name: Set correct permissions
