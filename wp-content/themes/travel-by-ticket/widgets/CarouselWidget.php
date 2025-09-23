@@ -39,30 +39,55 @@ class CarouselWidget extends \Elementor\Widget_Base
 
     protected function render()
     {
-        $settings = $this->get_settings_for_display();?>
+        $settings = $this->get_settings_for_display();
+        
+        $posts = get_posts([
+            'post_type'        => 'post',
+            'post_status'      => 'publish',
+            'orderby'          => 'date',
+            'order'            => 'DESC',
+            'category_name'    => 'popular',
+            'suppress_filters' => false 
+            ]);
+        ?>
 
-        <!-- Slider main container -->
-        <div class="swiper carouselSwiper">
-            <!-- Additional required wrapper -->
-            <div class="swiper-wrapper">
-                <!-- Slides -->
-                <div class="swiper-slide">Slide 1</div>
-                <div class="swiper-slide">Slide 2</div>
-                <div class="swiper-slide">Slide 3</div>
-                <div class="swiper-slide">Slide 4</div>
-                <div class="swiper-slide">Slide 5</div>
-                <div class="swiper-slide">Slide 5</div>
-                <div class="swiper-slide">Slide 5</div>
-                <div class="swiper-slide">Slide 5</div>
-                <div class="swiper-slide">Slide 5</div>
-                <div class="swiper-slide">Slide 5</div>
+        <div class="carousel-wrapper">
+            <!-- Slider main container -->
+            <div class="swiper carouselSwiper">
+                <!-- Additional required wrapper -->
+                <div class="swiper-wrapper">
+                <?php foreach ( $posts as $p ) : 
+                        $from_price = get_field('from_price', $p->ID);
+                        $title      = get_the_title( $p );
+                        $parts      = explode( ',', $title, 2 );
+                        $main_title = trim( $parts[0] );       
+                        $tag_part   = isset( $parts[1] ) ? trim( $parts[1] ) : ''; 
+                    ?>
+                    <div class="swiper-slide">
+                        <a href="<?php echo esc_url( get_permalink( $p ) ); ?>" class="card">
+                        <?php if ( has_post_thumbnail( $p ) ) : ?>
+                            <figure class="card-media">
+                            <?php echo get_the_post_thumbnail( $p, 'medium' ); ?>
+                            </figure>
+                        <?php endif; ?>
+
+                        <div class="card-heading">
+                            <h3 class="card-title"><?php echo esc_html( $main_title ); if ( $tag_part ) : ?>, <span class="card-tag"><?php echo esc_html( $tag_part ); ?></span>
+                        <?php endif; ?></h3>
+
+                        </div>
+                        <p class="card-price">
+                            <?php echo esc_html( sprintf( __('from %s €', 'travel'), $from_price ) ); ?>
+                        </p>
+                        </a>
+                    </div>
+                    <?php endforeach; ?>
+                </div>
             </div>
-
-
             <!-- navigation buttons -->
             <div class="navigation">
                 <div class="carousel-button-prev">
-                   <svg width="101" height="120" viewBox="0 0 101 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <svg width="101" height="120" viewBox="0 0 101 120" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <g>
                         <path d="M30.7138 21.4311C31.4617 17.6917 34.745 15 38.5584 15H77.2416C82.2899 15 86.0763 19.6186 85.0862 24.5689L70.2862 98.5689C69.5383 102.308 66.255 105 62.4416 105H23.7584C18.7101 105 14.9237 100.381 15.9138 95.4311L30.7138 21.4311Z" fill="white"/>
                         </g>
@@ -83,7 +108,7 @@ class CarouselWidget extends \Elementor\Widget_Base
 
                 </div>
                 <div class="carousel-button-next">
-                   <svg width="101" height="120" viewBox="0 0 101 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <svg width="101" height="120" viewBox="0 0 101 120" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <g>
                         <path d="M30.7138 21.4311C31.4617 17.6917 34.745 15 38.5584 15H77.2416C82.2899 15 86.0763 19.6186 85.0862 24.5689L70.2862 98.5689C69.5383 102.308 66.255 105 62.4416 105H23.7584C18.7101 105 14.9237 100.381 15.9138 95.4311L30.7138 21.4311Z" fill="white"/>
                         </g>

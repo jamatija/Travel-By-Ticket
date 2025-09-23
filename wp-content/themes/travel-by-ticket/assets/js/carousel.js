@@ -1,10 +1,10 @@
 document.addEventListener('DOMContentLoaded', function () {
   document.querySelectorAll('.carouselSwiper').forEach((root) => {
-    const swiperEl = root;
-    const nextBtn  = root.querySelector('.carousel-button-next svg > g');
-    const prevBtn  = root.querySelector('.carousel-button-prev svg > g');
+    const wrapper = root.closest('.carousel-wrapper'); 
+    const nextBtn = wrapper.querySelector('.carousel-button-next');
+    const prevBtn = wrapper.querySelector('.carousel-button-prev'); 
 
-    const swiper = new Swiper(swiperEl, {
+    const swiper = new Swiper(root, {
       slidesPerView: 4,
       loop: true,
       speed: 500,
@@ -19,20 +19,19 @@ document.addEventListener('DOMContentLoaded', function () {
         prevEl: prevBtn,
       },
       breakpoints: {
-        320:  { slidesPerView: 1.21, slidesOffsetBefore: 40, spaceBetween: 20 },
-        768:  { slidesPerView: 2.3,  slidesOffsetBefore: 65, spaceBetween: 2 },
+        320:  { slidesPerView: 1.21, spaceBetween: 20 },
+        768:  { slidesPerView: 2.3,  slidesOffsetBefore: 65, spaceBetween: 26 },
         1024: { slidesPerView: 4, spaceBetween: 32 },
       },
     });
 
-    //Autoslide how navigation button
-    swiper.on('slideNextTransitionStart', () => root.classList.add('has-seen-prev'));
+  
   });
 
   document.addEventListener('click', function (e) {
     const nextBtn = e.target.closest('.carousel-button-next');
     if (!nextBtn) return;
-    const root = nextBtn.closest('.carouselSwiper');
-    if (root) root.classList.add('has-seen-prev');
+    const wrapper = nextBtn.closest('.carousel-wrapper'); 
+    if (wrapper) wrapper.classList.add('has-seen-prev');
   });
 });
