@@ -2,6 +2,7 @@
 function travel_tickets_widget_styles()
 {
     wp_register_style('link-widget', get_stylesheet_directory_uri() . '/assets/css/link-widget.css');
+    wp_register_style('carousel-widget', get_stylesheet_directory_uri() . '/assets/css/carousel-widget.css');
 }
 add_action('wp_enqueue_scripts', 'travel_tickets_widget_styles');
 

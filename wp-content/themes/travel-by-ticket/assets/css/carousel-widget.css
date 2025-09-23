@@ -1,0 +1,94 @@
+.navigation{
+    display: flex;
+    gap: 20px;
+    padding: 40px;
+}
+
+.carousel-button-prev svg path,
+.carousel-button-next svg path{
+  filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));
+}
+
+.carousel-button-prev:hover,
+.carousel-button-next:hover{
+  cursor: pointer;
+}
+
+.swiper-slide{
+    background-color: red;
+}
+
+.swiper-slide-prev { 
+    opacity: 0;
+    transition: opacity .5s ease-out, transform .5s ease-out;
+}
+
+.carousel-button-prev:hover svg > g path,
+.carousel-button-next:hover svg > g path {
+  fill: #480E66;
+}
+
+
+.carousel-button-prev:hover svg path,
+.carousel-button-next:hover svg path {
+  filter: none !important;
+}
+
+.carousel-button-prev,
+.carousel-button-next {
+  transition: all .25s ease-in-out;
+}
+
+.carousel-button-prev svg,
+.carousel-button-next svg,
+.carousel-button-prev svg path,
+.carousel-button-next svg path {
+  transition: all .25s ease-in-out;
+}
+
+
+.carouselSwiper {
+  position: relative;
+}
+
+.carouselSwiper .carousel-button-prev {
+  opacity: 0;
+  pointer-events: none;
+  transform: translateX(-120px);
+  transition: opacity .3s ease-in-out, transform .3s ease-in-out;
+}
+
+.carouselSwiper.has-seen-prev .carousel-button-prev {
+  opacity: 1;
+  pointer-events: none;
+  transform: translateX(0);
+}
+
+
+.carousel-button-prev,
+.carousel-button-next,
+.carousel-button-prev svg,
+.carousel-button-next svg {
+  pointer-events: none;
+}
+
+.carousel-button-prev svg > g,
+.carousel-button-next svg > g {
+  pointer-events: visiblePainted;
+  cursor: pointer;
+  transition: all .3s ease-in-out;
+}
+
+.carouselSwiper .swiper-slide {
+  opacity: .6;
+  transition: opacity .3s ease-in-out;
+}
+
+.carouselSwiper .swiper-slide-active,
+.carouselSwiper .swiper-slide-prev {
+  opacity: 1;
+}
+
+.carouselSwiper .swiper-slide-prev{
+  opacity: 0 !important;
+}
