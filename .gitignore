@@ -8,8 +8,8 @@
 /wp-admin/
 /wp-content/index.php
 /wp-content/languages
-wp-content/plugins/wp-migrate*
-wp-content/mu-plugins
+# wp-content/plugins/wp-migrate*
+# wp-content/mu-plugins
 /wp-includes/
 /index.php
 /license.txt
