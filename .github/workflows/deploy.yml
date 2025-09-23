@@ -23,12 +23,6 @@ jobs:
         run: |
           ssh-keyscan -p 222 -H "${{ secrets.SERVER_HOST }}" >> ~/.ssh/known_hosts
 
-      - name: Test SSH connection
-        run: |
-          ssh -p 222 \
-            ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} \
-            "echo 'SSH connection successful'"
-
       - name: Ensure remote directory exists
         run: |
           ssh -p 222 \
@@ -53,6 +47,3 @@ jobs:
             ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} \
             "find public_html/travelbyticket-staging/wp-content -type d -exec chmod 755 {} \; && \
              find public_html/travelbyticket-staging/wp-content -type f -exec chmod 644 {} \;"
-
-      - name: Deploy complete
-        run: echo "Deployment to Hetzner completed successfully!"
