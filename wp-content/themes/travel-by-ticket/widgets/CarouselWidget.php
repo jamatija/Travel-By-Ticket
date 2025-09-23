@@ -41,7 +41,26 @@ class CarouselWidget extends \Elementor\Widget_Base
     {
         $settings = $this->get_settings_for_display();?>
 
-<h1>test</h1>
+        <!-- Slider main container -->
+        <div class="swiper carouselSwiper">
+            <!-- Additional required wrapper -->
+            <div class="swiper-wrapper">
+                <!-- Slides -->
+                <div class="swiper-slide">Slide 1</div>
+                <div class="swiper-slide">Slide 2</div>
+                <div class="swiper-slide">Slide 3</div>
+                <div class="swiper-slide">Slide 4</div>
+                <div class="swiper-slide">Slide 5</div>
+                ...
+            </div>
+
+
+            <!-- navigation buttons -->
+            <div class="carousel-button-prev"></div>
+            <div class="carousel-button-next"></div>
+
+        </div>
+
         <?php
 
     }
