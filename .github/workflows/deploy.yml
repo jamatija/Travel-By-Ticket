@@ -23,11 +23,6 @@ jobs:
         run: |
           ssh-keyscan -p 222 -H "${{ secrets.SERVER_HOST }}" >> ~/.ssh/known_hosts
 
-      - name: Ensure remote directory exists
-        run: |
-          ssh -p 222 \
-            ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} \
-            "mkdir -p public_html/travelbyticket-staging/wp-content"
 
       - name: Rsync wp-content to server
         run: |

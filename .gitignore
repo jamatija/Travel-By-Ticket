@@ -89,24 +89,8 @@ wp-content/debug.log
 /wp-settings.php
 /wp-signup.php
 /wp-trackback.php
-/wp-content/themes/twentyten
-/wp-content/themes/twentyeleven
-/wp-content/themes/twentytwelve
-/wp-content/themes/twentythirteen
-/wp-content/themes/twentyfourteen
-/wp-content/themes/twentyfifteen
-/wp-content/themes/twentysixteen
-/wp-content/themes/twentyseventeen
-/wp-content/themes/twentyteighteen
-/wp-content/themes/twentynineteen
-/wp-content/themes/twentytwenty
-/wp-content/themes/twentytwentyone
-/wp-content/themes/twentytwentytwo
-/wp-content/themes/twentytwentythree
-/wp-content/themes/twentytwentyfive
 /wp-content/themes/index.php
 /wp-content/plugins/index.php
-/wp-content/plugins/akismet*
 
 # large/disallowed file types
 # a CDN should be used for these
