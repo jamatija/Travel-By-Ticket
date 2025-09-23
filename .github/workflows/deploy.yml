@@ -35,8 +35,8 @@ jobs:
           DEST="${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }}:public_html/travelbyticket-staging/wp-content/"
           rsync -avz --delete \
             --exclude='.git*' \
-            --exclude='node_modules' \
             --exclude='*.log' \
+            --exclude='uploads/' \
             --exclude='cache/' \
             -e "ssh -p 222" \
             "$SRC" "$DEST"
