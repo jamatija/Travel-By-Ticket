@@ -19,9 +19,9 @@ document.addEventListener('DOMContentLoaded', function () {
         prevEl: prevBtn,
       },
       breakpoints: {
-        320:  { spaceBetween: 20, slidesPerView: 1.21, slidesOffsetBefore: 40 },
-        768:  { slidesPerView: 2.3,  slidesOffsetBefore: 65 },
-        1024: { slidesPerView: 4,    spaceBetween: 30 },
+        320:  { slidesPerView: 1.21, slidesOffsetBefore: 40, spaceBetween: 20 },
+        768:  { slidesPerView: 2.3,  slidesOffsetBefore: 65, spaceBetween: 2 },
+        1024: { slidesPerView: 4, spaceBetween: 32 },
       },
     });
 
