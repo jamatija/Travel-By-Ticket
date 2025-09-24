@@ -4,9 +4,8 @@
 .navigation {
     display: flex;
     position: absolute;
-    bottom: 40%;
+    bottom: 50%;
     z-index: 1;
-    inset: 0;
     width: 100%;
     pointer-events: none; 
 }
