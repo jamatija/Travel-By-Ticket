@@ -31,11 +31,150 @@ class CarouselWidget extends \Elementor\Widget_Base
         return 'eicon-carousel';
     }
 
-    protected function _register_controls()
-    {
-        
+    protected function _register_controls() {
+
+        /* =========================
+        TITLE (card-title)
+        ========================= */
+        $this->start_controls_section(
+            'section_style_title',
+            [
+                'label' => __( 'Title', 'travel' ),
+                'tab'   => \Elementor\Controls_Manager::TAB_STYLE,
+            ]
+        );
+
+        $this->add_group_control(
+            \Elementor\Group_Control_Typography::get_type(),
+            [
+                'name'     => 'title_typography',
+                'label'    => __( 'Typography', 'travel' ),
+                'selector' => '{{WRAPPER}} .card-title',
+            ]
+        );
+
+        $this->add_control(
+            'title_color',
+            [
+                'label'     => __( 'Text Color', 'travel' ),
+                'type'      => \Elementor\Controls_Manager::COLOR,
+                'selectors' => [
+                    '{{WRAPPER}} .card-title' => 'color: {{VALUE}};',
+                ],
+            ]
+        );
+
+        /* TITLE MARGINS */
+        $this->add_responsive_control(
+            'title_margin',
+            [
+                'label'      => __( 'Margin', 'travel' ),
+                'type'       => \Elementor\Controls_Manager::DIMENSIONS,
+                'size_units' => [ 'px', 'em', 'rem', '%' ],
+                'default'    => [
+                    'top' => '0', 'right' => '0', 'bottom' => '0', 'left' => '0', 'unit' => 'px', 'isLinked' => false,
+                ],
+                'selectors'  => [
+                    '{{WRAPPER}} .card-title' =>
+                        // Shorthand + logičke (pregazi Hello Elementor)
+                        'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};'.
+                        'margin-block-start: {{TOP}}{{UNIT}}; margin-block-end: {{BOTTOM}}{{UNIT}};'.
+                        'margin-inline-start: {{LEFT}}{{UNIT}}; margin-inline-end: {{RIGHT}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->end_controls_section();
+
+
+        /* =========================
+        PRICE (card-price)
+        ========================= */
+        $this->start_controls_section(
+            'section_style_price',
+            [
+                'label' => __( 'Price', 'travel' ),
+                'tab'   => \Elementor\Controls_Manager::TAB_STYLE,
+            ]
+        );
+
+        $this->add_group_control(
+            \Elementor\Group_Control_Typography::get_type(),
+            [
+                'name'     => 'price_typography',
+                'label'    => __( 'Typography', 'travel' ),
+                'selector' => '{{WRAPPER}} .card-price',
+            ]
+        );
+
+        $this->add_control(
+            'price_color',
+            [
+                'label'     => __( 'Text Color', 'travel' ),
+                'type'      => \Elementor\Controls_Manager::COLOR,
+                'selectors' => [
+                    '{{WRAPPER}} .card-price' => 'color: {{VALUE}};',
+                ],
+            ]
+        );
+
+        /* PRICE MARGINS */
+        $this->add_responsive_control(
+            'price_margin',
+            [
+                'label'      => __( 'Margin', 'travel' ),
+                'type'       => \Elementor\Controls_Manager::DIMENSIONS,
+                'size_units' => [ 'px', 'em', 'rem', '%' ],
+                'default'    => [
+                    'top' => '0', 'right' => '0', 'bottom' => '0', 'left' => '0', 'unit' => 'px', 'isLinked' => false,
+                ],
+                'selectors'  => [
+                    '{{WRAPPER}} .card-price' =>
+                        'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};'.
+                        'margin-block-start: {{TOP}}{{UNIT}}; margin-block-end: {{BOTTOM}}{{UNIT}};'.
+                        'margin-inline-start: {{LEFT}}{{UNIT}}; margin-inline-end: {{RIGHT}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->end_controls_section();
+
+
+        /* =========================
+        TAG (card-tag)
+        ========================= */
+        $this->start_controls_section(
+            'section_style_tag',
+            [
+                'label' => __( 'Tag', 'travel' ),
+                'tab'   => \Elementor\Controls_Manager::TAB_STYLE,
+            ]
+        );
+
+        $this->add_group_control(
+            \Elementor\Group_Control_Typography::get_type(),
+            [
+                'name'     => 'tag_typography',
+                'label'    => __( 'Typography', 'travel' ),
+                'selector' => '{{WRAPPER}} .card-tag',
+            ]
+        );
+
+        $this->add_control(
+            'tag_color',
+            [
+                'label'     => __( 'Text Color', 'travel' ),
+                'type'      => \Elementor\Controls_Manager::COLOR,
+                'selectors' => [
+                    '{{WRAPPER}} .card-tag' => 'color: {{VALUE}};',
+                ],
+            ]
+        );
+
+        $this->end_controls_section();
 
     }
+
 
     protected function render()
     {

@@ -4,6 +4,15 @@ function travel_by_ticket_enqueue_styles() {
 }
 add_action( 'wp_enqueue_scripts', 'travel_by_ticket_enqueue_styles' );
 
+add_action( 'wp_enqueue_scripts', function() {
+    wp_enqueue_style(
+        'child-style',
+        get_stylesheet_uri(),
+        ['hello-elementor-theme-style'], 
+        wp_get_theme()->get('Version')
+    );
+}, 20);
+
 
 function travel_enqueue_slider_assets() {
     wp_enqueue_style(

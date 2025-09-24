@@ -16,6 +16,10 @@
 .carousel-wrapper {
   position: relative;
 }
+
+.swiper {
+    padding-bottom: 80px;
+}
 /* =========================
    CAROUSEL BUTTONS BASE
    ========================= */
