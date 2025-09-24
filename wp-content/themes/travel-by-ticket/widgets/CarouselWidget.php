@@ -40,12 +40,12 @@ class CarouselWidget extends \Elementor\Widget_Base
             'section_style_title',
             [
                 'label' => __( 'Title', 'travel' ),
-                'tab'   => \Elementor\Controls_Manager::TAB_STYLE,
+                'tab'   => Controls_Manager::TAB_STYLE,
             ]
         );
 
         $this->add_group_control(
-            \Elementor\Group_Control_Typography::get_type(),
+            Group_Control_Typography::get_type(),
             [
                 'name'     => 'title_typography',
                 'label'    => __( 'Typography', 'travel' ),
@@ -57,7 +57,7 @@ class CarouselWidget extends \Elementor\Widget_Base
             'title_color',
             [
                 'label'     => __( 'Text Color', 'travel' ),
-                'type'      => \Elementor\Controls_Manager::COLOR,
+                'type'      => Controls_Manager::COLOR,
                 'selectors' => [
                     '{{WRAPPER}} .card-title' => 'color: {{VALUE}};',
                 ],
@@ -69,7 +69,7 @@ class CarouselWidget extends \Elementor\Widget_Base
             'title_margin',
             [
                 'label'      => __( 'Margin', 'travel' ),
-                'type'       => \Elementor\Controls_Manager::DIMENSIONS,
+                'type'       => Controls_Manager::DIMENSIONS,
                 'size_units' => [ 'px', 'em', 'rem', '%' ],
                 'default'    => [
                     'top' => '0', 'right' => '0', 'bottom' => '0', 'left' => '0', 'unit' => 'px', 'isLinked' => false,
@@ -94,12 +94,12 @@ class CarouselWidget extends \Elementor\Widget_Base
             'section_style_price',
             [
                 'label' => __( 'Price', 'travel' ),
-                'tab'   => \Elementor\Controls_Manager::TAB_STYLE,
+                'tab'   => Controls_Manager::TAB_STYLE,
             ]
         );
 
         $this->add_group_control(
-            \Elementor\Group_Control_Typography::get_type(),
+            Group_Control_Typography::get_type(),
             [
                 'name'     => 'price_typography',
                 'label'    => __( 'Typography', 'travel' ),
@@ -111,7 +111,7 @@ class CarouselWidget extends \Elementor\Widget_Base
             'price_color',
             [
                 'label'     => __( 'Text Color', 'travel' ),
-                'type'      => \Elementor\Controls_Manager::COLOR,
+                'type'      => Controls_Manager::COLOR,
                 'selectors' => [
                     '{{WRAPPER}} .card-price' => 'color: {{VALUE}};',
                 ],
@@ -123,7 +123,7 @@ class CarouselWidget extends \Elementor\Widget_Base
             'price_margin',
             [
                 'label'      => __( 'Margin', 'travel' ),
-                'type'       => \Elementor\Controls_Manager::DIMENSIONS,
+                'type'       => Controls_Manager::DIMENSIONS,
                 'size_units' => [ 'px', 'em', 'rem', '%' ],
                 'default'    => [
                     'top' => '0', 'right' => '0', 'bottom' => '0', 'left' => '0', 'unit' => 'px', 'isLinked' => false,
@@ -147,12 +147,12 @@ class CarouselWidget extends \Elementor\Widget_Base
             'section_style_tag',
             [
                 'label' => __( 'Tag', 'travel' ),
-                'tab'   => \Elementor\Controls_Manager::TAB_STYLE,
+                'tab'   => Controls_Manager::TAB_STYLE,
             ]
         );
 
         $this->add_group_control(
-            \Elementor\Group_Control_Typography::get_type(),
+            Group_Control_Typography::get_type(),
             [
                 'name'     => 'tag_typography',
                 'label'    => __( 'Typography', 'travel' ),
@@ -164,7 +164,7 @@ class CarouselWidget extends \Elementor\Widget_Base
             'tag_color',
             [
                 'label'     => __( 'Text Color', 'travel' ),
-                'type'      => \Elementor\Controls_Manager::COLOR,
+                'type'      => Controls_Manager::COLOR,
                 'selectors' => [
                     '{{WRAPPER}} .card-tag' => 'color: {{VALUE}};',
                 ],
@@ -211,7 +211,7 @@ class CarouselWidget extends \Elementor\Widget_Base
                         <?php endif; ?>
 
                         <div class="card-heading">
-                            <h3 class="card-title"><?php echo esc_html( $main_title ); if ( $tag_part ) : ?>, <span class="card-tag"><?php echo esc_html( $tag_part ); ?></span>
+                            <h3 class="card-title"><?php echo esc_html( $main_title ); if ( $tag_part ) : ?> <span class="card-tag"><?php echo esc_html( $tag_part ); ?></span>
                         <?php endif; ?></h3>
 
                         </div>
