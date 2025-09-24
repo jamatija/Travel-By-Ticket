@@ -91,6 +91,7 @@ class HeadingWidget extends \Elementor\Widget_Base
             ]
         );
 
+        // Tipografija za cijeli naslov
         $this->add_group_control(
             Group_Control_Typography::get_type(),
             [
@@ -100,15 +101,7 @@ class HeadingWidget extends \Elementor\Widget_Base
             ]
         );
 
-        $this->add_group_control(
-            Group_Control_Typography::get_type(),
-            [
-                'name'     => 'heading_typography_2',
-                'label'    => __( 'Typography 2', 'travel' ),
-                'selector' => '{{WRAPPER}} .heading-widget__title-2',
-            ]
-        );
-
+        // Boja glavnog teksta
         $this->add_control(
             'heading_color',
             [
@@ -161,7 +154,7 @@ class HeadingWidget extends \Elementor\Widget_Base
         $second= $settings['heading_text_second'];
 
         echo sprintf(
-            '<%1$s class="heading-widget__title">%2$s <span class="heading-widget__title-2">%3$s</span></%1$s>',
+            '<%1$s class="heading-widget__title">%2$s <span>%3$s</span></%1$s>',
             esc_attr($tag),
             esc_html($first),
             esc_html($second)
