@@ -10,3 +10,6 @@
 .elementor-element.elementor-widget-button {
     display: flex;
 }
+.elementor-icon-wrapper{
+    line-height: 0;
+}
