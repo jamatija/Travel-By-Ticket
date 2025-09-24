@@ -184,6 +184,7 @@ class CarouselWidget extends \Elementor\Widget_Base
             'orderby'          => 'date',
             'order'            => 'DESC',
             'category_name'    => 'popular',
+            'numberposts'      => -1,  
             'suppress_filters' => false 
             ]);
         ?>
