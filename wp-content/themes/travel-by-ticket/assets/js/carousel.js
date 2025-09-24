@@ -8,6 +8,13 @@ document.addEventListener('DOMContentLoaded', function () {
       slidesPerView: 4,
       loop: true,
       speed: 500,
+     
+      simulateTouch: true,
+      allowTouchMove: true,
+      grabCursor: true,
+      preventClicks: true,       
+      preventClicksPropagation: true,
+
       lazy: {
         enabled: true,
         loadPrevNext: true,
@@ -24,8 +31,9 @@ document.addEventListener('DOMContentLoaded', function () {
         1024: { slidesPerView: 4, spaceBetween: 32 },
       },
     });
-
-  
+   swiper.on('slideChange', () => {
+      wrapper.classList.add('has-seen-prev');
+    });
   });
 
   document.addEventListener('click', function (e) {
