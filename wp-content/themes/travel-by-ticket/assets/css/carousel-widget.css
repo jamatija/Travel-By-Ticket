@@ -10,18 +10,15 @@
     width: 100%;
     pointer-events: none; 
 }
-
 /* =========================
    CAROUSEL CONTAINER
    ========================= */
 .carousel-wrapper {
   position: relative;
 }
-
 /* =========================
    CAROUSEL BUTTONS BASE
    ========================= */
-
 .carousel-button-prev,
 .carousel-button-next {
     transition: all 0.25s ease-in-out;
@@ -36,38 +33,31 @@
     outline: none;
     user-select: none;
 }
-
 .carousel-button-prev svg,
 .carousel-button-next svg {
     transition: all 0.25s ease-in-out;
     pointer-events: none;
 }
-
 .carousel-button-prev svg path,
 .carousel-button-next svg path {
     filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1));
     transition: all 0.25s ease-in-out;
 }
-
 .carousel-button-prev svg > g,
 .carousel-button-next svg > g {
     pointer-events: visiblePainted;
     cursor: pointer;
     transition: all 0.3s ease-in-out;
 }
-
 /* =========================
    CAROUSEL BUTTONS POSITION
    ========================= */
 .carousel-button-next{
     left: 19%;
 }
-
 .carousel-button-prev{
     left: -3.5%;
 }
-
-
 /* =========================
    CAROUSEL BUTTONS HOVER
    ========================= */
@@ -75,12 +65,10 @@
 .carousel-button-next:hover svg > g path {
     fill: #480E66;
 }
-
 .carousel-button-prev:hover svg path,
 .carousel-button-next:hover svg path {
     filter: none !important;
 }
-
 /* =========================
    PREV BUTTON VISIBILITY
    ========================= */
@@ -90,13 +78,11 @@
     transform: translateX(-120px);
     transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
 }
-
 .carousel-wrapper.has-seen-prev .carousel-button-prev {
     opacity: 1;
     pointer-events: auto;
     transform: translateX(0);
 }
-
 /* =========================
    SWIPER SLIDES
    ========================= */
@@ -107,42 +93,34 @@
     will-change: transform;
     position: relative;
 }
-
 .carouselSwiper .swiper-slide-active {
     opacity: 1;
     transition: all .3s ease-in-out;
     transform: scaleY(1.11);
 }
-
 .carouselSwiper .swiper-slide-prev {
     opacity: 0 !important;
     transition: opacity 0.5s ease-out, transform 0.5s ease-out;
 }
-
 .card-media img {
     width: 100%;
 }
-
 .card-price {
     font-size: 1.25rem;
     line-height: 1.375rem;
     color: var(--e-global-color-c155371);
 }
-
 .card-heading {
     display: flex;
 }
-
 .card-title{
     font-size: 1.625rem !important;
     line-height: 1.75rem;
 }
-
 .card-tag{
     font-size: 1.25rem;
     line-height: 1.75rem;
 }
-
 /* =========================
    NAVIGATION REPONSIVE POSITION
    ========================= */
@@ -160,7 +138,6 @@
         left: 20%;
     }
 }
-
 @media (max-width: 1024px){
     .carousel-button-prev{
         left: -4.2%;
@@ -170,7 +147,6 @@
         left: 26%;
     }
 }
-
 @media (max-width: 768px) and (min-width: 430px){
     .carousel-button-prev{
         left: -5%;
