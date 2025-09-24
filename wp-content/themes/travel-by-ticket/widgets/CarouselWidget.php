@@ -198,9 +198,14 @@ class CarouselWidget extends \Elementor\Widget_Base
                 <?php foreach ( $posts as $p ) : 
                         $from_price = get_field('from_price', $p->ID);
                         $title      = get_the_title( $p );
-                        $parts      = explode( ',', $title, 2 );
-                        $main_title = trim( $parts[0] );       
-                        $tag_part   = isset( $parts[1] ) ? trim( $parts[1] ) : ''; 
+                        $pos = strpos( $title, ',' );
+                        if ( $pos !== false ) {
+                            $main_title = trim( substr( $title, 0, $pos + 1 ) ); 
+                            $tag_part   = trim( substr( $title, $pos + 1 ) );
+                        } else {
+                            $main_title = trim( $title );
+                            $tag_part   = '';
+                        }
                     ?>
                     <div class="swiper-slide">
                         <a href="<?php echo esc_url( get_permalink( $p ) ); ?>" class="card">
