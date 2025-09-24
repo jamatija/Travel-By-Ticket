@@ -157,6 +157,18 @@ class HeadingWidget extends \Elementor\Widget_Base
             ]
         );
 
+        $this->add_control(
+        'break_line_between_parts',
+        [
+            'label'        => __( 'Break heading', 'travel' ),
+            'type'         => Controls_Manager::SWITCHER,
+            'label_on'     => __( 'Yes', 'travel' ),
+            'label_off'    => __( 'No', 'travel' ),
+            'return_value' => 'yes',
+            'default'      => '',
+        ]
+    );
+
         // Margine
         $this->add_responsive_control(
             'heading_margin',
@@ -180,16 +192,20 @@ class HeadingWidget extends \Elementor\Widget_Base
     protected function render()
     {
         $settings = $this->get_settings_for_display();
+        $sep = ( ! empty( $settings['break_line_between_parts'] ) && $settings['break_line_between_parts'] === 'yes' )
+        ? '<br>'
+        : ' ';
 
         $tag   = $settings['heading_tag'] ?: 'h3';
         $first = $settings['heading_text_first'];
         $second= $settings['heading_text_second'];
 
-        echo sprintf(
-            '<%1$s class="heading-widget__title">%2$s <span class="heading-widget__title-2">%3$s</span></%1$s>',
-            esc_attr($tag),
-            esc_html($first),
-            esc_html($second)
+         echo sprintf(
+            '<%1$s class="heading-widget__title">%2$s%4$s<span class="heading-widget__title-2">%3$s</span></%1$s>',
+            esc_attr( $tag ),
+            esc_html( $first ),
+            esc_html( $second ),
+            $sep 
         );
         
     }
