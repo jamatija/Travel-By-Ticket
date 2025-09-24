@@ -26,7 +26,7 @@
 .carousel-button-next {
     transition: all 0.25s ease-in-out;
     cursor: pointer;
-    pointer-events: visiblePainted !important;
+    pointer-events: none !important;
     position: absolute;
     z-index: 10;
     bottom: 40%;
