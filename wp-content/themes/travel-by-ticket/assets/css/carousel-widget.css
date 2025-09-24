@@ -145,18 +145,91 @@
 /* =========================
    NAVIGATION REPONSIVE POSITION
    ========================= */
-@media (max-width: 1024px){
+@media (max-width: 1366px){
     .carousel-button-prev svg,
     .carousel-button-next svg{
        height: 78px;
        width: auto;
     }
-
     .carousel-button-prev{
-        left: -24px;
+        left: -2.5%;
     }
 
     .carousel-button-next{
-        left: 284px !important;
+        left: 20%;
+    }
+}
+
+@media (max-width: 1024px){
+    .carousel-button-prev{
+        left: -4.2%;
+    }
+
+    .carousel-button-next{
+        left: 26%;
+    }
+}
+
+@media (max-width: 768px) and (min-width: 430px){
+    .carousel-button-prev{
+        left: -5%;
+    }
+
+    .carousel-button-next{
+        left: 76.5%;
+    }
+}
+@media (max-width: 680px) and (min-width: 620px){
+    .carousel-button-prev{
+        left: -5%;
+    }
+
+    .carousel-button-next{
+        left: 75.7%;
+    }
+}
+@media (max-width: 620px) and (min-width: 520px){
+    .carousel-button-prev{
+        left: -5.5%;
+    }
+
+    .carousel-button-next{
+        left: 74.5%;
+    }
+}
+@media (max-width: 520px) and (min-width: 430px){
+    .carousel-button-prev{
+        left: -6%;
+    }
+
+    .carousel-button-next{
+        left: 73%;
+    }
+}
+@media (max-width: 430px) and (min-width: 400px){
+    .carousel-button-prev{
+        left: -6.3%;
+    }
+
+    .carousel-button-next{
+        left: 71%;
+    }
+}
+@media (max-width: 400px) and (min-width: 350px){
+    .carousel-button-prev{
+        left: -7%;
+    }
+
+    .carousel-button-next{
+        left: 69.8%;
+    }
+}
+@media (max-width: 350px) {
+    .carousel-button-prev{
+        left: -9%;
+    }
+
+    .carousel-button-next{
+        left: 68%;
     }
 }
