@@ -114,7 +114,7 @@ class HeadingWidget extends \Elementor\Widget_Base
             'heading_underline_offset',
             [
                 'label' => __( 'Underline Offset', 'travel' ),
-                'type'  => \Elementor\Controls_Manager::SLIDER,
+                'type'  => Controls_Manager::SLIDER,
                 'size_units' => [ 'px', 'em', 'rem' ],
                 'range' => [
                     'px' => [ 'min' => 0,  'max' => 50 ],
