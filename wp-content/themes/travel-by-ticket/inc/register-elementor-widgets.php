@@ -20,9 +20,11 @@ function register_widgets($widgets_manager)
 {
     require_once(__DIR__ . '/../widgets/LinkWidget.php');
     require_once(__DIR__ . '/../widgets/CarouselWidget.php');
+    require_once(__DIR__ . '/../widgets/HeadingWidget.php');
 
     $widgets_manager->register(new \LinkWidget());
     $widgets_manager->register(new \CarouselWidget());
+    $widgets_manager->register(new \HeadingWidget());
 }
 add_action('elementor/widgets/register', 'register_widgets');
 
