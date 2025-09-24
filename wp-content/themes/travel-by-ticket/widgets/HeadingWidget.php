@@ -110,6 +110,29 @@ class HeadingWidget extends \Elementor\Widget_Base
             ]
         );
 
+        $this->add_control(
+            'heading_underline_offset',
+            [
+                'label' => __( 'Underline Offset', 'travel' ),
+                'type'  => \Elementor\Controls_Manager::SLIDER,
+                'size_units' => [ 'px', 'em', 'rem' ],
+                'range' => [
+                    'px' => [ 'min' => 0,  'max' => 50 ],
+                    'em' => [ 'min' => 0,  'max' => 3, 'step' => 0.1 ],
+                    'rem'=> [ 'min' => 0,  'max' => 3, 'step' => 0.1 ],
+                ],
+                'default' => [
+                    'unit' => 'px',
+                    'size' => 4,
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .heading-widget__title-2' =>
+                        'text-underline-offset: {{SIZE}}{{UNIT}};',
+                ],
+            ]
+        );
+
+
         // Boja glavnog teksta
         $this->add_control(
             'heading_color',
@@ -163,7 +186,7 @@ class HeadingWidget extends \Elementor\Widget_Base
         $second= $settings['heading_text_second'];
 
         echo sprintf(
-            '<%1$s class="heading-widget__title">%2$s <span>%3$s</span></%1$s>',
+            '<%1$s class="heading-widget__title">%2$s <span class="heading-widget__title-2">%3$s</span></%1$s>',
             esc_attr($tag),
             esc_html($first),
             esc_html($second)
