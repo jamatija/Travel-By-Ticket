@@ -101,6 +101,15 @@ class HeadingWidget extends \Elementor\Widget_Base
             ]
         );
 
+        $this->add_group_control(
+            Group_Control_Typography::get_type(),
+            [
+                'name'     => 'heading_typography_2',
+                'label'    => __( 'Typography 2', 'travel' ),
+                'selector' => '{{WRAPPER}} .heading-widget__title-2',
+            ]
+        );
+
         // Boja glavnog teksta
         $this->add_control(
             'heading_color',
