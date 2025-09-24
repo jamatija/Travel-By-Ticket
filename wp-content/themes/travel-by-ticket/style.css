@@ -6,3 +6,6 @@
  Template:     hello-elementor
  Version:      1.0.0
 */
+.elementor-element.elementor-widget-button {
+    display: flex;
+}
