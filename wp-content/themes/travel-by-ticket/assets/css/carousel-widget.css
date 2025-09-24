@@ -6,6 +6,8 @@
     position: absolute;
     bottom: 40%;
     z-index: 1;
+    inset: 0;
+    width: 100%;
 }
 
 /* =========================
@@ -27,6 +29,11 @@
     position: absolute;
     z-index: 10;
     bottom: 40%;
+
+    background-color: transparent;    
+    -webkit-tap-highlight-color: transparent;
+    outline: none;
+    user-select: none;
 }
 
 .carousel-button-prev svg,
@@ -52,11 +59,11 @@
    CAROUSEL BUTTONS POSITION
    ========================= */
 .carousel-button-next{
-    left: 280px;
+    left: 19%;
 }
 
 .carousel-button-prev{
-    left: -60px;
+    left: -3.5%;
 }
 
 
