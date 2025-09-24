@@ -13,10 +13,10 @@
 .elementor-icon-wrapper{
     line-height: 0;
 }
-.my-heading{
+.heading{
     transition: all .3s ease-in-out;
 }
-.my-heading:hover {
+.heading:hover {
     text-decoration: underline;
     text-decoration-thickness: 2px;
     text-underline-offset: 4px;
