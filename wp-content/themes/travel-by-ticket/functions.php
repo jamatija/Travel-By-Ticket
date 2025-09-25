@@ -41,3 +41,19 @@ add_filter('upload_mimes', function ($mimes) {
     return $mimes;
 });
 
+// Register newsletter form styles
+add_action( 'wp_enqueue_scripts', function() {
+    wp_register_style(
+        'newsletter-css',
+        get_stylesheet_directory_uri() . '/assets/css/newsletter.css',
+        [],
+        '1.0'
+    );
+}, 5 );
+//Load styles when newsletter form is on page
+add_filter( 'wpcf7_form_elements', function ( $html ) {
+    if ( strpos( $html, 'newsletter-form' ) !== false ) {
+        wp_enqueue_style( 'newsletter-css' );
+    }
+    return $html;
+});
