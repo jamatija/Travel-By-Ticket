@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     //Layout-2 settings
     if(isLayout2){
-      slidesPerViewMobile = 1;
+      slidesPerViewMobile = 1.1;
       slidesPerViewTablet = 2.5;
       slidesPerViewDesktop = 3.6;
     }
@@ -41,7 +41,7 @@ document.addEventListener('DOMContentLoaded', function () {
         prevEl: prevBtn,
       },
       breakpoints: {
-        320:  { slidesPerView: slidesPerViewMobile, spaceBetween: 20 },
+        320:  { slidesPerView: slidesPerViewMobile, spaceBetween: 22, slidesOffsetBefore: 20,  },
         768:  { slidesPerView: slidesPerViewTablet, spaceBetween: 20 },
         1024: { slidesPerView: slidesPerViewDesktop, spaceBetween: 32 },
       },

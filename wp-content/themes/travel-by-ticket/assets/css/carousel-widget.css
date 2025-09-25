@@ -300,15 +300,19 @@
     .carouselSwiper.layout_2 .swiper-slide-prev {
         opacity: 1 !important;
     }
+
 }
 @media (max-width: 768px){
     .layout_2 .carousel-button-prev{
-        left: -3.7%;
+        left: -1.5%;
     }
     .layout_2 .carousel-button-next{
-        left: 94.7%;
+        left: 86%;
     }
-    .carouselSwiper.layout_2 .swiper-slide-prev {
+    .carouselSwiper .swiper-slide-active {
+        transform: none !important;
+    }
+    .layout_2 .carouselSwiper .swiper-slide-prev {
         opacity: 1 !important;
     }
 }
