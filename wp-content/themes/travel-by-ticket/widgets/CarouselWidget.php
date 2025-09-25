@@ -30,6 +30,84 @@ class CarouselWidget extends \Elementor\Widget_Base
     }
 
     protected function _register_controls() {
+        /* =========================
+                Select layout
+        ========================= */
+        $this->start_controls_section(
+            'section_layout',
+            [
+                'label' => __( 'Layout', 'travel' ),
+                'tab'   => Controls_Manager::TAB_CONTENT,
+            ]
+        );
+
+        $this->add_control(
+            'layout',
+            [
+                'label'   => __( 'Choose Layout', 'travel' ),
+                'type'    => Controls_Manager::SELECT,
+                'options' => [
+                    'layout_1' => __( 'Layout 1', 'travel' ),
+                    'layout_2' => __( 'Layout 2', 'travel' ),
+                ],
+                'default' => 'layout_1', 
+            ]
+        );
+
+        $this->end_controls_section();
+
+        /* =========================
+            Style for Layout 2 only
+        ========================= */
+        $this->start_controls_section(
+            'section_layout_2_styles',
+            [
+                'label'     => __( 'Layout 2 Styles', 'travel' ),
+                'tab'       => Controls_Manager::TAB_STYLE,
+                'condition' => [
+                    'layout' => 'layout_2', 
+                ],
+            ]
+        );
+
+        $this->add_group_control(
+            Group_Control_Typography::get_type(),
+            [
+                'name'     => 'tag_typography',
+                'label'    => __( 'Typography', 'travel' ),
+                'selector' => '{{WRAPPER}} .date',
+            ]
+        );
+
+       
+        $this->add_control(
+            'date_color_layout_2',
+            [
+                'label'     => __( 'Date Color for Layout 2', 'travel' ),
+                'type'      => Controls_Manager::COLOR,
+                'selectors' => [
+                    '{{WRAPPER}} .date' => 'color: {{VALUE}};',
+                ],
+            ]
+        );
+
+        $this->add_responsive_control(
+            'date_margin_layout_2',
+            [
+                'label'      => __( 'Date Margin for Layout 2', 'travel' ),
+                'type'       => Controls_Manager::DIMENSIONS,
+                'size_units' => [ 'px', 'em', 'rem', '%' ],
+                'default'    => [
+                    'top' => '0', 'right' => '0', 'bottom' => '0', 'left' => '0', 'unit' => 'px', 'isLinked' => false,
+                ],
+                'selectors'  => [
+                    '{{WRAPPER}} .date' =>
+                        'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->end_controls_section();
 
         /* =========================
         TITLE (card-title)
@@ -187,9 +265,11 @@ class CarouselWidget extends \Elementor\Widget_Base
             'numberposts'      => -1,  
             'suppress_filters' => false 
             ]);
+
+        $layout = $settings['layout']; 
         ?>
 
-        <div class="carousel-wrapper">
+        <div class="carousel-wrapper <?php echo esc_attr( $layout ); ?>">
             <!-- Slider main container -->
             <div class="swiper carouselSwiper">
                 <!-- Additional required wrapper -->
@@ -197,13 +277,17 @@ class CarouselWidget extends \Elementor\Widget_Base
                 <?php foreach ( $posts as $p ) : 
                         $from_price = get_field('from_price', $p->ID);
                         $title      = get_the_title( $p );
-                        $pos = strpos( $title, ',' );
-                        if ( $pos !== false ) {
-                            $main_title = trim( substr( $title, 0, $pos + 1 ) ); 
-                            $tag_part   = trim( substr( $title, $pos + 1 ) );
-                        } else {
-                            $main_title = trim( $title );
-                            $tag_part   = '';
+                        $excerpt    = get_the_excerpt($p);
+
+                        if($layout == 'layout_1'){
+                            $pos = strpos( $title, ',' );
+                            if ( $pos !== false ) {
+                                $main_title = trim( substr( $title, 0, $pos + 1 ) ); 
+                                $tag_part   = trim( substr( $title, $pos + 1 ) );
+                            } else {
+                                $main_title = trim( $title );
+                                $tag_part   = '';
+                            }
                         }
                     ?>
                     <div class="swiper-slide">
@@ -214,16 +298,38 @@ class CarouselWidget extends \Elementor\Widget_Base
                             </figure>
                         <?php endif; ?>
 
-                        <div class="card-heading">
-                            <h3 class="card-title"><?php echo esc_html( $main_title ); if ( $tag_part ) : ?> <span class="card-tag"><?php echo esc_html( $tag_part ); ?></span>
-                        <?php endif; ?></h3>
+                        <div class="text">
+
+                            <?php if($layout == 'layout_2'):?>
+                                <p class="date">
+                                    <?php echo date_i18n('d F, Y', strtotime(get_the_date())); ?>
+                                </p>
+                            <?php endif?>
+
+                            <div class="card-heading">
+                                <?php if($layout == 'layout_1'):?>
+                                    <h3 class="card-title"><?php echo esc_html( $main_title ); if ( $tag_part ) : ?> <span class="card-tag"><?php echo esc_html( $tag_part ); ?></span>
+                                    <?php endif; ?></h3>
+                                <?php else: ?>
+                                    <h3 class="card-title">
+                                        <?php echo esc_html($title) ?>
+                                    </h3>
+                                <?php endif?>
+                            </div>
+
+                            <?php if($layout == 'layout_1'):?>
+                                <p class="card-price">
+                                    <?php echo esc_html( sprintf( __('from %s €', 'travel'), $from_price ) ); ?>
+                                </p>
+                            <?php else: ?>
+                                <p class="card-tag">
+                                    <?php echo esc_html($excerpt) ?>
+                                </p>
+                            <?php endif?>
+                                </a>
+                            </div>
 
                         </div>
-                        <p class="card-price">
-                            <?php echo esc_html( sprintf( __('from %s €', 'travel'), $from_price ) ); ?>
-                        </p>
-                        </a>
-                    </div>
                     <?php endforeach; ?>
                 </div>
             </div>

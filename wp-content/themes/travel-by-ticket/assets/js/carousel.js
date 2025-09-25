@@ -4,8 +4,23 @@ document.addEventListener('DOMContentLoaded', function () {
     const nextBtn = wrapper.querySelector('.carousel-button-next');
     const prevBtn = wrapper.querySelector('.carousel-button-prev'); 
 
+    const isLayout2 = wrapper.classList.contains('layout_2');
+
+    //Layout-1 settings
+    let slidesPerViewMobile = 1.21;
+    let slidesPerViewTablet = 3;
+    let slidesPerViewDesktop = 4;
+
+    //Layout-2 settings
+    if(isLayout2){
+      slidesPerViewMobile = 1;
+      slidesPerViewTablet = 2.5;
+      slidesPerViewDesktop = 3.6;
+    }
+
+
     const swiper = new Swiper(root, {
-      slidesPerView: 4,
+      slidesPerView: slidesPerViewDesktop,
       loop: true,
       speed: 500,
      
@@ -26,9 +41,9 @@ document.addEventListener('DOMContentLoaded', function () {
         prevEl: prevBtn,
       },
       breakpoints: {
-        320:  { slidesPerView: 1.21, spaceBetween: 20 },
-        768:  { slidesPerView: 3, spaceBetween: 20 },
-        1024: { slidesPerView: 4, spaceBetween: 32 },
+        320:  { slidesPerView: slidesPerViewMobile, spaceBetween: 20 },
+        768:  { slidesPerView: slidesPerViewTablet, spaceBetween: 20 },
+        1024: { slidesPerView: slidesPerViewDesktop, spaceBetween: 32 },
       },
     });
    swiper.on('slideChange', () => {
