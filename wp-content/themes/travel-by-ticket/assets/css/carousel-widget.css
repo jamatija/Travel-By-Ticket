@@ -111,21 +111,13 @@
 .card-heading {
     display: flex;
 }
-.card-title{
-    font-size: 1.625rem;
-    line-height: 1.75rem;
-}
-.card-tag{
-    font-size: 1.25rem;
-    line-height: 1.75rem;
-}
 /* =========================
      SLIDE TITLES REDUCE
    ========================= */
 .carouselSwiper .swiper-slide-next .card-price,
 .carouselSwiper .swiper-slide-next .card-title,
-.carouselSwiper .swiper-slide-next .card-title .card-tag {
-    font-size: 1.4rem !important;
+.carouselSwiper .swiper-slide-next .card-tag {
+    font-size: 1.3rem !important;
 }
 .carouselSwiper .swiper-slide-active + .swiper-slide + .swiper-slide .card-price,
 .carouselSwiper .swiper-slide-active + .swiper-slide + .swiper-slide .card-title,
@@ -183,6 +175,11 @@
 
     .carousel-button-next{
         left: 26%;
+    }
+    .carouselSwiper .swiper-slide-next .card-price,
+    .carouselSwiper .swiper-slide-next .card-title,
+    .carouselSwiper .swiper-slide-next .card-tag {
+        font-size: 1.1rem !important;
     }
 }
 @media (max-width: 768px) and (min-width: 430px){
