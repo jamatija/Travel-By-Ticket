@@ -91,6 +91,37 @@ class HeadingWidget extends \Elementor\Widget_Base
             ]
         );
 
+        $this->add_responsive_control(
+            'text_align',
+            [
+                'label'   => __( 'Text Align', 'your-textdomain' ),
+                'type'    => Controls_Manager::CHOOSE,
+                'options' => [
+                    'left' => [
+                        'title' => __( 'Left', 'your-textdomain' ),
+                        'icon'  => 'eicon-text-align-left',
+                    ],
+                    'center' => [
+                        'title' => __( 'Center', 'your-textdomain' ),
+                        'icon'  => 'eicon-text-align-center',
+                    ],
+                    'right' => [
+                        'title' => __( 'Right', 'your-textdomain' ),
+                        'icon'  => 'eicon-text-align-right',
+                    ],
+                    'justify' => [
+                        'title' => __( 'Justify', 'your-textdomain' ),
+                        'icon'  => 'eicon-text-align-justify',
+                    ],
+                ],
+                'default'   => 'left',
+                'selectors' => [
+                    '{{WRAPPER}} .heading-widget__title' => 'text-align: {{VALUE}};',
+                ],
+            ]
+        );
+
+
         // Tipografija za cijeli naslov
         $this->add_group_control(
             Group_Control_Typography::get_type(),
@@ -200,7 +231,7 @@ class HeadingWidget extends \Elementor\Widget_Base
         $first = $settings['heading_text_first'];
         $second= $settings['heading_text_second'];
 
-         echo sprintf(
+        echo sprintf(
             '<%1$s class="heading-widget__title">%2$s%4$s<span class="heading-widget__title-2">%3$s</span></%1$s>',
             esc_attr( $tag ),
             esc_html( $first ),
