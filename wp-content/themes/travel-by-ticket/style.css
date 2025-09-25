@@ -25,3 +25,64 @@
 .benefits:hover{
     box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
 }
+/* NEWSLETTER */
+.newsletter-form p{
+    display: flex;
+    height: 55px;
+}
+.wpcf7-spinner{
+    display: none;
+}
+.newsletter{
+    border: 1px solid #8B46AF !important;
+    border-bottom-left-radius: 8px !important;
+    border-top-left-radius: 8px !important;
+    background-color: #3C0F53;
+    color: #ffffff;
+
+    outline: none;        
+    box-shadow: none;        
+    transition: border-color 0.3s;
+}
+.newsletter:focus{
+    background-color: #ffffff;
+    border-color: #ffffff !important;
+    color: #480E66;
+}
+.newsletter::placeholder{
+    color: #ffffff;
+}
+.newsletter:focus::placeholder{
+    color: #480E66;
+}
+.newsletter-form .wpcf7-form-control-wrap{
+    display: flex;
+}
+.newsletter-form .wpcf7-submit{
+    border-bottom-right-radius: 8px !important;
+    border-top-right-radius: 8px !important;
+    border-top-left-radius: 0 !important;
+    border-bottom-left-radius: 0 !important;
+    margin-left: -2px;
+    z-index: 1;
+    line-height: 0 !important;    
+    box-sizing: border-box; 
+    border: 1px solid #F4B821 !important;
+    font-size: 1rem !important;
+    font-weight: 700 !important;
+    font-family: 'Satoshi', 'sans-serif' !important;
+    letter-spacing: 1px;
+}
+.wpcf7 .wpcf7-not-valid-tip {
+    position: absolute;
+    left: 0;
+    top: calc(100% + 4px);
+    white-space: nowrap;
+    font-size: 0.875rem;
+    color: #ffffff;
+    pointer-events: none;
+}
+.wpcf7-response-output{
+    color: #ffffff;
+    font-size: 14px;
+}
