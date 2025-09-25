@@ -6,22 +6,22 @@ class CarouselNewsWidget extends \Elementor\Widget_Base
 {
     public function get_style_depends()
     {
-        return ['carousel-widget']; 
+        return ['carousel-news-widget']; 
     }
 
     public function get_script_depends()
     {
-        return ['carousel-widget']; 
+        return ['carousel-news-widget']; 
     }
 
     public function get_name()  
     {
-        return 'carousel-widget';
+        return 'carousel-news-widget';
     }
 
     public function get_title()
     {
-        return __('carousel', 'travel');
+        return __('carousel-news', 'travel');
     }
 
     public function get_icon()
@@ -189,9 +189,9 @@ class CarouselNewsWidget extends \Elementor\Widget_Base
             ]);
         ?>
 
-        <div class="carousel-wrapper">
+        <div class="carousel-news-wrapper">
             <!-- Slider main container -->
-            <div class="swiper carouselSwiper">
+            <div class="swiper carousel-newsSwiper">
                 <!-- Additional required wrapper -->
                 <div class="swiper-wrapper">
                 <?php foreach ( $posts as $p ) : 
@@ -229,7 +229,7 @@ class CarouselNewsWidget extends \Elementor\Widget_Base
             </div>
             <!-- navigation buttons -->
             <div class="navigation">
-                <div class="carousel-button-prev">
+                <div class="carousel-news-button-prev">
                     <svg width="101" height="120" viewBox="0 0 101 120" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <g>
                         <path d="M30.7138 21.4311C31.4617 17.6917 34.745 15 38.5584 15H77.2416C82.2899 15 86.0763 19.6186 85.0862 24.5689L70.2862 98.5689C69.5383 102.308 66.255 105 62.4416 105H23.7584C18.7101 105 14.9237 100.381 15.9138 95.4311L30.7138 21.4311Z" fill="white"/>
@@ -250,7 +250,7 @@ class CarouselNewsWidget extends \Elementor\Widget_Base
                     </svg>
 
                 </div>
-                <div class="carousel-button-next">
+                <div class="carousel-news-button-next">
                     <svg width="101" height="120" viewBox="0 0 101 120" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <g>
                         <path d="M30.7138 21.4311C31.4617 17.6917 34.745 15 38.5584 15H77.2416C82.2899 15 86.0763 19.6186 85.0862 24.5689L70.2862 98.5689C69.5383 102.308 66.255 105 62.4416 105H23.7584C18.7101 105 14.9237 100.381 15.9138 95.4311L30.7138 21.4311Z" fill="white"/>
