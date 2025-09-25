@@ -77,10 +77,6 @@
     background-size: 22px 22px;
     background-image: url('data:image/svg+xml;utf8,<svg width="23" height="20" viewBox="0 0 23 20" fill="none" xmlns="http://www.w3.org/2000/svg"> <path d="M0.666748 19.2082V0.791504L22.516 9.99984L0.666748 19.2082ZM2.08341 17.0832L18.8709 9.99984L2.08341 2.9165V8.41955L8.94894 9.99984L2.08341 11.5801V17.0832Z" fill="white"/></svg>');
   }
-    .wpcf7 .wpcf7-submit:hover,
-    .wpcf7 .wpcf7-submit:focus {
-        background-image: url('data:image/svg+xml;utf8,<svg width="23" height="20" viewBox="0 0 23 20" xmlns="http://www.w3.org/2000/svg"><path d="M0.666748 19.2082V0.791504L22.516 9.99984L0.666748 19.2082ZM2.08341 17.0832L18.8709 9.99984L2.08341 2.9165V8.41955L8.94894 9.99984L2.08341 11.5801V17.0832Z" fill="%23F4B821"/></svg>');
-    }
 }
 @media (max-width: 1024px) {
     .newsletter-banner {
