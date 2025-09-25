@@ -21,7 +21,7 @@ class CarouselNewsWidget extends \Elementor\Widget_Base
 
     public function get_title()
     {
-        return __('carousel-news', 'travel');
+        return __('Carousel V2', 'travel');
     }
 
     public function get_icon()
