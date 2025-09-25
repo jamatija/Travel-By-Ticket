@@ -84,3 +84,16 @@
         margin: 0 auto;
     }
 }
+.wpcf7 form .wpcf7-response-output  {
+    position: absolute !important;
+    line-height: .8rem !important;
+    margin-top: 1rem !important;
+    margin-left: 0 !important;
+}
+@media(max-width: 768px){
+    .wpcf7 form .wpcf7-response-output  {
+        margin-top: .7rem !important;
+        font-size: 12px !important;
+        border-width: 1px !important;
+    }
+}
