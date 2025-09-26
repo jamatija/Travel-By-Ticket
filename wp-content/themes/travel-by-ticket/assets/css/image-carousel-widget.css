@@ -1,0 +1,224 @@
+.imageSlide{
+    position: relative;
+    border: 1px solid #EDE2F3;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 1.5rem;
+    height: 260px;
+}
+.carousel-icon{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    margin-bottom: 40px;
+}
+.image-card-title{
+    position: absolute;  
+    bottom: 2rem;  
+    text-align: center;
+    padding-bottom: 10px;
+}
+.image-card-title:hover{
+    color: var(--e-global-color-accent) !important;
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 4px;
+}
+   /* =========================
+   NAVIGATION & LAYOUT
+   ========================= */
+.imageCarousel .navigation {
+    display: flex;
+    position: absolute;
+    bottom: 41%;
+    z-index: 1;
+    width: 100%;
+    pointer-events: none; 
+}
+/* =========================
+   CAROUSEL CONTAINER
+   ========================= */
+.imageCarousel.carousel-wrapper {
+  position: relative;
+}
+.imageCarousel .swiper {
+    padding-bottom: 80px;
+}
+/* =========================
+   CAROUSEL BUTTONS BASE
+   ========================= */
+.imageCarousel .carousel-button-prev,
+.imageCarousel .carousel-button-next {
+    transition: all 0.25s ease-in-out;
+    cursor: pointer;
+    pointer-events: none !important;
+    position: absolute;
+    z-index: 10;
+    bottom: 40%;
+
+    background-color: transparent;    
+    -webkit-tap-highlight-color: transparent;
+    outline: none;
+    user-select: none;
+}
+.imageCarousel .carousel-button-prev svg,
+.imageCarousel .carousel-button-next svg {
+    transition: all 0.25s ease-in-out;
+    pointer-events: none;
+}
+.imageCarousel .carousel-button-prev svg path,
+.imageCarousel .carousel-button-next svg path {
+    filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1));
+    transition: all 0.25s ease-in-out;
+}
+.imageCarousel .carousel-button-prev svg > g,
+.imageCarousel .carousel-button-next svg > g {
+    pointer-events: visiblePainted !important;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
+/* =========================
+   CAROUSEL BUTTONS POSITION
+   ========================= */
+.imageCarousel .carousel-button-next{
+    left: 19.4%;
+}
+.imageCarousel .carousel-button-prev{
+    left: -3.5%;
+}
+/* =========================
+   CAROUSEL BUTTONS HOVER
+   ========================= */
+.imageCarousel .carousel-button-prev svg > g:hover  path,
+.imageCarousel .carousel-button-next svg > g:hover path {
+    fill: #480E66;
+}
+.imageCarousel .carousel-button-prev:hover svg path,
+.imageCarousel .carousel-button-next:hover svg path {
+    filter: none !important;
+}
+/* =========================
+   PREV BUTTON VISIBILITY
+   ========================= */
+.imageCarousel .carousel-button-prev {
+    opacity: 0; 
+    pointer-events: none;
+    transform: translateX(-120px);
+    transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
+.imageCarousel.carousel-wrapper.has-seen-prev .carousel-button-prev {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateX(0);
+}
+.imageCarousel .imageCarouselSwiper .swiper-slide-prev {
+    opacity: 0 !important;
+    transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+}
+/* =========================
+   NAVIGATION REPONSIVE POSITION
+   ========================= */
+@media (max-width: 1366px){
+    .imageCarousel .carousel-button-prev svg,
+    .imageCarousel .carousel-button-next svg{
+       height: 78px;
+       width: auto;
+    }
+    .imageCarousel .carousel-button-prev{
+        left: -2.5%;
+    }
+
+    .imageCarousel .carousel-button-next{
+        left: 20%;
+    }
+}
+@media (max-width: 1024px){
+    .imageCarousel .carousel-button-prev{
+        left: -3.2%;
+    }
+
+    .imageCarousel .carousel-button-next{
+        left: 28%;
+    }
+    .imageCarousel .imageCarouselSwiper .swiper-slide-next .card-price,
+    .imageCarousel .imageCarouselSwiper .swiper-slide-next .card-title,
+    .imageCarousel .imageCarouselSwiper .swiper-slide-next .card-tag {
+        font-size: 1.1rem !important;
+    }
+}
+@media(max-width: 768px) {
+    .imageSlide{
+        padding: 2.813rem;
+    }
+    .imageCarousel .navigation {
+        bottom: 50%;
+    }
+}
+@media (max-width: 768px) and (min-width: 430px){
+    .imageCarousel .carousel-button-prev{
+        left: -2%;
+    }
+
+    .imageCarousel .carousel-button-next{
+        left: 55%;
+    }
+}
+@media (max-width: 680px) and (min-width: 620px){
+    .imageCarousel .carousel-button-prev{
+        left: -2%;
+    }
+
+    .imageCarousel .carousel-button-next{
+        left: 54.7%;
+    }
+}
+@media (max-width: 620px) and (min-width: 520px){
+    .imageCarousel .carousel-button-prev{
+        left: -2.5%;
+    }
+
+    .imageCarousel .carousel-button-next{
+        left: 54.2%;
+    }
+}
+@media (max-width: 520px) and (min-width: 430px){
+    .imageCarousel .carousel-button-prev{
+        left: -2.2%;
+    }
+
+    .imageCarousel .carousel-button-next{
+        left: 53%;
+    }
+}
+@media (max-width: 430px) and (min-width: 400px){
+    .imageCarousel .carousel-button-prev{
+        left: -2.2%;
+    }
+
+    .imageCarousel .carousel-button-next{
+        left: 51.8%;
+    }
+}
+@media (max-width: 400px) and (min-width: 350px){
+    .imageCarousel .carousel-button-prev{
+        left: -3.2%;
+    }
+
+    .imageCarousel .carousel-button-next{
+        left: 51.4%;
+    }
+}
+@media (max-width: 350px) {
+    .imageCarousel .carousel-button-prev{
+        left: -4.2%;
+    }
+
+    .imageCarousel .carousel-button-next{
+        left: 50%;
+    }
+}
