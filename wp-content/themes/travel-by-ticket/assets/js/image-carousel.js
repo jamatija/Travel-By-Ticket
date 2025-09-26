@@ -1,13 +1,13 @@
 document.addEventListener('DOMContentLoaded', function () {
-  document.querySelectorAll('.carouselSwiper').forEach((root) => {
-    const wrapper = root.closest('.carousel-wrapper'); 
-    const nextBtn = wrapper.querySelector('.carousel-button-next');
-    const prevBtn = wrapper.querySelector('.carousel-button-prev'); 
+  document.querySelectorAll('.imageCarouselSwiper').forEach((root) => {
+    const wrapper = root.closest('.imageCarousel'); 
+    const nextBtn = wrapper.querySelector('.imageCarousel .carousel-button-next');
+    const prevBtn = wrapper.querySelector('.imageCarousel .carousel-button-prev'); 
 
     const isLayout2 = wrapper.classList.contains('layout_2');
 
     //Layout-1 settings
-    let slidesPerViewMobile = 1.21;
+    let slidesPerViewMobile = 1.7;
     let slidesPerViewTablet = 3;
     let slidesPerViewDesktop = 4;
 
@@ -41,7 +41,7 @@ document.addEventListener('DOMContentLoaded', function () {
         prevEl: prevBtn,
       },
       breakpoints: {
-        320:  { slidesPerView: slidesPerViewMobile, spaceBetween: 22, slidesOffsetBefore: 20,  },
+        320:  { slidesPerView: slidesPerViewMobile, spaceBetween: 20, slidesOffsetBefore: 20,  },
         768:  { slidesPerView: slidesPerViewTablet, spaceBetween: 20 },
         1025: { slidesPerView: slidesPerViewDesktop, spaceBetween: 32 },
       },
