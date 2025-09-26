@@ -406,7 +406,7 @@ class CarouselWidget extends \Elementor\Widget_Base
 
                             <?php if($layout == 'layout_2'):?>
                                 <p class="date">
-                                    <?php echo date_i18n('d F, Y', strtotime(get_the_date())); ?>
+                                    <?php echo date_i18n('d F, Y', strtotime(get_post_time('Y-m-d H:i:s', false, $p))); ?>
                                 </p>
                             <?php endif?>
 
