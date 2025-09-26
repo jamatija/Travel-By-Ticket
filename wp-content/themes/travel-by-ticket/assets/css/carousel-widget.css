@@ -117,11 +117,11 @@
 /* =========================
      SLIDE TITLES REDUCE
    ========================= */
+
 .carouselSwiper .swiper-slide.swiper-slide-active .card-price,
 .carouselSwiper .swiper-slide.swiper-slide-active .card-title {
     font-size: 1.625rem !important;
 }
-.carouselSwiper .swiper-slide.swiper-slide-active .card-price,
 .carouselSwiper .swiper-slide.swiper-slide-active .card-tag {
     font-size: 1.25rem !important;
 }
@@ -137,6 +137,7 @@
 .carouselSwiper .swiper-slide .card-title .card-tag {
     transition: font-size 0.2s ease;
 }
+
 /* =========================
    NAVIGATION REPONSIVE POSITION
    ========================= */
@@ -246,8 +247,14 @@
     .carousel-wrapper.layout_2 .swiper-slide-active figure img{
         transition: all .5s ease-in-out;
         transform: scaleX(1.2) scaleY(1);
+        transform-origin: center;
+        will-change: transform; 
+        position: relative; 
         margin-left: 40px;
     }
+    /* .layout_2 .carouselSwiper .swiper-slide.swiper-slide-next {
+        transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out !important;
+    } */
     .carousel-wrapper.layout_2 .swiper-slide-active .card-title {
         transform: none !important; 
     }
@@ -264,8 +271,8 @@
     .layout_2 .text {
         padding: .4rem 1.375rem 0 1.375rem;
     }
-    .carousel-wrapper.layout_2 .swiper-slide{
-        transition: transform 0.3s ease, opacity 0.3s ease;
+    .carousel-wrapper.layout_2 .carouselSwiper .swiper-slide figure img{
+        transition: all 0.5s ease-in-out !important; 
     }
 }
 
@@ -309,7 +316,7 @@
     .layout_2 .carousel-button-next{
         left: 86%;
     }
-    .carouselSwiper .swiper-slide-active {
+    .layout_2 .carouselSwiper .swiper-slide-active {
         transform: none !important;
     }
     .layout_2 .carouselSwiper .swiper-slide-prev {
