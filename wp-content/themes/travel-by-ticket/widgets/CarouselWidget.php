@@ -119,7 +119,7 @@ class CarouselWidget extends \Elementor\Widget_Base
         $this->add_group_control(
             Group_Control_Typography::get_type(),
             [
-                'name'     => 'tag_typography',
+                'name'     => 'tag_typography_2',
                 'label'    => __( 'Typography', 'travel' ),
                 'selector' => '{{WRAPPER}} .date',
             ]
