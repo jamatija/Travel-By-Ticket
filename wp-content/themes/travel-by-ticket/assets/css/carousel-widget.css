@@ -1,7 +1,6 @@
 /* =========================
         Layout 1 styling
    ========================= */
-
    /* =========================
    NAVIGATION & LAYOUT
    ========================= */
@@ -117,7 +116,6 @@
 /* =========================
      SLIDE TITLES REDUCE
    ========================= */
-
 .carouselSwiper .swiper-slide.swiper-slide-active .card-price,
 .carouselSwiper .swiper-slide.swiper-slide-active .card-title {
     font-size: 1.625rem !important;
@@ -137,7 +135,6 @@
 .carouselSwiper .swiper-slide .card-title .card-tag {
     transition: font-size 0.2s ease;
 }
-
 /* =========================
    NAVIGATION REPONSIVE POSITION
    ========================= */
@@ -252,9 +249,6 @@
         position: relative; 
         margin-left: 40px;
     }
-    /* .layout_2 .carouselSwiper .swiper-slide.swiper-slide-next {
-        transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out !important;
-    } */
     .carousel-wrapper.layout_2 .swiper-slide-active .card-title {
         transform: none !important; 
     }
@@ -275,7 +269,6 @@
         transition: all 0.5s ease-in-out !important; 
     }
 }
-
 .layout_2 .card-tag {
     padding-top: 1.25rem;
 }
@@ -307,7 +300,6 @@
     .carouselSwiper.layout_2 .swiper-slide-prev {
         opacity: 1 !important;
     }
-
 }
 @media (max-width: 768px){
     .layout_2 .carousel-button-prev{
