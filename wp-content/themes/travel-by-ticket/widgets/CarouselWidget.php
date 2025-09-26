@@ -54,11 +54,22 @@ class CarouselWidget extends \Elementor\Widget_Base
         $this->add_control(
             'taxonomy',
             [
-                'label'   => __( 'Select Taxonomy Term', 'travel' ),
+                'label'   => __( 'Include Taxonomy', 'travel' ),
                 'type'    => Controls_Manager::SELECT2,
                 'options' => $this->get_taxonomy_options(), 
                 'default' => '',
                 'multiple' => true,  
+            ]
+        );
+
+        $this->add_control(
+            'exclude_categories',
+            [
+                'label'   => __( 'Exclude Taxonomy', 'travel' ),
+                'type'    => Controls_Manager::SELECT2,
+                'options' => $this->get_taxonomy_options(), 
+                'default' => '',
+                'multiple' => true,
             ]
         );
 
@@ -325,6 +336,7 @@ class CarouselWidget extends \Elementor\Widget_Base
 
         $selected_cpt = $settings['cpt']; 
         $selected_taxonomy = $settings['taxonomy'];
+        $excluded_categories = $settings['exclude_categories'];
 
         $args = [
             'post_type' => $selected_cpt,  
@@ -344,6 +356,15 @@ class CarouselWidget extends \Elementor\Widget_Base
                     'terms' => $selected_taxonomy, 
                     'operator' => 'IN',
                 ]
+            ];
+        }
+
+        if (!empty($excluded_categories)) {
+            $args['tax_query'][] = [
+                'taxonomy' => 'category',
+                'field' => 'term_id',
+                'terms' => $excluded_categories,  
+                'operator' => 'NOT IN',
             ];
         }
 
