@@ -168,8 +168,10 @@ class ImageCarouselWidget extends \Elementor\Widget_Base
                         $nofollow = !empty($item['link']['nofollow']);
                         $custom_attr = !empty($item['link']['custom_attributes']) ? $item['link']['custom_attributes'] : '';
 
-                        // Add link attributes
-                        $this->add_render_attribute('link', 'class', 'tw-link');
+                        $this->add_render_attribute('link', 'class', 'tw-link'); 
+                        
+                        $this->remove_render_attribute('link'); 
+
                         if ($url) {
                             $this->add_render_attribute('link', 'href', esc_url($url));
                         } else {
@@ -190,22 +192,25 @@ class ImageCarouselWidget extends \Elementor\Widget_Base
                         if ($custom_attr) {
                             $this->add_render_attribute('link', $custom_attr);
                         }
-                    ?>
-                    <div class="swiper-slide imageSlide">
-                        <?php if ($icon_url) : ?>
-                            <div class="carousel-icon">
-                                <img src="<?php echo esc_url($icon_url); ?>" alt="<?php echo esc_attr($title); ?>">
-                            </div>
-                        <?php endif; ?>
 
-                        <a class="image-card-title" style="display: inline-block;" <?php echo $this->get_render_attribute_string('link'); ?>>
-                            <?php echo esc_html($title); ?>
-                        </a>
-                    </div>
+                    ?>
+                        <div class="swiper-slide imageSlide">
+                            <?php if ($icon_url) : ?>
+                                <div class="carousel-icon">
+                                    <img src="<?php echo esc_url($icon_url); ?>" alt="<?php echo esc_attr($title); ?>">
+                                </div>
+                            <?php endif; ?>
+
+                            <a class="image-card-title" style="display: inline-block;" <?php echo $this->get_render_attribute_string('link'); ?>>
+                                <?php echo esc_html($title); ?>
+                            </a>
+                        </div>
                     <?php endforeach; ?>
+
+
                 </div><!-- End of swiper-wrapper -->
             </div><!-- End of swiper -->
-            
+
             <!-- navigation buttons -->
              <div class="navigation">
                 <div class="carousel-button-prev">
