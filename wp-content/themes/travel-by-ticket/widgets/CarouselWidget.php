@@ -31,6 +31,41 @@ class CarouselWidget extends \Elementor\Widget_Base
 
     protected function _register_controls() {
         /* =========================
+                Select source
+        ========================= */
+        $this->start_controls_section(
+            'section_cpt_taxonomy',
+            [
+                'label' => __( 'Select Content', 'travel' ),
+                'tab'   => Controls_Manager::TAB_CONTENT,
+            ]
+        );
+
+        $this->add_control(
+        'cpt',
+            [
+                'label'   => __( 'Select Post Type', 'travel' ),
+                'type'    => Controls_Manager::SELECT,
+                'options' => $this->get_post_type_options(), 
+                'default' => 'post', 
+            ]
+        );
+
+        $this->add_control(
+            'taxonomy',
+            [
+                'label'   => __( 'Select Taxonomy Term', 'travel' ),
+                'type'    => Controls_Manager::SELECT2,
+                'options' => $this->get_taxonomy_options(), 
+                'default' => '',
+                'multiple' => true,  
+            ]
+        );
+
+        $this->end_controls_section();
+
+
+        /* =========================
                 Select layout
         ========================= */
         $this->start_controls_section(
@@ -251,20 +286,68 @@ class CarouselWidget extends \Elementor\Widget_Base
 
     }
 
+    public function get_taxonomy_options() {
+        $taxonomies = get_taxonomies(['public' => true], 'objects');
+        
+        $options = [];
+
+        foreach ($taxonomies as $taxonomy) {
+            $terms = get_terms([
+                'taxonomy' => $taxonomy->name, 
+                'hide_empty' => false, 
+            ]);
+
+            if ($terms && !is_wp_error($terms)) {
+                foreach ($terms as $term) {
+                    $options[$term->term_id] = $term->name;
+                }
+            }
+        }
+
+        return $options;
+    }
+
+
+    public function get_post_type_options() {
+        $post_types = get_post_types(['public' => true], 'objects');
+
+        $options = [];
+        foreach ($post_types as $post_type) {
+            $options[$post_type->name] = $post_type->labels->singular_name;
+        }
+
+        return $options;
+    }
 
     protected function render()
     {
         $settings = $this->get_settings_for_display();
-        
-        $posts = get_posts([
-            'post_type'        => 'post',
-            'post_status'      => 'publish',
-            'orderby'          => 'date',
-            'order'            => 'DESC',
-            'category_name'    => 'popular',
-            'numberposts'      => -1,  
-            'suppress_filters' => false 
-            ]);
+
+        $selected_cpt = $settings['cpt']; 
+        $selected_taxonomy = $settings['taxonomy'];
+
+        $args = [
+            'post_type' => $selected_cpt,  
+            'post_status' => 'publish',
+            'orderby' => 'date',
+            'order' => 'DESC',
+            'numberposts' => -1,  
+            'tax_query' => [],
+            'suppress_filters' => false
+        ];
+
+        if (!empty($selected_taxonomy)) {
+            $args['tax_query'] = [
+                [
+                    'taxonomy' => 'category', 
+                    'field' => 'term_id',
+                    'terms' => $selected_taxonomy, 
+                    'operator' => 'IN',
+                ]
+            ];
+        }
+
+        $posts = get_posts($args);
 
         $layout = $settings['layout']; 
         ?>
