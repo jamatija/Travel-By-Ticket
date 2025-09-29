@@ -135,6 +135,9 @@
 .carouselSwiper .swiper-slide .card-title .card-tag {
     transition: font-size 0.2s ease;
 }
+.carousel-wrapper figure img {
+    border-radius: 8px;
+}
 /* =========================
    NAVIGATION REPONSIVE POSITION
    ========================= */
