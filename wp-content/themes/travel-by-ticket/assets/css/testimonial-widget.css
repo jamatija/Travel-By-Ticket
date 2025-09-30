@@ -17,7 +17,7 @@
   justify-content: flex-start;
 }
 .testimonial-info{
-  padding: 1.75rem;
+  padding: 1.75rem 1.75rem 0 1.75rem;
 }
 .testimonial-box {
   padding-left: 1px;
@@ -103,5 +103,15 @@
   }
   .testimonialCarousel .navigation {
     bottom: 46%;
+  }
+  .testimonialCarousel .swiper-slide {
+    padding-bottom: 1rem;
+  }
+  .testimonialCarousel .testimonial-text{
+    text-align: center;
+  }
+  .testimonial-rating{
+    display: flex;
+    justify-content: center;
   }
 }
