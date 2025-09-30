@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
     let slidesPerViewMobile = 1;
-    let slidesPerViewTablet = 3;
+    let slidesPerViewTablet = 2;
     let slidesPerViewDesktop = 3;
 
     const swiper = new Swiper(root, {
@@ -31,9 +31,10 @@ document.addEventListener('DOMContentLoaded', function () {
         prevEl: prevBtn,
       },
       breakpoints: {
-        320:  { slidesPerView: slidesPerViewMobile, spaceBetween: 20, slidesOffsetBefore: 20,  },
-        768:  { slidesPerView: slidesPerViewTablet, spaceBetween: 20 },
-        1025: { slidesPerView: slidesPerViewDesktop, spaceBetween: 140 },
+        320:  { slidesPerView: slidesPerViewMobile, spaceBetween: 20 },
+        769:  { slidesPerView: slidesPerViewTablet, spaceBetween: 0 },
+        1025: { slidesPerView: slidesPerViewDesktop, spaceBetween: 20 },
+        1367: { slidesPerView: slidesPerViewDesktop, spaceBetween: 50 },
       },
     });
    swiper.on('slideChange', () => {
