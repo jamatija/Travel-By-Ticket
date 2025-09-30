@@ -4,43 +4,44 @@
   align-items: center;
   justify-content: flex-start;
 }
-
 .testimonial-box {
   padding-left: 1px;
   gap: 16px;
 }
-
 .testimonial-text,
 .testimonial-name,
 .testimonial-job {
   margin: 0;
 }
-
 .testimonial-text {
     font-size: 1.375rem !important;
     transition: font-size 0.4s ease;
 }
-
 .swiper-slide-active .testimonial-text {
     font-size: 26px !important;
 }
-
 .testimonial-image {
   line-height: 0;
 }
-
 .testimonial-image img {
   width: 72px;
   height: 72px;
   border-radius: 50%;
   object-fit: cover;
 }
-
 .star {
   color: #f4b821;
   line-height: 2rem;
 }
-
+/* =========================
+   CAROUSEL BUTTONS POSITION
+========================= */
+.testimonialCarousel .carousel-button-next{
+    left: 27.5%;
+}
+.testimonialCarousel .carousel-button-prev{
+    left: -7.5%;
+}
 @media (max-width: 768px) {
     .swiper-slide-active .testimonial-text {
       font-size: 1.125rem !important;
