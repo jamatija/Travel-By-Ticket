@@ -90,7 +90,32 @@
       bottom: 46%;
   }
 }
-@media (max-width: 1024px)  {
+@media (max-width: 1024px) and (min-width: 768px){
+  .testimonialCarousel .swiper-slide-active .testimonial-text {
+    font-size: 1.5rem !important;
+    line-height: 2rem;
+  }
+  .testimonialCarousel .carousel-button-next{
+    left: 46%;
+  }
+  .testimonialCarousel .carousel-button-prev{
+      left: -3.4%;
+  }
+  .testimonialCarousel .navigation {
+    bottom: 46%;
+  }
+  .testimonialCarousel .swiper-slide {
+    padding-bottom: 1rem;
+  }
+  .testimonialCarousel .testimonial-text{
+    text-align: center;
+  }
+  .testimonial-rating{
+    display: flex;
+    justify-content: center;
+  }
+}
+@media (max-width: 768px)  {
   .testimonialCarousel .swiper-slide-active .testimonial-text {
     font-size: 1.5rem !important;
     line-height: 2rem;
