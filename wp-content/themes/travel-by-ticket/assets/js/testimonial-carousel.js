@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', function () {
         320:  { slidesPerView: slidesPerViewMobile, spaceBetween: 20, slidesOffsetBefore: 20,  },
         768:  { slidesPerView: slidesPerViewTablet, spaceBetween: 20 },
         1025: { slidesPerView: slidesPerViewDesktop, spaceBetween: 20 },
-        1367: { slidesPerView: slidesPerViewDesktop, spaceBetween: 140 },
+        1367: { slidesPerView: slidesPerViewDesktop, spaceBetween: 50 },
       },
     });
    swiper.on('slideChange', () => {
