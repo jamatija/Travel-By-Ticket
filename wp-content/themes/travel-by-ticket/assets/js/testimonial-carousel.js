@@ -33,7 +33,8 @@ document.addEventListener('DOMContentLoaded', function () {
       breakpoints: {
         320:  { slidesPerView: slidesPerViewMobile, spaceBetween: 20, slidesOffsetBefore: 20,  },
         768:  { slidesPerView: slidesPerViewTablet, spaceBetween: 20 },
-        1025: { slidesPerView: slidesPerViewDesktop, spaceBetween: 140 },
+        1025: { slidesPerView: slidesPerViewDesktop, spaceBetween: 20 },
+        1367: { slidesPerView: slidesPerViewDesktop, spaceBetween: 140 },
       },
     });
    swiper.on('slideChange', () => {
