@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const prevBtn = wrapper.querySelector('.testimonialCarousel .carousel-button-prev'); 
 
 
-    let slidesPerViewMobile = 1.7;
+    let slidesPerViewMobile = 1;
     let slidesPerViewTablet = 3;
     let slidesPerViewDesktop = 3;
 

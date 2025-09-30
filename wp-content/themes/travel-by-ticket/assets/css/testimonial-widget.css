@@ -40,3 +40,9 @@
   color: #f4b821;
   line-height: 2rem;
 }
+
+@media (max-width: 768px) {
+    .swiper-slide-active .testimonial-text {
+      font-size: 1.125rem !important;
+  }
+}
