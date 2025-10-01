@@ -4,77 +4,62 @@
     border-radius: 8px;
     border: none;
 }
-
 .flatpickr-day.selected {
     background: #FFC107;
     border-color: #FFC107;
     color: #000;
 }
-
 .flatpickr-day.selected:hover {
     background: #FFD54F;
     border-color: #FFD54F;
 }
-
 .flatpickr-day:hover {
     background: #f5f5f5;
     border-color: #f5f5f5;
 }
-
 .flatpickr-day.today {
     border-color: #FFC107;
 }
-
 .flatpickr-months .flatpickr-month {
     background: #FFC107;
     color: #000;
 }
-
 .flatpickr-current-month .flatpickr-monthDropdown-months {
     background: #FFC107;
     color: #000;
 }
-
 .flatpickr-weekdays {
     background: #FFD54F;
 }
-
 .flatpickr-weekday {
     color: #000;
     font-weight: 600;
 }
-
 /* Select2 custom styling */
 .select2-container {
     font-size: 14px;
 }
-
 .select2-container--default .select2-selection--single {
     /* height: 45px; */
     border: none;
     border-radius: 4px;
 }
-
 .select2-container--default .select2-selection--single .select2-selection__rendered {
     line-height: 28px;
     color: #333;
 }
-
 .select2-container--default .select2-selection--single .select2-selection__arrow {
     height: 43px;
 }
-
 .select2-dropdown {
     border: 1px solid #ddd;
     border-radius: 4px;
     box-shadow: 0 4px 12px rgba(0,0,0,0.1);
 }
-
 .select2-container--default .select2-results__option--highlighted[aria-selected] {
     background-color: #FFC107;
     color: #000;
 }
-
 .select2-container--default .select2-search--dropdown .select2-search__field {
     border: 1px solid #ddd;
     border-radius: 4px;
@@ -212,8 +197,19 @@ input[type=number]:focus{
 .select2-selection.select2-selection--single.select2-selection--clearable:focus{
     outline: none !important;
 }
-
 .flatpickr-day.selected{
     background: #F4B821 !important;
     border: 1px solid #F4B821 !important;
+}
+@media(max-width: 1240px) and (min-width: 1024px){
+    .depart,
+    .final{
+        width: 140px !important;
+    }
+    input[type=number]:focus{
+        width: 120px !important;
+    }
+    .passenger{
+        width: 120px !important;
+    }
 }
