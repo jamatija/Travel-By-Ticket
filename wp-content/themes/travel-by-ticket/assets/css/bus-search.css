@@ -179,6 +179,7 @@ select {
     border: none !important;
     padding: 0 0 0 8px!important;
     color: #757575;
+    font-size: 14px;
 }
 .dep-date{
     display: flex;
@@ -187,4 +188,6 @@ select {
 }
 input[type=number]{
     border: none !important;
+    font-size: 14px;
+    color: #757575;
 }
