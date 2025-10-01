@@ -277,11 +277,12 @@
             const today = new Date();
             today.setHours(0, 0, 0, 0);
             const selectedDate = new Date(departDate);
+            selectedDate.setHours(0, 0, 0, 0);
             
-            if (selectedDate < today) {
-                alert('Datum polaska mora biti danas ili u budućnosti!');
-                return false;
-            }
+            // if (selectedDate < today) {
+            //     alert('Datum polaska mora biti danas ili u budućnosti!');
+            //     return false;
+            // }
             
             if (returnDate && returnDate.trim() !== '') {
                 const returnDateObj = new Date(returnDate);
