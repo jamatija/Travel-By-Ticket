@@ -17,7 +17,6 @@
             
             const data = await response.json();
             
-            // Proveri format
             if (Array.isArray(data)) {
                 citiesData = data;
             } else if (data && Array.isArray(data.results)) {
@@ -29,7 +28,6 @@
             }
             
             console.log('✅ Loaded ' + citiesData.length + ' cities');
-            console.log('Sample city:', citiesData[0]); // Debug
             return citiesData;
             
         } catch (error) {
@@ -38,15 +36,85 @@
         }
     }
     
+    // Funkcija za formatiranje datuma u DD-MM-YYYY format
+    function formatDate(dateString) {
+        if (!dateString) return '';
+        
+        const date = new Date(dateString);
+        const day = String(date.getDate()).padStart(2, '0');
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const year = date.getFullYear();
+        
+        return `${day}-${month}-${year}`;
+    }
+    
+    // Funkcija za čišćenje naziva grada za URL
+    function cleanCityName(cityName) {
+        if (!cityName) return '';
+        
+        return cityName
+            .trim()
+            .replace(/\s+/g, '-')
+            .replace(/[^\w\-]/g, '')
+            .replace(/\-+/g, '-')
+            .replace(/^\-+|\-+$/g, '');
+    }
+    
+    // Funkcija za kreiranje BusTicket URL-a
+    function buildBusTicketUrl(formData) {
+        const baseUrl = 'https://busticket4.me';
+        const lang = busSearchConfig.lang || 'MNE';
+        
+        // Station IDs
+        const fromStationId = formData.fromCityId;
+        const toStationId = formData.toCityId;
+        const cassiopeiaId = '132';
+        const affiliateId = '0';
+        const zero = '0';
+        
+        const stationPart = `${fromStationId}-${toStationId}-${cassiopeiaId}-${affiliateId}-${zero}`;
+        
+        // VAŽNO: Povratna ili jednosmjerna
+        // 0 = jednosmjerna (one-way)
+        // 1 = povratna (round-trip)
+        const hasReturnDate = formData.returnDate && formData.returnDate.trim() !== '';
+        const isRoundTrip = hasReturnDate ? '1' : '0';
+        const passengers = formData.passengers || '1';
+        
+        const tripPart = `${isRoundTrip}-${passengers}`;
+        
+        console.log('🎫 Trip type:', hasReturnDate ? 'Povratna (1)' : 'Jednosmerna (0)');
+        
+        // Nazivi gradova - OČIŠĆENI
+        const fromCityName = cleanCityName(formData.fromCityLabel);
+        const toCityName = cleanCityName(formData.toCityLabel);
+        const routePart = `${fromCityName}-${toCityName}`;
+        
+        // Datumi
+        const departDate = formatDate(formData.departDate);
+        
+        // Sastavi URL
+        let url = `${baseUrl}/${lang}/${stationPart}/${tripPart}/${routePart}/${departDate}/`;
+        
+        // Dodaj datum povratka SAMO ako postoji
+        if (hasReturnDate) {
+            const returnDate = formatDate(formData.returnDate);
+            url += `${returnDate}/`;
+            console.log('📅 Return date included:', returnDate);
+        } else {
+            console.log('📅 One-way trip - no return date');
+        }
+        
+        return url;
+    }
+    
     $(document).ready(async function() {
         console.log('🚀 Initializing bus search form...');
         
-        // Loading state
         $('#from-city, #to-city')
             .html('<option value="">Učitavam...</option>')
             .prop('disabled', true);
         
-        // Učitaj gradove
         const cities = await loadCities();
         
         if (cities.length === 0) {
@@ -57,23 +125,19 @@
             return;
         }
         
-        // Pripremi opcije - prilagođeno za BusTicket API format
         const options = cities
             .filter(city => {
-                // Filtriraj gradove koji nemaju potrebne podatke
-                const hasLabel = city.city_label || city.city_primary_name || city.name;
+                const hasLabel = city.city_label || city.city_primary_name;
                 if (!hasLabel) {
                     console.warn('⚠️ City without label:', city);
                 }
                 return hasLabel;
             })
             .map(city => {
-                // Mapiranje prema API strukturi
                 const cityId = city.city_id || city.id;
-                const cityLabel = city.city_label || city.city_primary_name || city.name;
+                const cityLabel = city.city_label || city.city_primary_name;
                 const stateName = city.state_name || city.city_state || '';
                 
-                // Formatiranje prikaza: "AACHEN (Njemačka)"
                 const displayText = stateName 
                     ? `${cityLabel} (${stateName})`
                     : cityLabel;
@@ -81,26 +145,16 @@
                 return {
                     id: String(cityId),
                     text: String(displayText),
-                    // Dodatni podaci za kasnije korišćenje
-                    cityData: {
-                        cityId: cityId,
-                        label: cityLabel,
-                        primaryName: city.city_primary_name,
-                        state: city.city_state,
-                        stateName: stateName,
-                        stateCode: city.state_code,
-                        stateId: city.state_id
-                    }
+                    cityLabel: cityLabel.trim(),
+                    stateName: stateName,
+                    cityData: city
                 };
             });
         
         console.log('✅ Prepared ' + options.length + ' options for Select2');
-        console.log('First 3 options:', options.slice(0, 3));
         
-        // Inicijalizuj Select2
         $('#from-city, #to-city').each(function() {
             const $select = $(this);
-            const fieldName = $select.attr('id');
             
             try {
                 $select
@@ -111,7 +165,7 @@
                         placeholder: 'Izaberite grad',
                         allowClear: true,
                         width: '100%',
-                        minimumInputLength: 2, // Traži bar 2 karaktera
+                        minimumInputLength: 2,
                         language: {
                             noResults: function() {
                                 return 'Nema rezultata';
@@ -128,7 +182,6 @@
                                 return data.text;
                             }
                             
-                            // Formatiranje rezultata sa bold gradom
                             const parts = data.text.split('(');
                             if (parts.length > 1) {
                                 return $('<span><strong>' + parts[0].trim() + '</strong> <small>(' + parts[1] + '</small></span>');
@@ -137,49 +190,79 @@
                         },
                         templateSelection: function(data) {
                             return data.text;
-                        },
-                        matcher: function(params, data) {
-                            // Custom matcher za bolju pretragu
-                            if ($.trim(params.term) === '') {
-                                return data;
-                            }
-                            
-                            if (typeof data.text === 'undefined') {
-                                return null;
-                            }
-                            
-                            const term = params.term.toLowerCase();
-                            const text = data.text.toLowerCase();
-                            
-                            // Pretraži po nazivu grada ili državi
-                            if (text.indexOf(term) > -1) {
-                                return data;
-                            }
-                            
-                            return null;
                         }
                     });
                 
-                console.log('✅ Select2 initialized for:', fieldName);
-                
             } catch (error) {
-                console.error('❌ Error initializing Select2 for ' + fieldName + ':', error);
+                console.error('❌ Error initializing Select2:', error);
             }
         });
         
-        console.log('✅ All Select2 fields initialized successfully!');
-        
-        // Event listener za submit forme
+        // Handle form submission
         $('.bus-form').on('submit', function(e) {
+            e.preventDefault();
+            
             const fromCity = $('#from-city').select2('data')[0];
             const toCity = $('#to-city').select2('data')[0];
+            const departDate = $('#depart-date').val();
+            const returnDate = $('#return-date').val();
+            const passengers = $('#passengers').val();
             
-            console.log('Form submitted:', {
-                from: fromCity,
-                to: toCity
-            });
+            // Validation
+            if (!fromCity || !fromCity.id) {
+                alert('Molimo izaberite grad polaska!');
+                return false;
+            }
             
-            // Možeš dodati validaciju ovde
+            if (!toCity || !toCity.id) {
+                alert('Molimo izaberite grad odredišta!');
+                return false;
+            }
+            
+            if (!departDate) {
+                alert('Molimo unesite datum polaska!');
+                return false;
+            }
+            
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+            const selectedDate = new Date(departDate);
+            
+            if (selectedDate < today) {
+                alert('Datum polaska mora biti danas ili u budućnosti!');
+                return false;
+            }
+            
+            // Validate date of return
+            if (returnDate && returnDate.trim() !== '') {
+                const returnDateObj = new Date(returnDate);
+                if (returnDateObj < selectedDate) {
+                    alert('Datum povratka mora biti nakon datuma polaska!');
+                    return false;
+                }
+            }
+            
+            // Prepare the data
+            const formData = {
+                fromCityId: fromCity.id,
+                fromCityLabel: fromCity.cityLabel,
+                toCityId: toCity.id,
+                toCityLabel: toCity.cityLabel,
+                departDate: departDate,
+                returnDate: returnDate && returnDate.trim() !== '' ? returnDate : null,
+                passengers: passengers
+            };
+            
+            console.log('📋 Form data:', formData);
+            console.log('🎫 Trip type:', formData.returnDate ? 'POVRATNA (round-trip)' : 'JEDNOSMERNA (one-way)');
+            
+            const busTicketUrl = buildBusTicketUrl(formData);
+            
+            console.log('🔗 Generated URL:', busTicketUrl);
+            
+            window.open(busTicketUrl, '_blank');
+            
+            return false;
         });
     });
     
