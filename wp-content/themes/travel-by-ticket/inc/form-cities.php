@@ -72,35 +72,35 @@ function bus_search_form_shortcode() {
         <form method="GET" action="<?php echo esc_url(home_url('/bus-results')); ?>" class="bus-form">
             <div class="form-row">
                 <div class="form-field">
-                    <label for="from-city">Polazak iz</label>
+                    <label for="from-city">Depart from</label>
                     <select id="from-city" name="from_city" required>
                     </select>
                 </div>
                 
                 <div class="form-field">
-                    <label for="to-city">Odredište</label>
+                    <label for="to-city">Travel to</label>
                     <select id="to-city" name="to_city" required>
                     </select>
                 </div>
                 
                 <div class="form-field">
-                    <label for="depart-date">Datum polaska</label>
-                    <input type="text" id="depart-date" name="depart_date" placeholder="Izaberite datum" required readonly>
+                    <label for="depart-date">Departing on</label>
+                    <input type="text" id="depart-date" name="depart_date" placeholder="Choose date" required readonly>
                 </div>
                 
                 <div class="form-field">
-                    <label for="return-date">Datum povratka</label>
-                    <input type="text" id="return-date" name="return_date" placeholder="Opciono" readonly>
+                    <label for="return-date">Return on</label>
+                    <input type="text" id="return-date" name="return_date" placeholder="Optional" readonly>
                 </div>
                 
                 <div class="form-field">
-                    <label for="passengers">Putnici</label>
+                    <label for="passengers">Passengers</label>
                     <input type="number" id="passengers" name="passengers" value="1" min="1" max="9" required>
                 </div>
                 
                 <div class="form-field">
                     <label style="opacity: 0;">Search</label>
-                    <button type="submit" class="search-btn">Pretraži</button>
+                    <button type="submit" class="search-btn">Search</button>
                 </div>
             </div>
         </form>
@@ -128,7 +128,7 @@ function refresh_cities_cache() {
     }
 }
 
-// Manual cache clear (pristup: /wp-admin/?clear_bus_cache=1)
+// Manual cache clear (/wp-admin/?clear_bus_cache=1)
 add_action('admin_init', function() {
     if (isset($_GET['clear_bus_cache']) && current_user_can('manage_options')) {
         delete_transient('bus_cities_MNE_v3');
