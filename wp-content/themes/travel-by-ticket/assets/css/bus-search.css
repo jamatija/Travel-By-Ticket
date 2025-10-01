@@ -182,6 +182,10 @@ select {
     color: #757575;
     font-size: 14px;
 }
+
+.flatpickr-input:focus{
+    outline: none !important;
+}
 .dep-date{
     display: flex;
     align-items: center;
