@@ -74,25 +74,23 @@ function bus_search_form_shortcode() {
                 <div class="form-field">
                     <label for="from-city">Polazak iz</label>
                     <select id="from-city" name="from_city" required>
-                        <option value="">Učitavam...</option>
                     </select>
                 </div>
                 
                 <div class="form-field">
                     <label for="to-city">Odredište</label>
                     <select id="to-city" name="to_city" required>
-                        <option value="">Učitavam...</option>
                     </select>
                 </div>
                 
                 <div class="form-field">
                     <label for="depart-date">Datum polaska</label>
-                    <input type="date" id="depart-date" name="depart_date" value="<?php echo date('Y-m-d'); ?>" required>
+                    <input type="text" id="depart-date" name="depart_date" placeholder="Izaberite datum" required readonly>
                 </div>
                 
                 <div class="form-field">
                     <label for="return-date">Datum povratka</label>
-                    <input type="date" id="return-date" name="return_date" placeholder="Opciono">
+                    <input type="text" id="return-date" name="return_date" placeholder="Opciono" readonly>
                 </div>
                 
                 <div class="form-field">

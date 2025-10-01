@@ -39,6 +39,24 @@ function enqueue_bus_search_scripts2() {
                 'nonce' => wp_create_nonce('wp_rest'),
                 'lang' => 'MNE'
             ));
+
+               // Flatpickr JS
+            wp_enqueue_script(
+                'flatpickr',
+                'https://cdn.jsdelivr.net/npm/flatpickr',
+                array(),
+                '4.6.13',
+                true
+            );
+
+
+            // Flatpickr CSS
+            wp_enqueue_style(
+                'flatpickr',
+                'https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css',
+                array(),
+                '4.6.13'
+            );
         }
     }
 }

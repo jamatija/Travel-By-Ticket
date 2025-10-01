@@ -36,7 +36,6 @@
         }
     }
     
-    // Funkcija za formatiranje datuma u DD-MM-YYYY format
     function formatDate(dateString) {
         if (!dateString) return '';
         
@@ -48,7 +47,6 @@
         return `${day}-${month}-${year}`;
     }
     
-    // Funkcija za čišćenje naziva grada za URL
     function cleanCityName(cityName) {
         if (!cityName) return '';
         
@@ -60,12 +58,10 @@
             .replace(/^\-+|\-+$/g, '');
     }
     
-    // Funkcija za kreiranje BusTicket URL-a
     function buildBusTicketUrl(formData) {
         const baseUrl = 'https://busticket4.me';
         const lang = busSearchConfig.lang || 'MNE';
         
-        // Station IDs
         const fromStationId = formData.fromCityId;
         const toStationId = formData.toCityId;
         const cassiopeiaId = '132';
@@ -74,9 +70,6 @@
         
         const stationPart = `${fromStationId}-${toStationId}-${cassiopeiaId}-${affiliateId}-${zero}`;
         
-        // VAŽNO: Povratna ili jednosmjerna
-        // 0 = jednosmjerna (one-way)
-        // 1 = povratna (round-trip)
         const hasReturnDate = formData.returnDate && formData.returnDate.trim() !== '';
         const isRoundTrip = hasReturnDate ? '1' : '0';
         const passengers = formData.passengers || '1';
@@ -85,18 +78,14 @@
         
         console.log('🎫 Trip type:', hasReturnDate ? 'Povratna (1)' : 'Jednosmerna (0)');
         
-        // Nazivi gradova - OČIŠĆENI
         const fromCityName = cleanCityName(formData.fromCityLabel);
         const toCityName = cleanCityName(formData.toCityLabel);
         const routePart = `${fromCityName}-${toCityName}`;
         
-        // Datumi
         const departDate = formatDate(formData.departDate);
         
-        // Sastavi URL
         let url = `${baseUrl}/${lang}/${stationPart}/${tripPart}/${routePart}/${departDate}/`;
         
-        // Dodaj datum povratka SAMO ako postoji
         if (hasReturnDate) {
             const returnDate = formatDate(formData.returnDate);
             url += `${returnDate}/`;
@@ -111,9 +100,9 @@
     $(document).ready(async function() {
         console.log('🚀 Initializing bus search form...');
         
-        $('#from-city, #to-city')
-            .html('<option value="">Učitavam...</option>')
-            .prop('disabled', true);
+        // Postavi početne placeholdere
+        $('#from-city').html('<option value="">Leaving from</option>').prop('disabled', true);
+        $('#to-city').html('<option value="">Final destination</option>').prop('disabled', true);
         
         const cities = await loadCities();
         
@@ -153,16 +142,26 @@
         
         console.log('✅ Prepared ' + options.length + ' options for Select2');
         
+        // Inicijalizuj Select2 sa različitim placeholderima
         $('#from-city, #to-city').each(function() {
             const $select = $(this);
+            const fieldId = $select.attr('id');
+            
+            // Različiti placeholderi
+            const placeholder = fieldId === 'from-city' 
+                ? 'Leaving from' 
+                : 'Final destination';
             
             try {
+                // Dodaj praznu opciju kao prvu
+                $select.empty();
+                $select.append('<option value=""></option>'); // Prazna opcija za placeholder
+                
                 $select
-                    .empty()
                     .prop('disabled', false)
                     .select2({
                         data: options,
-                        placeholder: 'Izaberite grad',
+                        placeholder: placeholder,
                         allowClear: true,
                         width: '100%',
                         minimumInputLength: 2,
@@ -189,16 +188,26 @@
                             return data.text;
                         },
                         templateSelection: function(data) {
+                            // Ako je prazna opcija, prikaži placeholder
+                            if (!data.id) {
+                                return placeholder;
+                            }
                             return data.text;
                         }
                     });
+                
+                // Eksplicitno postavi da nema selekcije
+                $select.val(null).trigger('change');
+                
+                console.log('✅ Select2 initialized for:', fieldId, 'with placeholder:', placeholder);
                 
             } catch (error) {
                 console.error('❌ Error initializing Select2:', error);
             }
         });
         
-        // Handle form submission
+        console.log('✅ All Select2 fields initialized successfully!');
+        
         $('.bus-form').on('submit', function(e) {
             e.preventDefault();
             
@@ -208,7 +217,6 @@
             const returnDate = $('#return-date').val();
             const passengers = $('#passengers').val();
             
-            // Validation
             if (!fromCity || !fromCity.id) {
                 alert('Molimo izaberite grad polaska!');
                 return false;
@@ -233,7 +241,6 @@
                 return false;
             }
             
-            // Validate date of return
             if (returnDate && returnDate.trim() !== '') {
                 const returnDateObj = new Date(returnDate);
                 if (returnDateObj < selectedDate) {
@@ -242,7 +249,6 @@
                 }
             }
             
-            // Prepare the data
             const formData = {
                 fromCityId: fromCity.id,
                 fromCityLabel: fromCity.cityLabel,
