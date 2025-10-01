@@ -208,6 +208,48 @@
         
         console.log('✅ All Select2 fields initialized successfully!');
         
+        // Inicijalizuj Flatpickr za datume
+        const departDatePicker = flatpickr("#depart-date", {
+            dateFormat: "Y-m-d",
+            minDate: "today",
+            defaultDate: new Date(),
+            locale: {
+                firstDayOfWeek: 1,
+                weekdays: {
+                    shorthand: ['Ned', 'Pon', 'Uto', 'Sri', 'Čet', 'Pet', 'Sub'],
+                    longhand: ['Nedjelja', 'Ponedjeljak', 'Utorak', 'Srijeda', 'Četvrtak', 'Petak', 'Subota']
+                },
+                months: {
+                    shorthand: ['Jan', 'Feb', 'Mar', 'Apr', 'Maj', 'Jun', 'Jul', 'Avg', 'Sep', 'Okt', 'Nov', 'Dec'],
+                    longhand: ['Januar', 'Februar', 'Mart', 'April', 'Maj', 'Jun', 'Jul', 'Avgust', 'Septembar', 'Oktobar', 'Novembar', 'Decembar']
+                }
+            },
+            onChange: function(selectedDates, dateStr, instance) {
+                // Kada se promeni datum polaska, ažuriraj minimum za povratak
+                if (selectedDates.length > 0) {
+                    returnDatePicker.set('minDate', selectedDates[0]);
+                }
+            }
+        });
+        
+        const returnDatePicker = flatpickr("#return-date", {
+            dateFormat: "Y-m-d",
+            minDate: "today",
+            locale: {
+                firstDayOfWeek: 1,
+                weekdays: {
+                    shorthand: ['Ned', 'Pon', 'Uto', 'Sri', 'Čet', 'Pet', 'Sub'],
+                    longhand: ['Nedjelja', 'Ponedjeljak', 'Utorak', 'Srijeda', 'Četvrtak', 'Petak', 'Subota']
+                },
+                months: {
+                    shorthand: ['Jan', 'Feb', 'Mar', 'Apr', 'Maj', 'Jun', 'Jul', 'Avg', 'Sep', 'Okt', 'Nov', 'Dec'],
+                    longhand: ['Januar', 'Februar', 'Mart', 'April', 'Maj', 'Jun', 'Jul', 'Avgust', 'Septembar', 'Oktobar', 'Novembar', 'Decembar']
+                }
+            }
+        });
+        
+        console.log('✅ Flatpickr initialized for date fields!');
+        
         $('.bus-form').on('submit', function(e) {
             e.preventDefault();
             
