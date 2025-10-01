@@ -233,7 +233,7 @@
         });
         
         const returnDatePicker = flatpickr("#return-date", {
-            dateFormat: "Y-m-d",
+            dateFormat: "d.m.Y",
             minDate: "today",
             locale: {
                 firstDayOfWeek: 1,
