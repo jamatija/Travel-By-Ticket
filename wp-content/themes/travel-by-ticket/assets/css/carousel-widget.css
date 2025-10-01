@@ -164,7 +164,7 @@
         left: 26%;
     }
     .layout_1 .carousel-button-next{
-        left: 77%;
+        left: 28%;
     }
     .carouselSwiper .swiper-slide-next .card-price,
     .carouselSwiper .swiper-slide-next .card-title,
@@ -185,7 +185,6 @@
     .carousel-button-prev{
         left: -5%;
     }
-
     .carousel-button-next{
         left: 75.7%;
     }
