@@ -137,7 +137,7 @@ select {
 }
 
 .form-field{
-    padding: 16px;
+    padding: 16px 16px 8px 16px !important;
     border-right: 1px solid #EEF1F8;
 }
 
