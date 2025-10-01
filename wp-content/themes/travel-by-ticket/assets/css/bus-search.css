@@ -126,6 +126,7 @@
     cursor: pointer;
     transition: all 0.3s ease;
     height: 100%;
+    letter-spacing: .5px;
 }
 .search-btn:hover{
     background-color: #CE970C !important;
@@ -154,12 +155,18 @@ select {
     width: 140px !important;
 }
 .depart,
-.final,
-.passenger{
+.final{
     display: flex;
     align-items: center;
     background-color: #ffffff;
     width: 200px !important;
+    padding-top: 8px;
+}
+.passenger{
+    display: flex;
+    align-items: center;
+    background-color: #ffffff;
+    width: 140px !important;
     padding-top: 8px;
 }
 .select2.select2-container.select2-container--default.select2-container--below{
@@ -200,6 +207,7 @@ input[type=number]{
 
 input[type=number]:focus{
     outline: none !important;
+    width: 140px !important;
 }
 .select2-selection.select2-selection--single.select2-selection--clearable:focus{
     outline: none !important;
