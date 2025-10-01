@@ -197,3 +197,7 @@ input[type=number]{
     color: #757575;
     padding: 0 0 0 8px !important;
 }
+
+input[type=number]:focus{
+    outline: none !important;
+}
