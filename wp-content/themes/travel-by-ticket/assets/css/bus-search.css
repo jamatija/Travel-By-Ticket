@@ -155,12 +155,18 @@ select {
     width: 140px !important;
 }
 .depart,
-.final,
-.passenger{
+.final{
     display: flex;
     align-items: center;
     background-color: #ffffff;
     width: 200px !important;
+    padding-top: 8px;
+}
+.passenger{
+    display: flex;
+    align-items: center;
+    background-color: #ffffff;
+    width: 140px !important;
     padding-top: 8px;
 }
 .select2.select2-container.select2-container--default.select2-container--below{
