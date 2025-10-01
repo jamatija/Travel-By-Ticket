@@ -210,7 +210,7 @@
         
         // Inicijalizuj Flatpickr za datume
         const departDatePicker = flatpickr("#depart-date", {
-            dateFormat: "Y-m-d",
+            dateFormat: "d.m.Y",
             minDate: "today",
             defaultDate: new Date(),
             locale: {
