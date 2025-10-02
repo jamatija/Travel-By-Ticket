@@ -1,84 +1,124 @@
-/* Flatpickr custom styling */
+/* ==========================================================================
+   FLATPICKR CALENDAR STYLING
+   ========================================================================== */
+
+/* Calendar container */
 .flatpickr-calendar {
-    box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
     border-radius: 8px;
     border: none;
 }
-.flatpickr-day.selected {
-    background: #FFC107;
-    border-color: #FFC107;
-    color: #000;
-}
-.flatpickr-day.selected:hover {
-    background: #FFD54F;
-    border-color: #FFD54F;
-}
-.flatpickr-day:hover {
-    background: #f5f5f5;
-    border-color: #f5f5f5;
-}
-.flatpickr-day.today {
-    border-color: #FFC107;
-}
-.flatpickr-months .flatpickr-month {
-    background: #FFC107;
-    color: #000;
-}
+
+/* Calendar header */
+.flatpickr-months .flatpickr-month,
 .flatpickr-current-month .flatpickr-monthDropdown-months {
     background: #FFC107;
     color: #000;
 }
+
 .flatpickr-weekdays {
     background: #FFD54F;
 }
+
 .flatpickr-weekday {
     color: #000;
     font-weight: 600;
 }
-/* Select2 custom styling */
+
+/* Calendar days */
+.flatpickr-day.today {
+    border-color: #FFC107;
+}
+
+.flatpickr-day:hover {
+    background: #f5f5f5;
+    border-color: #f5f5f5;
+}
+
+.flatpickr-day.selected {
+    background: #F4B821 !important;
+    border: 1px solid #F4B821 !important;
+}
+
+.flatpickr-day.selected:hover {
+    background: #FFD54F;
+    border-color: #FFD54F;
+}
+
+
+/* ==========================================================================
+   SELECT2 DROPDOWN STYLING
+   ========================================================================== */
+
+/* Container */
 .select2-container {
     font-size: 14px;
 }
+
 .select2-container--default .select2-selection--single {
-    /* height: 45px; */
     border: none;
     border-radius: 4px;
 }
+
 .select2-container--default .select2-selection--single .select2-selection__rendered {
     line-height: 28px;
     color: #333;
 }
+
 .select2-container--default .select2-selection--single .select2-selection__arrow {
     height: 43px;
 }
+
+/* Dropdown */
 .select2-dropdown {
     border: 1px solid #ddd;
     border-radius: 4px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
+
 .select2-container--default .select2-results__option--highlighted[aria-selected] {
     background-color: #FFC107;
     color: #000;
 }
+
+/* Search field */
 .select2-container--default .select2-search--dropdown .select2-search__field {
     border: 1px solid #ddd;
     border-radius: 4px;
     padding: 8px;
 }
-.select2-container--default .select2-search--dropdown .select2-search__field:focus{
+
+.select2-container--default .select2-search--dropdown .select2-search__field:focus {
     outline: none !important;
 }
-.select2-selection__clear{
+
+/* Clear button */
+.select2-selection__clear {
     padding: 0 !important;
     margin-right: 12px;
     color: #480E66 !important;
 }
-/* Bus search form styling */
+
+.select2-selection__arrow {
+    display: none !important;
+}
+
+
+/* ==========================================================================
+   BUS SEARCH FORM - LAYOUT
+   ========================================================================== */
+
 .bus-search-form {
     border-radius: 8px;
     background-color: #ffffff;
 }
-.form-row,
+
+.form-row {
+    display: flex;
+    background-color: #ffffff;
+    border-radius: 8px !important;
+}
+
 .destinations,
 .dates,
 .passengers-submit {
@@ -86,46 +126,15 @@
     background-color: #ffffff;
     border-radius: 8px !important;
 }
+
+
+/* ==========================================================================
+   BUS SEARCH FORM - FORM FIELDS
+   ========================================================================== */
+
 .form-field {
     display: flex;
     flex-direction: column;
-}
-.form-row{
-    border-radius: 8px !important;
-}
-.form-field label {
-    font-size: 9px;
-    color: #480E66;
-    font-weight: 700;
-    font-family: 'Satoshi', 'sans-serif';
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-}
-.search-btn {
-    background: var(--e-global-color-accent);
-    color: #ffffff;
-    border: none;
-    border-top-right-radius: 8px !important;
-    border-top-left-radius: 0 !important;
-    border-bottom-left-radius: 0 !important;
-    border-bottom-right-radius: 8px !important;
-    font-weight: 700;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    height: 100%;
-    letter-spacing: .5px;
-}
-.search-btn:hover{
-    background-color: #CE970C !important;
-}
-select {
-    appearance: none;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-}
-
-.form-field{
     padding: 16px 16px 8px 16px !important;
     border-right: 1px solid #EEF1F8;
 }
@@ -135,170 +144,253 @@ select {
     padding: 0 !important;
 }
 
-.select__city{
-    width: 200px !important;
-}
-#depart-date,
-#return-date{
-    width: 140px !important;
-}
-.depart,
-.final{
-    display: flex;
-    align-items: center;
-    background-color: #ffffff;
-    width: 200px !important;
-    padding-top: 8px;
-}
-.passenger{
-    display: flex;
-    align-items: center;
-    background-color: #ffffff;
-    width: 140px !important;
-    padding-top: 8px;
-}
-#passengers{
-    line-height: 28px !important;
-}
-.select2.select2-container.select2-container--default.select2-container--below{
-    max-width: 174px !important;
-}
-.select2-selection.select2-selection--single.select2-selection--clearable{
-    color: #757575;
-}
-.select2-selection.select2-selection--single{
-    padding-left: 0;
-    padding-right: 0;
-    padding-bottom: 0;
-}
-.select2-selection__arrow{
-    display: none !important;
-}
-.flatpickr-input{
-    border: none !important;
-    padding: 0 0 0 8px!important;
-    color: #757575;
-    font-size: 14px;
+/* Field labels */
+.form-field label {
+    font-size: 9px;
+    color: #480E66;
+    font-weight: 700;
+    font-family: 'Satoshi', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
-.flatpickr-input:focus{
-    outline: none !important;
-}
-.dep-date{
-    display: flex;
-    align-items: center;
-    padding-top: 8px;
-}
-input[type=number]{
+
+/* ==========================================================================
+   BUS SEARCH FORM - INPUTS
+   ========================================================================== */
+
+/* Remove default styling */
+select,
+input[type="text"],
+input[type="number"],
+.flatpickr-input {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
     border: none !important;
+    outline: none !important;
     font-size: 14px;
     color: #757575;
+}
+
+/* Text inputs */
+input[type="text"] {
+    padding: 0 0 0 8px !important;
+    line-height: 28px !important;
+}
+
+/* Number inputs */
+input[type="number"] {
     padding: 0 0 0 8px !important;
 }
 
-input[type=number]:focus{
+input[type="number"]:focus {
     outline: none !important;
     width: 140px !important;
 }
-.select2-selection.select2-selection--single.select2-selection--clearable:focus{
+
+/* Flatpickr inputs */
+.flatpickr-input {
+    padding: 0 0 0 8px !important;
+}
+
+.flatpickr-input:focus {
     outline: none !important;
 }
-input[type=text]{
-    outline: none !important;
-    border: none !important;
-    border-width: 0 !important;
+
+/* Select2 inputs */
+.select2-selection.select2-selection--single {
+    padding: 0;
+}
+
+.select2-selection.select2-selection--single.select2-selection--clearable {
     color: #757575;
-    font-size: 14px !important;
-    padding-bottom: 0 !important;
-    padding-left: 8px !important;
-    padding-top: 0 !important;
+}
+
+.select2-selection.select2-selection--single.select2-selection--clearable:focus {
+    outline: none !important;
+}
+
+#passengers {
     line-height: 28px !important;
 }
-.flatpickr-day.selected{
-    background: #F4B821 !important;
-    border: 1px solid #F4B821 !important;
+
+
+/* ==========================================================================
+   BUS SEARCH FORM - FIELD CONTAINERS
+   ========================================================================== */
+
+/* City selects */
+.depart,
+.final {
+    display: flex;
+    align-items: center;
+    background-color: #ffffff;
+    width: 200px !important;
+    padding-top: 8px;
 }
-.button-text{
+
+.select__city {
+    width: 200px !important;
+}
+
+.select2.select2-container.select2-container--default.select2-container--below {
+    max-width: 174px !important;
+}
+
+/* Date inputs */
+.dep-date {
+    display: flex;
+    align-items: center;
+    padding-top: 8px;
+}
+
+#depart-date,
+#return-date {
+    width: 140px !important;
+}
+
+/* Passenger input */
+.passenger {
+    display: flex;
+    align-items: center;
+    background-color: #ffffff;
+    width: 140px !important;
+    padding-top: 8px;
+}
+
+
+/* ==========================================================================
+   BUS SEARCH FORM - SUBMIT BUTTON
+   ========================================================================== */
+
+.search-btn {
+    background: var(--e-global-color-accent);
+    color: #ffffff;
+    border: none;
+    border-radius: 0 8px 8px 0 !important;
+    font-weight: 700;
+    font-size: 1rem;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    height: 100%;
+}
+
+.search-btn:hover {
+    background-color: #CE970C !important;
+}
+
+.button-text {
     display: block;
 }
-.button-icon{
+
+.button-icon {
     display: none;
 }
-@media(max-width: 1240px) and (min-width: 1024px){
+
+
+/* ==========================================================================
+   RESPONSIVE - TABLET (1024px - 1240px)
+   ========================================================================== */
+
+@media (max-width: 1240px) and (min-width: 1024px) {
     .depart,
-    .final{
+    .final {
         width: 140px !important;
     }
-    input[type=number]:focus{
+    
+    .passenger {
         width: 120px !important;
     }
-    .passenger{
+    
+    input[type="number"]:focus {
         width: 120px !important;
     }
 }
-@media(max-width: 1024px){
-    .form-row{
+
+
+/* ==========================================================================
+   RESPONSIVE - MOBILE (< 1024px)
+   ========================================================================== */
+
+@media (max-width: 1024px) {
+    /* Layout changes */
+    .bus-search-form {
+        background-color: transparent !important;
+    }
+    
+    .form-row {
         flex-direction: column;
         gap: 20px !important;
         background-color: transparent !important;
     }
-    .bus-search-form {
-        background-color: transparent !important;
-    }
+    
     .destinations,
     .dates,
     .passengers-submit {
         border-radius: 8px;
     }
-    .final{
-        width: auto !important;
-    }
-    .form-field{
+    
+    /* Field adjustments */
+    .form-field {
         width: 50%;
         padding: 16px 16px 2px 16px !important;
     }
+    
+    .form-field:nth-child(even) {
+        border: none;
+    }
+    
+    .depart,
+    .final {
+        width: 100% !important;
+    }
+    
+    /* Passengers section */
     .passengers-submit {
         background-color: transparent;
     }
-    .passengers-submit .form-field button{
+    
+    .passengers-con {
+        background-color: #ffffff;
+        border-radius: 8px 0 0 8px;
+    }
+    
+    .passengers-submit .form-field button {
         width: 110px !important;
         display: flex;
         justify-content: center;
         align-items: center;
         padding: 0;
     }
-    .passengers-con{
-        background-color: #ffffff;
-        border-bottom-left-radius: 8px;
-        border-top-left-radius: 8px;
-    }
-    .button-text{
+    
+    /* Button icon toggle */
+    .button-text {
         display: none;
     }
-    .button-icon{
+    
+    .button-icon {
         display: block;
         margin-bottom: -4px;
     }
-    .depart{
-        width: 100% !important;
-    }
-    .form-field:nth-child(even) {
-        border: none;   
-    }
-    .select2-selection__clear{
-        margin: 0 !important;
-    }
-    .select2.select2-container.select2-container--default{
+    
+    /* Select2 adjustments */
+    .select2.select2-container.select2-container--default {
         width: 89%;
     }
+    
+    .select2.select2-container.select2-container--default.select2-container--below,
+    .select2.select2-container.select2-container--default.select2-container--below.select2-container--focus {
+        width: 90% !important;
+    }
+    
+    .select2-selection__clear {
+        margin: 0 !important;
+    }
+    
     #select2-to-city-container,
-    #select2-from-city-container{
+    #select2-from-city-container {
         padding-right: 0 !important;
-    }
-    .select2.select2-container.select2-container--default.select2-container--below.select2-container--focus{
-        width: 90% !important;
-    }
-    .select2.select2-container.select2-container--default.select2-container--below{
-        width: 90% !important;
     }
 }
