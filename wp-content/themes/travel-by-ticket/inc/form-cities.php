@@ -50,7 +50,7 @@ function get_cities_cached($request) {
         error_log('BusTicket: Cache HIT - ' . count($cached) . ' cities');
     }
     
-    // Filtriraj po search termu (ispravljeno za city_label)
+    // Filter search
     $filtered = $cached;
     if ($search) {
         $filtered = array_filter($cached, function($city) use ($search) {
