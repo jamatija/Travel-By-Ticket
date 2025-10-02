@@ -25,3 +25,58 @@
 .benefits:hover{
     box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
 }
+/************************
+      HEADER STYLES
+*************************/
+@media(min-width: 1025px){
+		.menu-item.current-menu-item a::before {
+			content: url('https://travel.aisolutionmontenegrofour.com/wp-content/uploads/2025/10/Vector-8.svg');
+			display: inline-block;
+			margin-right: 10px;
+	}
+	.e--pointer-underline .elementor-item:before{
+		height: 0 !important;
+		background: none !important;
+		padding: 0 !important;
+		margin-bottom: 24px;
+	}
+	
+}
+
+.elementor-nav-menu--dropdown.elementor-nav-menu__container {
+	background: transparent !important;
+}
+
+
+@media(max-width: 1024px){
+.elementor-nav-menu--dropdown.elementor-nav-menu__container ul li {
+	display: flex;
+	justify-content: end;
+}
+	
+.elementor-nav-menu--dropdown.elementor-nav-menu__container ul li a{
+	color: #480E66 !important;
+}
+	
+	.elementor-nav-menu--dropdown .elementor-item.elementor-item-active{
+		background: none !important;
+	}
+	
+.elementor-nav-menu--dropdown .elementor-item:hover{
+		background: none !important;
+	color: #ffffff !important;
+    text-decoration: underline;
+    text-decoration-thickness: 3px;
+    text-underline-offset: 8px;
+	}
+	.current-menu-item .elementor-item.elementor-item-active{
+		    text-decoration: underline;
+    text-decoration-thickness: 3px;
+    text-underline-offset: 8px;
+		color: #ffffff !important;
+		font-weight: 700 !important;
+	}
+	.elementor-nav-menu--stretch .elementor-nav-menu__container.elementor-nav-menu--dropdown{
+		position: static;
+	}
+}
