@@ -394,3 +394,7 @@ input[type="number"]:focus {
         padding-right: 0 !important;
     }
 }
+
+.form-control.input {
+    background-color: transparent !important;
+}
