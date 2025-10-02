@@ -123,7 +123,7 @@ function bus_search_form_shortcode() {
 
                 <!-- PASSENGERS & SUBMIT -->
                 <div class="passengers-submit">
-                    <div class="form-field">
+                    <div class="form-field passengers-con">
                         <label for="passengers">Passengers</label>
                         <div class="passenger">
                             <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -134,7 +134,14 @@ function bus_search_form_shortcode() {
                     </div>
                 
                     <div class="form-field">
-                        <button type="submit" class="search-btn">Search</button>
+                        <button type="submit" class="search-btn">
+                            <span class="button-text">Search</span>
+                            <span class="button-icon">
+                                <svg width="19" height="20" viewBox="0 0 19 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M7.71387 0.516602C9.75362 0.516602 11.4869 1.22548 12.9043 2.64062C14.3216 4.05618 15.0312 5.78923 15.0312 7.83008C15.0312 8.71678 14.8747 9.5758 14.5605 10.4053C14.2654 11.1846 13.8799 11.8589 13.4072 12.4297L18.6641 18.0938L18.7627 18.2002L18.6602 18.3018L17.7764 19.1865L17.666 19.2969L17.5596 19.1826L12.3086 13.5254C11.6955 14.0252 10.9989 14.4168 10.2178 14.6973C9.38996 14.9944 8.55626 15.1436 7.71777 15.1436C5.67702 15.1435 3.9439 14.4352 2.52832 13.0205C1.11321 11.6059 0.404406 9.8743 0.404297 7.83496C0.404297 5.79507 1.11262 4.06105 2.52734 2.64355C3.94209 1.22626 5.67418 0.516647 7.71387 0.516602ZM7.71777 2.06738C6.09775 2.06746 4.73663 2.62352 3.62402 3.73633C2.51121 4.84894 1.95516 6.21005 1.95508 7.83008C1.95508 9.45026 2.51113 10.8121 3.62402 11.9248C4.73661 13.0375 6.09781 13.5937 7.71777 13.5938C9.33774 13.5938 10.6996 13.0377 11.8125 11.9248C12.9254 10.8121 13.4814 9.45026 13.4814 7.83008C13.4814 6.21012 12.9252 4.84891 11.8125 3.73633C10.6996 2.62342 9.33774 2.06738 7.71777 2.06738Z" fill="white" stroke="white" stroke-width="0.3"/>
+                                </svg>
+                            </span>
+                    </button>
                     </div>
                 </div>
                 <!-- END PASSENGERS & SUBMIT -->

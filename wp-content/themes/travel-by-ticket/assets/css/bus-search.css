@@ -83,13 +83,16 @@
 .dates,
 .passengers-submit {
     display: flex;
+    background-color: #ffffff;
+    border-radius: 8px !important;
 }
-
 .form-field {
     display: flex;
     flex-direction: column;
 }
-
+.form-row{
+    border-radius: 8px !important;
+}
 .form-field label {
     font-size: 9px;
     color: #480E66;
@@ -215,6 +218,12 @@ input[type=text]{
     background: #F4B821 !important;
     border: 1px solid #F4B821 !important;
 }
+.button-text{
+    display: block;
+}
+.button-icon{
+    display: none;
+}
 @media(max-width: 1240px) and (min-width: 1024px){
     .depart,
     .final{
@@ -225,5 +234,71 @@ input[type=text]{
     }
     .passenger{
         width: 120px !important;
+    }
+}
+@media(max-width: 1024px){
+    .form-row{
+        flex-direction: column;
+        gap: 20px !important;
+        background-color: transparent !important;
+    }
+    .bus-search-form {
+        background-color: transparent !important;
+    }
+    .destinations,
+    .dates,
+    .passengers-submit {
+        border-radius: 8px;
+    }
+    .final{
+        width: auto !important;
+    }
+    .form-field{
+        width: 50%;
+        padding: 16px 16px 2px 16px !important;
+    }
+    .passengers-submit {
+        background-color: transparent;
+    }
+    .passengers-submit .form-field button{
+        width: 110px !important;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 0;
+    }
+    .passengers-con{
+        background-color: #ffffff;
+        border-bottom-left-radius: 8px;
+        border-top-left-radius: 8px;
+    }
+    .button-text{
+        display: none;
+    }
+    .button-icon{
+        display: block;
+        margin-bottom: -4px;
+    }
+    .depart{
+        width: 100% !important;
+    }
+    .form-field:nth-child(even) {
+        border: none;   
+    }
+    .select2-selection__clear{
+        margin: 0 !important;
+    }
+    .select2.select2-container.select2-container--default{
+        width: 89%;
+    }
+    #select2-to-city-container,
+    #select2-from-city-container{
+        padding-right: 0 !important;
+    }
+    .select2.select2-container.select2-container--default.select2-container--below.select2-container--focus{
+        width: 90% !important;
+    }
+    .select2.select2-container.select2-container--default.select2-container--below{
+        width: 90% !important;
     }
 }
