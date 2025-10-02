@@ -210,7 +210,9 @@
         
         // Inicijalizuj Flatpickr za datume
         const departDatePicker = flatpickr("#depart-date", {
-            dateFormat: "d.m.Y",
+            altInput: true,
+            altFormat: "d.m.Y", 
+            dateFormat: "Y-m-d",
             minDate: "today",
             defaultDate: new Date(),
             locale: {
@@ -233,7 +235,9 @@
         });
         
         const returnDatePicker = flatpickr("#return-date", {
-            dateFormat: "d.m.Y",
+            altInput: true,
+            altFormat: "d.m.Y", 
+            dateFormat: "Y-m-d",
             minDate: "today",
             locale: {
                 firstDayOfWeek: 1,
@@ -277,12 +281,11 @@
             const today = new Date();
             today.setHours(0, 0, 0, 0);
             const selectedDate = new Date(departDate);
-            selectedDate.setHours(0, 0, 0, 0);
             
-            // if (selectedDate < today) {
-            //     alert('Datum polaska mora biti danas ili u budućnosti!');
-            //     return false;
-            // }
+            if (selectedDate < today) {
+                alert('Datum polaska mora biti danas ili u budućnosti!');
+                return false;
+            }
             
             if (returnDate && returnDate.trim() !== '') {
                 const returnDateObj = new Date(returnDate);

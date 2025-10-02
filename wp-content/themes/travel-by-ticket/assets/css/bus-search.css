@@ -154,6 +154,9 @@ select {
     width: 140px !important;
     padding-top: 8px;
 }
+#passengers{
+    line-height: 28px !important;
+}
 .select2.select2-container.select2-container--default.select2-container--below{
     max-width: 174px !important;
 }
@@ -196,6 +199,17 @@ input[type=number]:focus{
 }
 .select2-selection.select2-selection--single.select2-selection--clearable:focus{
     outline: none !important;
+}
+input[type=text]{
+    outline: none !important;
+    border: none !important;
+    border-width: 0 !important;
+    color: #757575;
+    font-size: 14px !important;
+    padding-bottom: 0 !important;
+    padding-left: 8px !important;
+    padding-top: 0 !important;
+    line-height: 28px !important;
 }
 .flatpickr-day.selected{
     background: #F4B821 !important;
