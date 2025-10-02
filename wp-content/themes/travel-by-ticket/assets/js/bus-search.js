@@ -215,6 +215,7 @@
             dateFormat: "Y-m-d",
             minDate: "today",
             defaultDate: new Date(),
+            mobileFriendly: true,
             locale: {
                 firstDayOfWeek: 1,
                 weekdays: {
