@@ -317,10 +317,6 @@
     .carouselSwiper.layout_2 .swiper-slide-prev {
         opacity: 1 !important;
     }
-    .layout_2 .carouselSwiper .swiper-slide-active {
-        width: calc(100vw - 3rem) !important;
-        transition: all .3s ease-in-out;
-    }
     .layout_2 .carouselSwiper .swiper-slide .card-media img {
         height: 256px;
     }
@@ -349,5 +345,9 @@
     }
     .layout_2 .navigation {
         bottom: 64%;
+    }
+    .layout_2 .carouselSwiper .swiper-slide-active {
+        width: calc(100vw - 3rem) !important;
+        transition: all .3s ease-in-out;
     }
 }
