@@ -38,6 +38,9 @@ class CarouselWidget extends \Elementor\Widget_Base
             [
                 'label' => __( 'Select Content', 'travel' ),
                 'tab'   => Controls_Manager::TAB_CONTENT,
+                  'condition' => [
+                    'layout' => 'layout_1', 
+                ],
             ]
         );
 
@@ -193,6 +196,18 @@ class CarouselWidget extends \Elementor\Widget_Base
                 'default' => '',
                 'multiple' => false,
                 'description' => __( 'Select category for Travel News filter', 'travel' ),
+            ]
+        );
+
+        $this->add_control(
+            'our_blog_category',
+            [
+                'label'   => __( 'Our Blog Category', 'travel' ),
+                'type'    => Controls_Manager::SELECT2,
+                'options' => $this->get_category_options(),
+                'default' => '',
+                'multiple' => false,
+                'description' => __( 'Select category for Our Blog filter', 'travel' ),
             ]
         );
 
@@ -451,41 +466,64 @@ class CarouselWidget extends \Elementor\Widget_Base
         $selected_cpt = $settings['cpt']; 
         $selected_taxonomy = $settings['taxonomy'];
         $travel_news_cat_id = (int) $settings['travel_news_category'] ?: 0;
+        $our_blog_cat_id = (int) $settings['our_blog_category'] ?: 0;  
         $excluded_categories = $settings['exclude_categories'];
 
-        $args = [
-            'post_type' => $selected_cpt,  
-            'post_status' => 'publish',
-            'orderby' => 'date',
-            'order' => 'DESC',
-            'numberposts' => -1,  
-            'tax_query' => [],
-            'suppress_filters' => false
-        ];
+        $layout = $settings['layout']; 
 
-        if (!empty($selected_taxonomy)) {
-            $args['tax_query'] = [
-                [
-                    'taxonomy' => 'category', 
+        if ($layout == 'layout_2' && ($travel_news_cat_id || $our_blog_cat_id)) {
+                $categories_to_include = array_filter([$travel_news_cat_id, $our_blog_cat_id]);
+                
+                $args = [
+                    'post_type' => $selected_cpt,  
+                    'post_status' => 'publish',
+                    'orderby' => 'date',
+                    'order' => 'DESC',
+                    'numberposts' => -1,
+                    'tax_query' => [
+                        [
+                            'taxonomy' => 'category',
+                            'field' => 'term_id',
+                            'terms' => $categories_to_include,
+                            'operator' => 'IN',
+                        ]
+                    ],
+                    'suppress_filters' => false
+                ];
+        } else {
+            $args = [
+                'post_type' => $selected_cpt,  
+                'post_status' => 'publish',
+                'orderby' => 'date',
+                'order' => 'DESC',
+                'numberposts' => -1,  
+                'tax_query' => [],
+                'suppress_filters' => false
+            ];
+
+            if (!empty($selected_taxonomy)) {
+                $args['tax_query'] = [
+                    [
+                        'taxonomy' => 'category', 
+                        'field' => 'term_id',
+                        'terms' => $selected_taxonomy, 
+                        'operator' => 'IN',
+                    ]
+                ];
+            }
+
+            if (!empty($excluded_categories)) {
+                $args['tax_query'][] = [
+                    'taxonomy' => 'category',
                     'field' => 'term_id',
-                    'terms' => $selected_taxonomy, 
-                    'operator' => 'IN',
-                ]
-            ];
-        }
-
-        if (!empty($excluded_categories)) {
-            $args['tax_query'][] = [
-                'taxonomy' => 'category',
-                'field' => 'term_id',
-                'terms' => $excluded_categories,  
-                'operator' => 'NOT IN',
-            ];
+                    'terms' => $excluded_categories,  
+                    'operator' => 'NOT IN',
+                ];
+            }
         }
 
         $posts = get_posts($args);
 
-        $layout = $settings['layout']; 
         ?>
 
         <div class="carousel-wrapper <?php echo esc_attr( $layout ); ?>">
@@ -514,8 +552,14 @@ class CarouselWidget extends \Elementor\Widget_Base
                         
                         if ( $layout == 'layout_2' ) {
                             $categories = wp_get_post_terms( $p->ID, 'category', [ 'fields' => 'ids' ] );
-                            $is_travel_news = $travel_news_cat_id && in_array( $travel_news_cat_id, $categories, true );
-                            $data_category  = $is_travel_news ? 'travel-news' : 'our-blog';
+                            
+                            if ($travel_news_cat_id && in_array($travel_news_cat_id, $categories, true)) {
+                                $data_category = 'travel-news';
+                            } elseif ($our_blog_cat_id && in_array($our_blog_cat_id, $categories, true)) {
+                                $data_category = 'our-blog';
+                            } else {
+                                $data_category = 'our-blog';
+                            }
                         }
 
 
