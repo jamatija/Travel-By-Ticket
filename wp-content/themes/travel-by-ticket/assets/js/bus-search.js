@@ -215,7 +215,7 @@
             dateFormat: "Y-m-d",
             minDate: "today",
             defaultDate: new Date(),
-            mobileFriendly: true,
+            disableMobile: true,
             locale: {
                 firstDayOfWeek: 1,
                 weekdays: {
@@ -240,6 +240,7 @@
             altFormat: "d.m.Y", 
             dateFormat: "Y-m-d",
             minDate: "today",
+            disableMobile: true,
             locale: {
                 firstDayOfWeek: 1,
                 weekdays: {
