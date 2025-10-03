@@ -351,3 +351,25 @@
         transition: all .3s ease-in-out;
     }
 }
+.carousel-header .filter-btn {
+    cursor: pointer;
+    transition: all 0.3s ease;
+    color: #E9D3F4;
+}
+.carousel-header .filter-btn:hover {
+    color: #E9D3F4;
+}
+.carousel-header .filter-btn.active {
+    color: #480E66 !important;
+    text-decoration: underline;
+    text-decoration-thickness: 3px;
+    text-underline-offset: 9px;
+    text-decoration-color: #F4B821;
+}
+.carousel-header .filter-btn:hover {
+   color: #F4B821;
+    text-decoration: underline;
+    text-decoration-thickness: 3px;
+    text-underline-offset: 9px;
+    text-decoration-color: #F4B821;
+}
