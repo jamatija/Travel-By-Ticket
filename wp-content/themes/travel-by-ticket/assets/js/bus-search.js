@@ -27,7 +27,6 @@
                 citiesData = [];
             }
             
-            console.log('✅ Loaded ' + citiesData.length + ' cities');
             return citiesData;
             
         } catch (error) {
@@ -76,7 +75,6 @@
         
         const tripPart = `${isRoundTrip}-${passengers}`;
         
-        console.log('🎫 Trip type:', hasReturnDate ? 'Povratna (1)' : 'Jednosmerna (0)');
         
         const fromCityName = cleanCityName(formData.fromCityLabel);
         const toCityName = cleanCityName(formData.toCityLabel);
@@ -89,17 +87,12 @@
         if (hasReturnDate) {
             const returnDate = formatDate(formData.returnDate);
             url += `${returnDate}/`;
-            console.log('📅 Return date included:', returnDate);
-        } else {
-            console.log('📅 One-way trip - no return date');
         }
         
         return url;
     }
     
     $(document).ready(async function() {
-        console.log('🚀 Initializing bus search form...');
-        
         // Postavi početne placeholdere
         $('#from-city').html('<option value="">Leaving from</option>').prop('disabled', true);
         $('#to-city').html('<option value="">Final destination</option>').prop('disabled', true);
@@ -107,7 +100,6 @@
         const cities = await loadCities();
         
         if (cities.length === 0) {
-            console.error('❌ No cities loaded!');
             $('#from-city, #to-city')
                 .html('<option value="">Greška pri učitavanju</option>')
                 .prop('disabled', false);
@@ -139,8 +131,6 @@
                     cityData: city
                 };
             });
-        
-        console.log('✅ Prepared ' + options.length + ' options for Select2');
         
         // Inicijalizuj Select2 sa različitim placeholderima
         $('#from-city, #to-city').each(function() {
@@ -199,14 +189,12 @@
                 // Eksplicitno postavi da nema selekcije
                 $select.val(null).trigger('change');
                 
-                console.log('✅ Select2 initialized for:', fieldId, 'with placeholder:', placeholder);
                 
             } catch (error) {
                 console.error('❌ Error initializing Select2:', error);
             }
         });
         
-        console.log('✅ All Select2 fields initialized successfully!');
         
         // Inicijalizuj Flatpickr za datume
         const departDatePicker = flatpickr("#depart-date", {
@@ -253,8 +241,6 @@
                 }
             }
         });
-        
-        console.log('✅ Flatpickr initialized for date fields!');
         
         $('.bus-form').on('submit', function(e) {
             e.preventDefault();
@@ -307,17 +293,11 @@
                 passengers: passengers
             };
             
-            console.log('📋 Form data:', formData);
-            console.log('🎫 Trip type:', formData.returnDate ? 'POVRATNA (round-trip)' : 'JEDNOSMERNA (one-way)');
-            
             const busTicketUrl = buildBusTicketUrl(formData);
-            
-            console.log('🔗 Generated URL:', busTicketUrl);
             
             window.open(busTicketUrl, '_blank');
             
             return false;
         });
     });
-    
 })(jQuery);

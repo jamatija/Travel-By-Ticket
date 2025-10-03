@@ -75,6 +75,71 @@ class CarouselWidget extends \Elementor\Widget_Base
 
         $this->end_controls_section();
 
+        /* =========================
+            Header Styles
+        ========================= */
+
+        $this->start_controls_section(
+            'section_header_styles',
+            [
+                'label' => __( 'Layout 2 Header', 'travel' ),
+                'tab'   => Controls_Manager::TAB_STYLE,
+                'condition' => [
+                    'layout' => 'layout_2', 
+                ],
+            ]
+        );
+        $this->add_group_control(
+            Group_Control_Typography::get_type(),
+            [
+                'name'     => 'header_typography',
+                'label'    => __( 'Typography', 'travel' ),
+                'selector' => '{{WRAPPER}} .carousel-heading',
+            ]
+        );
+        $this->add_control(
+            'header_color',
+            [
+                'label'     => __( 'Text Color', 'travel' ),
+                'type'      => Controls_Manager::COLOR,
+                'selectors' => [
+                    '{{WRAPPER}} .carousel-heading' => 'color: {{VALUE}};',
+                ],
+            ]
+        );
+        $this->add_control(
+            'header_active_color',
+            [
+                'label'     => __( 'Active Text Color', 'travel' ),
+                'type'      => Controls_Manager::COLOR,
+                'selectors' => [
+                    '{{WRAPPER}} .carousel-header .filter-btn.active' => 'color: {{VALUE}};',
+                ],
+            ]
+        );
+        $this->add_control(
+            'header_separator_color',
+            [
+                'label'     => __( 'Separator Color', 'travel' ),
+                'type'      => Controls_Manager::COLOR,
+                'selectors' => [
+                    '{{WRAPPER}} .carousel-header .separator' => 'color: {{VALUE}};',
+                ],
+            ]
+        );
+        $this->add_responsive_control(
+            'header_margin',
+            [
+                'label'      => __( 'Margin', 'travel' ),
+                'type'       => Controls_Manager::DIMENSIONS,
+                'size_units' => [ 'px', 'em', 'rem', '%' ],
+                'selectors'  => [
+                    '{{WRAPPER}} .carousel-header' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                ],
+            ]
+        );
+        $this->end_controls_section();
+
 
         /* =========================
                 Select layout
@@ -103,8 +168,36 @@ class CarouselWidget extends \Elementor\Widget_Base
         $this->end_controls_section();
 
         /* =========================
-            Style for Layout 2 only
+                Layout 2 only
         ========================= */
+
+        $this->start_controls_section(
+            'section_layout_2_content',
+            [
+                'label'     => __( 'Layout 2 Content', 'travel' ),
+                'tab'       => Controls_Manager::TAB_CONTENT,
+                'condition' => [
+                    'layout' => 'layout_2', 
+                ],
+            ]
+        );
+
+        
+        // Kontrola za Travel News kategoriju
+        $this->add_control(
+            'travel_news_category',
+            [
+                'label'   => __( 'Travel News Category', 'travel' ),
+                'type'    => Controls_Manager::SELECT2,
+                'options' => $this->get_category_options(),
+                'default' => '',
+                'multiple' => false,
+                'description' => __( 'Select category for Travel News filter', 'travel' ),
+            ]
+        );
+
+        $this->end_controls_section();
+
         $this->start_controls_section(
             'section_layout_2_styles',
             [
@@ -115,6 +208,7 @@ class CarouselWidget extends \Elementor\Widget_Base
                 ],
             ]
         );
+
 
         $this->add_group_control(
             Group_Control_Typography::get_type(),
@@ -198,7 +292,6 @@ class CarouselWidget extends \Elementor\Widget_Base
                 ],
                 'selectors'  => [
                     '{{WRAPPER}} .card-title' =>
-                        // Shorthand + logičke (pregazi Hello Elementor)
                         'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};'.
                         'margin-block-start: {{TOP}}{{UNIT}}; margin-block-end: {{BOTTOM}}{{UNIT}};'.
                         'margin-inline-start: {{LEFT}}{{UNIT}}; margin-inline-end: {{RIGHT}}{{UNIT}};',
@@ -330,12 +423,34 @@ class CarouselWidget extends \Elementor\Widget_Base
         return $options;
     }
 
+       public function get_category_options() {
+        $taxonomies = get_taxonomies(['public' => true], 'objects');
+        
+        $options = [];
+
+        foreach ($taxonomies as $taxonomy) {
+            $terms = get_terms([
+                'taxonomy' => $taxonomy->name, 
+                'hide_empty' => false, 
+            ]);
+
+            if ($terms && !is_wp_error($terms)) {
+                foreach ($terms as $term) {
+                    $options[$term->term_id] = $term->name;
+                }
+            }
+        }
+
+        return $options;
+    }
+
     protected function render()
     {
         $settings = $this->get_settings_for_display();
 
         $selected_cpt = $settings['cpt']; 
         $selected_taxonomy = $settings['taxonomy'];
+        $travel_news_cat_id = (int) $settings['travel_news_category'] ?: 0;
         $excluded_categories = $settings['exclude_categories'];
 
         $args = [
@@ -374,6 +489,17 @@ class CarouselWidget extends \Elementor\Widget_Base
         ?>
 
         <div class="carousel-wrapper <?php echo esc_attr( $layout ); ?>">
+            <!-- Header with filters -->
+            <?php if($layout == 'layout_2'):?>
+                <div class="carousel-header">
+                    <h2 class="carousel-heading">
+                        <span class="filter-btn active" data-filter="travel-news">Travel News</span>
+                        <span class="separator"> / </span>
+                        <span class="filter-btn" data-filter="our-blog">Our Blog</span>
+                    </h2>
+                </div>
+            <?php endif?>
+
             <!-- Slider main container -->
             <div class="swiper carouselSwiper">
                 <!-- Additional required wrapper -->
@@ -382,6 +508,16 @@ class CarouselWidget extends \Elementor\Widget_Base
                         $from_price = get_field('from_price', $p->ID);
                         $title      = get_the_title( $p );
                         $excerpt    = get_the_excerpt($p);
+
+                        
+                        $data_category = '';            
+                        
+                        if ( $layout == 'layout_2' ) {
+                            $categories = wp_get_post_terms( $p->ID, 'category', [ 'fields' => 'ids' ] );
+                            $is_travel_news = $travel_news_cat_id && in_array( $travel_news_cat_id, $categories, true );
+                            $data_category  = $is_travel_news ? 'travel-news' : 'our-blog';
+                        }
+
 
                         if($layout == 'layout_1'){
                             $pos = strpos( $title, ',' );
@@ -394,46 +530,54 @@ class CarouselWidget extends \Elementor\Widget_Base
                             }
                         }
                     ?>
-                    <div class="swiper-slide">
+
+                        <?php   $initial_filter = ($layout == 'layout_2' && $travel_news_cat_id) ? 'travel-news' : '';
+                                $display = ($layout == 'layout_2' && $travel_news_cat_id)
+                                    ? (($data_category === $initial_filter) ? 'block' : 'none')
+                                    : 'block';?>
+                    <div class="swiper-slide" <?php if (!empty($data_category)) : ?>
+                                                    data-category="<?php echo esc_attr($data_category); ?>"
+                                                <?php endif; ?> style="display: <?php echo esc_attr($display); ?>;">
+
                         <a href="<?php echo esc_url( get_permalink( $p ) ); ?>" class="card">
-                        <?php if ( has_post_thumbnail( $p ) ) : ?>
-                            <figure class="card-media">
-                            <?php echo get_the_post_thumbnail( $p, 'medium' ); ?>
-                            </figure>
-                        <?php endif; ?>
+                            <?php if ( has_post_thumbnail( $p ) ) : ?>
+                                <figure class="card-media">
+                                <?php echo get_the_post_thumbnail( $p, 'medium' ); ?>
+                                </figure>
+                            <?php endif; ?>
 
-                        <div class="text">
+                            <div class="text">
 
-                            <?php if($layout == 'layout_2'):?>
-                                <p class="date">
-                                    <?php echo date_i18n('d F, Y', strtotime(get_post_time('Y-m-d H:i:s', false, $p))); ?>
-                                </p>
-                            <?php endif?>
+                                <?php if($layout == 'layout_2'):?>
+                                    <p class="date">
+                                        <?php echo date_i18n('d F, Y', strtotime(get_post_time('Y-m-d H:i:s', false, $p))); ?>
+                                    </p>
+                                <?php endif?>
 
-                            <div class="card-heading">
+                                <div class="card-heading">
+                                    <?php if($layout == 'layout_1'):?>
+                                        <h3 class="card-title"><?php echo esc_html( $main_title ); if ( $tag_part ) : ?> <span class="card-tag"><?php echo esc_html( $tag_part ); ?></span>
+                                        <?php endif; ?></h3>
+                                    <?php else: ?>
+                                        <h3 class="card-title">
+                                            <?php echo esc_html($title) ?>
+                                        </h3>
+                                    <?php endif?>
+                                </div>
+
                                 <?php if($layout == 'layout_1'):?>
-                                    <h3 class="card-title"><?php echo esc_html( $main_title ); if ( $tag_part ) : ?> <span class="card-tag"><?php echo esc_html( $tag_part ); ?></span>
-                                    <?php endif; ?></h3>
+                                    <p class="card-price">
+                                        <?php echo esc_html( sprintf( __('from %s €', 'travel'), $from_price ) ); ?>
+                                    </p>
                                 <?php else: ?>
-                                    <h3 class="card-title">
-                                        <?php echo esc_html($title) ?>
-                                    </h3>
+                                    <p class="card-tag">
+                                        <?php echo esc_html($excerpt) ?>
+                                    </p>
                                 <?php endif?>
                             </div>
+                        </a>
+                    </div>
 
-                            <?php if($layout == 'layout_1'):?>
-                                <p class="card-price">
-                                    <?php echo esc_html( sprintf( __('from %s €', 'travel'), $from_price ) ); ?>
-                                </p>
-                            <?php else: ?>
-                                <p class="card-tag">
-                                    <?php echo esc_html($excerpt) ?>
-                                </p>
-                            <?php endif?>
-                                </a>
-                            </div>
-
-                        </div>
                     <?php endforeach; ?>
                 </div>
             </div>
