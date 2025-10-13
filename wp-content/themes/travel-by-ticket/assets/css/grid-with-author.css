@@ -107,6 +107,7 @@
     gap: 20px;
     align-items: center;
     transition: all .2s ease-out;
+    display: hidden;
 }
 
 @media (max-width: 1024px) {
@@ -137,7 +138,7 @@
 
 @media (max-width: 767px) {
   .btn-all-news-mobile {
-    display: inline-block;
+        display: inline-block;
   }
 }
 
