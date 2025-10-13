@@ -5,6 +5,7 @@ function travel_tickets_widget_styles()
     wp_register_style('carousel-widget', get_stylesheet_directory_uri() . '/assets/css/carousel-widget.css');
     wp_register_style('image-carousel-widget', get_stylesheet_directory_uri() . '/assets/css/image-carousel-widget.css');
     wp_register_style('testimonial-widget', get_stylesheet_directory_uri() . '/assets/css/testimonial-widget.css');
+    wp_register_style('grid-with-author', get_stylesheet_directory_uri() . '/assets/css/grid-with-author.css');
 }
 add_action('wp_enqueue_scripts', 'travel_tickets_widget_styles');
 
@@ -27,12 +28,14 @@ function register_widgets($widgets_manager)
     require_once(__DIR__ . '/../widgets/HeadingWidget.php');
     require_once(__DIR__ . '/../widgets/ImageCarouselWidget.php');
     require_once(__DIR__ . '/../widgets/TestimonialWidget.php');
+    require_once(__DIR__ . '/../widgets/GridWithAuthorWidget.php');
     
     $widgets_manager->register(new \LinkWidget());
     $widgets_manager->register(new \CarouselWidget());
     $widgets_manager->register(new \HeadingWidget());
     $widgets_manager->register(new \ImageCarouselWidget());
     $widgets_manager->register(new \TestimonialWidget());
+    $widgets_manager->register(new \GridWithAuthorWidget());
 }
 add_action('elementor/widgets/register', 'register_widgets');
 
