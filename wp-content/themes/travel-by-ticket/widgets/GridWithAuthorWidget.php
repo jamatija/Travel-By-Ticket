@@ -603,7 +603,7 @@ class GridWithAuthorWidget extends \Elementor\Widget_Base
                 $i = 0;
                 while ($query->have_posts()) : $query->the_post(); 
                 $i++;
-                
+
                 $raw_excerpt = has_excerpt() ? get_the_excerpt() : wp_strip_all_tags( get_the_content() );
                 $max_chars   = !empty( $settings['excerpt_length'] ) ? intval( $settings['excerpt_length'] ) : 20;
 
@@ -614,7 +614,7 @@ class GridWithAuthorWidget extends \Elementor\Widget_Base
                 }
             ?>
                     <div class="grid-post-card">
-                        <a href="<?php echo get_post_permalink(); ?>"></a>
+                        <a href="<?php echo get_post_permalink(); ?>">
                             <?php if (has_post_thumbnail()) : ?>
                                 <img class="grid-post-image" src="<?php echo get_the_post_thumbnail_url(get_the_ID(), 'large'); ?>" alt="<?php the_title(); ?>">
                             <?php endif; ?>
