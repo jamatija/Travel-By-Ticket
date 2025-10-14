@@ -112,6 +112,171 @@ protected function register_controls() {
         );
 
         $this->end_controls_section();
+
+    /* ================================
+     *  Typography & Colors
+     * ================================ */
+    $this->start_controls_section(
+        'section_typography_colors',
+        [
+            'label' => __( 'Typography & Colors', 'travel' ),
+            'tab'   => Controls_Manager::TAB_STYLE,
+        ]
+    );
+
+    $this->add_control(
+        'cta_heading',
+        [
+            'type' => Controls_Manager::HEADING,
+            'label' => __( 'Link Text', 'travel' ),
+            'separator' => 'before',
+        ]
+    );
+
+    $this->add_group_control(
+        Group_Control_Typography::get_type(),
+        [
+            'name'     => 'cta_typography',
+            'label'    => __( 'Link Typography', 'travel' ),
+            'selector' => '{{WRAPPER}} .cta',
+        ]
+    );
+
+    $this->add_control(
+        'cta_color',
+        [
+            'label'     => __( 'Link Color', 'travel' ),
+            'type'      => Controls_Manager::COLOR,
+            'selectors' => [
+                '{{WRAPPER}} .cta' => 'color: {{VALUE}};',
+            ],
+        ]
+    );
+
+    $this->add_control(
+        'text_heading',
+        [
+            'type' => Controls_Manager::HEADING,
+            'label' => __( 'Text', 'travel' ),
+            'separator' => 'before',
+        ]
+    );
+
+    $this->add_group_control(
+        Group_Control_Typography::get_type(),
+        [
+            'name'     => 'text_typography',
+            'label'    => __( 'Text Typography', 'travel' ),
+            'selector' => '{{WRAPPER}} .text',
+        ]
+    );
+
+    $this->add_control(
+        'text_color',
+        [
+            'label'     => __( 'Text Color', 'travel' ),
+            'type'      => Controls_Manager::COLOR,
+            'selectors' => [
+                '{{WRAPPER}} .text' => 'color: {{VALUE}};',
+            ],
+        ]
+    );
+
+    $this->add_responsive_control(
+        'text_margin',
+        [
+            'label'      => __( 'Text Margin', 'travel' ),
+            'type'       => Controls_Manager::DIMENSIONS,
+            'size_units' => [ 'px', 'em', 'rem', '%' ],
+            'selectors'  => [
+                '{{WRAPPER}} .text' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+            ],
+        ]
+    );
+
+    $this->add_control(
+        'tab_heading_heading',
+        [
+            'type' => Controls_Manager::HEADING,
+            'label' => __( 'Title', 'travel' ),
+            'separator' => 'before',
+        ]
+    );
+
+    $this->add_group_control(
+        Group_Control_Typography::get_type(),
+        [
+            'name'     => 'tab_heading_typography',
+            'label'    => __( 'Tab Heading Typography', 'travel' ),
+            'selector' => '{{WRAPPER}} .tab-heading',
+        ]
+    );
+
+    $this->add_control(
+        'tab_heading_color',
+        [
+            'label'     => __( 'Tab Heading Color', 'travel' ),
+            'type'      => Controls_Manager::COLOR,
+            'selectors' => [
+                '{{WRAPPER}} .tab-heading' => 'color: {{VALUE}};',
+            ],
+        ]
+    );
+
+    $this->end_controls_section();
+
+    $this->start_controls_section(
+        'section_icon',
+        [
+            'label' => __( 'Tab Icon', 'travel' ),
+            'tab'   => Controls_Manager::TAB_STYLE,
+        ]
+    );
+
+    $this->add_responsive_control(
+        'tab_icon_size',
+        [
+            'label'      => __( 'Icon Size', 'travel' ),
+            'type'       => Controls_Manager::SLIDER,
+            'size_units' => [ 'px', 'em', 'rem', 'vw' ],
+            'range'      => [
+                'px'  => [ 'min' => 8,  'max' => 200 ],
+                'em'  => [ 'min' => 0.25, 'max' => 10, 'step' => 0.05 ],
+                'rem' => [ 'min' => 0.25, 'max' => 10, 'step' => 0.05 ],
+                'vw'  => [ 'min' => 1,  'max' => 50 ],
+            ],
+            'selectors'  => [
+                '{{WRAPPER}} .tab-icon svg' => 'width: {{SIZE}}{{UNIT}}; height: auto; display: block;',
+            ],
+        ]
+    );
+
+    
+    $this->add_responsive_control(
+        'tab_icon_margin',
+        [
+            'label'      => __( 'Icon Margin', 'travel' ),
+            'type'       => Controls_Manager::DIMENSIONS,
+            'size_units' => [ 'px', 'em', 'rem', '%' ],
+            'selectors'  => [
+                '{{WRAPPER}} .tab-icon' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+            ],
+        ]
+    );
+
+
+    $this->add_control(
+        'tab_icon_color',
+        [
+            'label'     => __( 'Icon Color (fill)', 'travel' ),
+            'type'      => Controls_Manager::COLOR,
+            'selectors' => [
+                '{{WRAPPER}} .tab-icon svg path' => 'fill: {{VALUE}};',
+            ],
+        ]
+    );
+
+    $this->end_controls_section();
     }
 
 
