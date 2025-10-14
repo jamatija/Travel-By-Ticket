@@ -85,7 +85,7 @@
 .select2-container--default .select2-search--dropdown .select2-search__field {
     border: 1px solid #ddd;
     border-radius: 4px;
-    padding: 8px;
+    padding: 8px;   
 }
 
 .select2-container--default .select2-search--dropdown .select2-search__field:focus {
@@ -223,11 +223,11 @@ input[type="number"]:focus {
 /* City selects */
 .depart,
 .final {
+    padding-top: 8px;
     display: flex;
-    align-items: center;
+    align-items: center !important;
     background-color: #ffffff;
     width: 200px !important;
-    padding-top: 8px;
 }
 
 .select__city {
@@ -243,12 +243,9 @@ input[type="number"]:focus {
     display: flex;
     align-items: center;
     padding-top: 8px;
+    width: 140px;
 }
 
-#depart-date,
-#return-date {
-    width: 140px !important;
-}
 
 /* Passenger input */
 .passenger {
@@ -397,4 +394,9 @@ input[type="number"]:focus {
 
 .form-control.input {
     background-color: transparent !important;
+}
+
+#from-city, #to-city {
+    padding: 3px 20px 0 8px !important;
+    font-size: 14px;
 }
