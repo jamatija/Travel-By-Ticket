@@ -64,3 +64,40 @@
     align-items: center;
     gap: 36px;
 }
+.tab-icons {
+    display: none;
+}
+@media (max-width: 1024px){
+    .tab-items {
+        display: none;
+    }
+
+    .tab-info {
+        height: 532px;
+        width: 100%;
+    }
+
+    .tab-text-box{
+        max-width: unset;
+        left: 16px !important;
+        right: 16px !important;
+        bottom: 28px !important;
+    }
+
+    .tab-icons {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 6px;
+    }
+
+    .tab-icon.is-active svg path{
+        fill: #E3AA1A;
+        opacity: 1;
+    }
+
+    .tab-container {
+       flex-direction: column;
+    }
+
+}

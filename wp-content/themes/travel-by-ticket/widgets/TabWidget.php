@@ -151,10 +151,10 @@ protected function register_controls() {
                     </a>
                 </div>
             </div>
-            <div class="tab-items">
+            <div class="tab-items" data-count="<?php echo esc_attr( count( $items ) ); ?>" data-items="<?php echo esc_attr( $json ); ?>">
                 <?php foreach ( $settings['items'] as $index => $item ) :
                 ?>
-                    <h3 class="tab-item__heading <?php echo $index === 0 ? 'is-active' : ''; ?>" data-count="<?php echo esc_attr( count( $items ) ); ?>" data-items="<?php echo esc_attr( $json ); ?>">
+                    <h3 class="tab-item__heading <?php echo $index === 0 ? 'is-active' : ''; ?>">
                         <span>
                             <svg width="12" height="20" viewBox="0 0 12 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M10 20L0 10L10 0L11.775 1.775L3.55 10L11.775 18.225L10 20Z" fill="#F4B821"/>
@@ -162,6 +162,15 @@ protected function register_controls() {
                         </span> 
                         <?php echo esc_html( $item['item_title'] ); ?>
                     </h3>
+                <?php endforeach ?>
+            </div>
+            <div class="tab-icons" data-count="<?php echo esc_attr( count( $items ) ); ?>" data-items="<?php echo esc_attr( $json ); ?>">
+                <?php foreach( $items as $index => $item ): ?>
+                    <span class="tab-icon <?php echo $index === 0 ? 'is-active' : ''; ?>" data-index="<?php echo esc_attr( $index ); ?>">
+                        <svg width="23" height="19" viewBox="0 0 23 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path opacity="0.22" d="M21.4143 0.00173743L17.5979 0C17.3342 1.12041 16.3474 1.95246 15.1683 1.95246C13.9892 1.95246 13.0024 1.12041 12.7386 0H11.3282C10.6714 0 10.0776 0.39605 9.81218 1.00923L3.04897 16.6654L0 16.6689V19H5.39695C5.66068 17.8796 6.64751 17.0475 7.8266 17.0475C9.0057 17.0475 9.99253 17.8796 10.2563 19H12.1261C12.7829 19 13.3767 18.604 13.6421 17.9908L20.4053 2.33809H23V0H21.4143V0.00173743Z" fill="#480E66"/>
+                        </svg>
+                    </span>
                 <?php endforeach ?>
             </div>
         </div>    
