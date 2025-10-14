@@ -211,6 +211,42 @@ class CarouselWidget extends \Elementor\Widget_Base
             ]
         );
 
+                $this->add_control(
+            'layout_2_title_desktop_1',
+            [
+                'label' => __( 'Title 1 (Desktop)', 'travel' ),
+                'type'  => Controls_Manager::TEXT,
+                'default' => '',
+            ]
+        );
+
+        $this->add_control(
+            'layout_2_title_mobile_1',
+            [
+                'label' => __( 'Title 1 (Tablet/Mobile)', 'travel' ),
+                'type'  => Controls_Manager::TEXT,
+                'default' => '',
+            ]
+        );
+
+        $this->add_control(
+            'layout_2_title_desktop_2',
+            [
+                'label' => __( 'Title (Desktop) 2', 'travel' ),
+                'type'  => Controls_Manager::TEXT,
+                'default' => '',
+            ]
+        );
+
+        $this->add_control(
+            'layout_2_title_mobile_2',
+            [
+                'label' => __( 'Title (Tablet/Mobile) 2', 'travel' ),
+                'type'  => Controls_Manager::TEXT,
+                'default' => '',
+            ]
+        );
+
         $this->end_controls_section();
 
         $this->start_controls_section(
@@ -463,6 +499,11 @@ class CarouselWidget extends \Elementor\Widget_Base
     {
         $settings = $this->get_settings_for_display();
 
+        $title1_desktop = $settings['layout_2_title_desktop_1'] ?? '';
+        $title1_mobile  = $settings['layout_2_title_mobile_1']  ?? '';
+        $title2_desktop = $settings['layout_2_title_desktop_2'] ?? '';
+        $title2_mobile  = $settings['layout_2_title_mobile_2']  ?? '';
+
         $selected_cpt = $settings['cpt']; 
         $selected_taxonomy = $settings['taxonomy'];
         $travel_news_cat_id = (int) $settings['travel_news_category'] ?: 0;
@@ -530,10 +571,38 @@ class CarouselWidget extends \Elementor\Widget_Base
             <!-- Header with filters -->
             <?php if($layout == 'layout_2'):?>
                 <div class="carousel-header">
-                    <h2 class="carousel-heading">
-                        <span class="filter-btn active" data-filter="travel-news">Travel News</span>
+                    <!-- <h2 class="carousel-heading">
+                        <span class="filter-btn active" data-filter="travel-news"><span clas></span></span>
+                        <span class="filter-btn" data-filter="our-blog"></span>
+                    </h2> -->
+                     <h2 class="carousel-heading">
+                        <span class="filter-btn active" data-filter="travel-news">
+                        <?php if ($title1_desktop !== ''): ?>
+                            <span class="title-variant title-desktop" aria-hidden="false">
+                            <?php echo esc_html($title1_desktop); ?>
+                            </span>
+                        <?php endif; ?>
+                        <?php if ($title1_mobile !== ''): ?>
+                            <span class="title-variant title-mobile" aria-hidden="true">
+                            <?php echo esc_html($title1_mobile); ?>
+                            </span>
+                        <?php endif; ?>
+                        </span>
+
                         <span class="separator"> / </span>
-                        <span class="filter-btn" data-filter="our-blog">Our Blog</span>
+
+                        <span class="filter-btn" data-filter="our-blog">
+                        <?php if ($title2_desktop !== ''): ?>
+                            <span class="title-variant title-desktop" aria-hidden="false">
+                            <?php echo esc_html($title2_desktop); ?>
+                            </span>
+                        <?php endif; ?>
+                        <?php if ($title2_mobile !== ''): ?>
+                            <span class="title-variant title-mobile" aria-hidden="true">
+                            <?php echo esc_html($title2_mobile); ?>
+                            </span>
+                        <?php endif; ?>
+                        </span>
                     </h2>
                 </div>
             <?php endif?>
