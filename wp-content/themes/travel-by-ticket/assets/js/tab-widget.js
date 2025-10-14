@@ -18,7 +18,7 @@ function initTabWidget() {
             return;
         }
         
-        // Function to update tab content with fade effect
+        // Function to update tab content
         function updateTabContent(index) {
             // Check if current item exists
             if (!items[index]) {
@@ -27,47 +27,31 @@ function initTabWidget() {
 
             const currentItem = items[index];
             
-            // Get all elements to animate
+            // Update image
             const image = container.querySelector('.tab-image');
+            if (image) {
+                image.src = currentItem.image;
+                image.alt = currentItem.title;
+            }
+
+            // Update heading
             const heading = container.querySelector('.tab-heading');
+            if (heading) {
+                heading.textContent = currentItem.title;
+            }
+
+            // Update text
             const text = container.querySelector('.text');
+            if (text) {
+                text.innerHTML = currentItem.text;
+            }
+
+            // Update link and link text
             const cta = container.querySelector('.cta');
-            
-            const elements = [image, heading, text, cta].filter(el => el !== null);
-            
-            // Fade out
-            elements.forEach(el => el.classList.add('fade-out'));
-            
-            // Wait for fade out, then update content and fade in
-            setTimeout(() => {
-                // Update image
-                if (image) {
-                    image.src = currentItem.image;
-                    image.alt = currentItem.title;
-                }
-
-                // Update heading
-                if (heading) {
-                    heading.textContent = currentItem.title;
-                }
-
-                // Update text
-                if (text) {
-                    text.innerHTML = currentItem.text;
-                }
-
-                // Update link and link text
-                if (cta) {
-                    cta.href = currentItem.link;
-                    cta.textContent = currentItem.cta_text;
-                }
-                
-                // Fade in
-                setTimeout(() => {
-                    elements.forEach(el => el.classList.remove('fade-out'));
-                }, 50);
-                
-            }, 300); // Match this with CSS transition duration
+            if (cta) {
+                cta.href = currentItem.link;
+                cta.textContent = currentItem.cta_text;
+            }
         }
         
         // Handle desktop tab headings click
@@ -92,7 +76,7 @@ function initTabWidget() {
                     }
                 }
                 
-                // Update content with fade effect
+                // Update content
                 updateTabContent(index);
             });
         });
@@ -117,7 +101,7 @@ function initTabWidget() {
                         tabHeadings[index].classList.add('is-active');
                     }
                     
-                    // Update content with fade effect
+                    // Update content
                     updateTabContent(index);
                 });
             });
