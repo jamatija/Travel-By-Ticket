@@ -6,6 +6,7 @@ function travel_tickets_widget_styles()
     wp_register_style('image-carousel-widget', get_stylesheet_directory_uri() . '/assets/css/image-carousel-widget.css');
     wp_register_style('testimonial-widget', get_stylesheet_directory_uri() . '/assets/css/testimonial-widget.css');
     wp_register_style('grid-with-author', get_stylesheet_directory_uri() . '/assets/css/grid-with-author.css');
+    wp_register_style('tab-widget', get_stylesheet_directory_uri() . '/assets/css/tab-widget.css');
 }
 add_action('wp_enqueue_scripts', 'travel_tickets_widget_styles');
 
@@ -16,6 +17,7 @@ function travel_tickets_pulse_register_widget_scripts()
     wp_register_script('carousel-widget', get_stylesheet_directory_uri() . '/assets/js/carousel.js', ['swiper'], false, true);
     wp_register_script('image-carousel-widget', get_stylesheet_directory_uri() . '/assets/js/image-carousel.js', ['swiper'], false, true);
     wp_register_script('testimonial-widget', get_stylesheet_directory_uri() . '/assets/js/testimonial-carousel.js', ['swiper'], false, true);
+    wp_register_script('tab-widget', get_stylesheet_directory_uri() . '/assets/js/tab-widget.js', [],false, true);
 }
 add_action('wp_enqueue_scripts', 'travel_tickets_pulse_register_widget_scripts');
 
@@ -29,6 +31,7 @@ function register_widgets($widgets_manager)
     require_once(__DIR__ . '/../widgets/ImageCarouselWidget.php');
     require_once(__DIR__ . '/../widgets/TestimonialWidget.php');
     require_once(__DIR__ . '/../widgets/GridWithAuthorWidget.php');
+    require_once(__DIR__ . '/../widgets/TabWidget.php');
     
     $widgets_manager->register(new \LinkWidget());
     $widgets_manager->register(new \CarouselWidget());
@@ -36,6 +39,7 @@ function register_widgets($widgets_manager)
     $widgets_manager->register(new \ImageCarouselWidget());
     $widgets_manager->register(new \TestimonialWidget());
     $widgets_manager->register(new \GridWithAuthorWidget());
+    $widgets_manager->register(new \TabWidget());
 }
 add_action('elementor/widgets/register', 'register_widgets');
 
