@@ -82,3 +82,11 @@
   outline: none;
   box-shadow: none;
 }
+
+/*************************
+	Responsive padding
+*************************/
+.res-padding {
+	padding-left: clamp(1.5rem, 1.333vw + 1.233rem, 2.5rem);
+	padding-right: clamp(1.5rem, 1.333vw + 1.233rem, 2.5rem);
+}
