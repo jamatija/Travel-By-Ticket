@@ -247,6 +247,28 @@ class CarouselWidget extends \Elementor\Widget_Base
             ]
         );
 
+        $this->add_control(
+            'layout_2_button_link_travel',
+            [
+                'label'   => __( 'Travel Button link', 'travel' ),
+                'type'    => Controls_Manager::URL,
+                'default' => [
+                    'url' => '#',
+                ],
+            ]
+        );
+
+        $this->add_control(
+            'layout_2_button_link_blog',
+            [
+                'label'   => __( 'Blog Button link', 'travel' ),
+                'type'    => Controls_Manager::URL,
+                'default' => [
+                    'url' => '#',
+                ],
+            ]
+        );
+
         $this->end_controls_section();
 
         $this->start_controls_section(
@@ -571,10 +593,6 @@ class CarouselWidget extends \Elementor\Widget_Base
             <!-- Header with filters -->
             <?php if($layout == 'layout_2'):?>
                 <div class="carousel-header">
-                    <!-- <h2 class="carousel-heading">
-                        <span class="filter-btn active" data-filter="travel-news"><span clas></span></span>
-                        <span class="filter-btn" data-filter="our-blog"></span>
-                    </h2> -->
                      <h2 class="carousel-heading">
                         <span class="filter-btn active" data-filter="travel-news">
                         <?php if ($title1_desktop !== ''): ?>
@@ -604,6 +622,12 @@ class CarouselWidget extends \Elementor\Widget_Base
                         <?php endif; ?>
                         </span>
                     </h2>
+                    <a class="dynamic-button-travel elementor-button elementor-button-link elementor-size-sm" href="<?php echo esc_url( $settings['layout_2_button_link_travel']['url'] ); ?>">
+                        <?php echo esc_html( sprintf( __('All news', 'travel')) ); ?>
+                    </a>
+                    <a class="dynamic-button-blog elementor-button elementor-button-link elementor-size-sm" href="<?php echo esc_url( $settings['layout_2_button_link_blog']['url'] ); ?>">
+                        <?php echo esc_html( sprintf( __('All articles', 'travel')) ); ?>
+                    </a>
                 </div>
             <?php endif?>
 

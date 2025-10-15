@@ -351,6 +351,11 @@
         transition: all .3s ease-in-out;
     }
 }
+.carousel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
 .carousel-header .filter-btn {
     cursor: pointer;
     transition: all 0.3s ease;
@@ -373,10 +378,13 @@
     text-underline-offset: 9px;
     text-decoration-color: #F4B821;
 }
-
 .title-variant.title-mobile { display: none; }
 .title-variant.title-desktop { display: inline; }
 @media (max-width: 767px) {
    .title-variant.title-desktop { display: none; }
    .title-variant.title-mobile  { display: inline; }
+}
+.dynamic-button-blog.is-hidden,
+.dynamic-button-travel.is-hidden{
+    display: none;
 }
