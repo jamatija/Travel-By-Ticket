@@ -207,7 +207,7 @@ protected function register_controls() {
         Group_Control_Typography::get_type(),
         [
             'name'     => 'tab_heading_typography',
-            'label'    => __( 'Tab Heading Typography', 'travel' ),
+            'label'    => __( 'Title Typography', 'travel' ),
             'selector' => '{{WRAPPER}} .tab-heading',
         ]
     );
@@ -215,11 +215,20 @@ protected function register_controls() {
     $this->add_control(
         'tab_heading_color',
         [
-            'label'     => __( 'Tab Heading Color', 'travel' ),
+            'label'     => __( 'Title Color', 'travel' ),
             'type'      => Controls_Manager::COLOR,
             'selectors' => [
                 '{{WRAPPER}} .tab-heading' => 'color: {{VALUE}};',
             ],
+        ]
+    );
+
+    $this->add_group_control(
+        Group_Control_Typography::get_type(),
+        [
+            'name'     => 'tab_title_typography',
+            'label'    => __( 'Tab title Typography', 'travel' ),
+            'selector' => '{{WRAPPER}} .tab-item__heading ',
         ]
     );
 
