@@ -48,36 +48,42 @@ document.addEventListener('DOMContentLoaded', function () {
       wrapper.classList.add('has-seen-prev');
     });
 
-    // === Filtering layout_2 ===
+    // === Filtering + toggle dugmadi (layout_2) ===
     if (isLayout2) {
-      // Save all slide 
       const allSlides = Array.from(wrapper.querySelectorAll('.swiper-slide'));
-      
-      function filterSlides(category) {
-        // Find slides by category
-        const matchingSlides = allSlides.filter(slide => 
-          slide.dataset.category === category
-        );
+      const filterBtns = wrapper.querySelectorAll('.filter-btn');
 
-        // Show all if no slides
+      const travelBtn = wrapper.querySelector('.dynamic-button-travel');
+      const blogBtn   = wrapper.querySelector('.dynamic-button-blog');
+
+      function toggleButtons(category) {
+        if (!travelBtn || !blogBtn) return;
+
+        if (category === 'travel-news') {
+          travelBtn.classList.remove('is-hidden');
+          blogBtn.classList.add('is-hidden');
+        } else if (category === 'our-blog') {
+          blogBtn.classList.remove('is-hidden');
+          travelBtn.classList.add('is-hidden');
+        }
+      }
+      function filterSlides(category) {
+        const matchingSlides = allSlides.filter(slide => slide.dataset.category === category);
         const slidesToShow = matchingSlides.length > 0 ? matchingSlides : allSlides;
 
-        // Remove all slide
         swiper.removeAllSlides();
-
-        // Add proper slides
         slidesToShow.forEach(slide => {
           const clonedSlide = slide.cloneNode(true);
           clonedSlide.style.display = 'block';
           swiper.appendSlide(clonedSlide);
         });
 
-        // Reset swiper on 1 slide
         swiper.update();
-        swiper.slideTo(0, 50); 
+        swiper.slideTo(0, 50);
+
+        toggleButtons(category);
       }
 
-      const filterBtns = wrapper.querySelectorAll('.filter-btn');
       filterBtns.forEach((btn) => {
         btn.addEventListener('click', function () {
           filterBtns.forEach((b) => b.classList.remove('active'));
@@ -86,12 +92,15 @@ document.addEventListener('DOMContentLoaded', function () {
         });
       });
 
-      // Initialization
-      filterSlides('travel-news');
+      // Inicijalno stanje (pošto je prvi filter .active)
+      const activeBtn = wrapper.querySelector('.filter-btn.active');
+      const initialCategory = activeBtn ? activeBtn.dataset.filter : 'travel-news';
+      toggleButtons(initialCategory);
+      filterSlides(initialCategory);
     }
   });
 
-  // Global event listener
+  // Global event listener samo za next (zadržano iz tvog koda)
   document.addEventListener('click', function (e) {
     const nextBtn = e.target.closest('.carousel-button-next');
     if (!nextBtn) return;
