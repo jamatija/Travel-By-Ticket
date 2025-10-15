@@ -384,7 +384,33 @@
    .title-variant.title-desktop { display: none; }
    .title-variant.title-mobile  { display: inline; }
 }
-.dynamic-button-blog.is-hidden,
-.dynamic-button-travel.is-hidden{
-    display: none;
+.dynamic-button-blog-mobile,
+.dynamic-button-travel-mobile {
+  display: none;
+}
+
+/* Desktop - prikazujemo desktop buttone */
+.dynamic-button-blog,
+.dynamic-button-travel {
+  display: inline-block;
+}
+
+/* Kada JS doda .is-hidden klasu */
+.is-hidden {
+  display: none !important;
+}
+
+/* MOBILE */
+@media (max-width: 768px) {
+  /* Sakrivamo desktop buttone */
+  .dynamic-button-blog,
+  .dynamic-button-travel {
+    display: none !important;
+  }
+
+  /* Prikazujemo mobile buttone */
+  .dynamic-button-travel-mobile,
+  .dynamic-button-blog-mobile {
+    display: inline-block;
+  }
 }

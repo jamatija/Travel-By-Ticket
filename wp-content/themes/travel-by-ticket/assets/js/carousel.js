@@ -53,20 +53,32 @@ document.addEventListener('DOMContentLoaded', function () {
       const allSlides = Array.from(wrapper.querySelectorAll('.swiper-slide'));
       const filterBtns = wrapper.querySelectorAll('.filter-btn');
 
+
+    function toggleButtons(category) {
+      console.log('toggleButtons called with category:', category);
+      
       const travelBtn = wrapper.querySelector('.dynamic-button-travel');
-      const blogBtn   = wrapper.querySelector('.dynamic-button-blog');
+      const blogBtn = wrapper.querySelector('.dynamic-button-blog');
+      
+      const travelBtnMobile = document.querySelector('.dynamic-button-travel-mobile');
+      const blogBtnMobile = document.querySelector('.dynamic-button-blog-mobile');
 
-      function toggleButtons(category) {
-        if (!travelBtn || !blogBtn) return;
+      console.log('Found buttons:', { travelBtn, blogBtn, travelBtnMobile, blogBtnMobile });
 
-        if (category === 'travel-news') {
-          travelBtn.classList.remove('is-hidden');
-          blogBtn.classList.add('is-hidden');
-        } else if (category === 'our-blog') {
-          blogBtn.classList.remove('is-hidden');
-          travelBtn.classList.add('is-hidden');
-        }
-      }
+      const showTravel = category === 'travel-news';
+      console.log('showTravel:', showTravel);
+
+      [travelBtn, travelBtnMobile].forEach(btn => {
+        if (!btn) return;
+        btn.classList.toggle('is-hidden', !showTravel);
+      });
+
+      [blogBtn, blogBtnMobile].forEach(btn => {
+        if (!btn) return;
+        btn.classList.toggle('is-hidden', showTravel);
+      });
+    }
+
       function filterSlides(category) {
         const matchingSlides = allSlides.filter(slide => slide.dataset.category === category);
         const slidesToShow = matchingSlides.length > 0 ? matchingSlides : allSlides;
