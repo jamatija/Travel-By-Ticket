@@ -80,7 +80,6 @@
 }
 @media (max-width: 1024px) {
     .newsletter-banner {
-        width: calc(100% - 3rem);
         margin: 0 auto;
     }
 }
