@@ -23,6 +23,7 @@
     flex-direction: column;
     box-sizing: border-box;
     margin: 0 !important;
+    justify-content: space-between;
 }
 .tab-items .is-active {
     background-color: var(--e-global-color-primary);
@@ -35,6 +36,7 @@
     color: var(--e-global-color-primary);
     padding: 40px 28px 40px 25px;
     cursor: pointer;
+    margin: 0;
 }
 .tab-text-box .tab-heading {
     font-size: 22px;
