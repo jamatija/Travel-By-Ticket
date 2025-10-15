@@ -59,6 +59,9 @@
     color: #ffffff;
     font-size: 14px;
 }
+.wpcf7 .wpcf7-submit:hover {
+    background-color: #CE970C !important;
+}
 @media (max-width: 767px) {
   .wpcf7 .wpcf7-submit {
     font-size: 0;     
