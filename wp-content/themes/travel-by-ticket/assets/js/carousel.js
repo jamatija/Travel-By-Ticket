@@ -48,7 +48,6 @@ document.addEventListener('DOMContentLoaded', function () {
       wrapper.classList.add('has-seen-prev');
     });
 
-    // === Filtering + toggle dugmadi (layout_2) ===
     if (isLayout2) {
       const allSlides = Array.from(wrapper.querySelectorAll('.swiper-slide'));
       const filterBtns = wrapper.querySelectorAll('.filter-btn');
@@ -66,7 +65,6 @@ document.addEventListener('DOMContentLoaded', function () {
       console.log('Found buttons:', { travelBtn, blogBtn, travelBtnMobile, blogBtnMobile });
 
       const showTravel = category === 'travel-news';
-      console.log('showTravel:', showTravel);
 
       [travelBtn, travelBtnMobile].forEach(btn => {
         if (!btn) return;
