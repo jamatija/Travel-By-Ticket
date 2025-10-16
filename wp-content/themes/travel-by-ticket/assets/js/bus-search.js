@@ -94,17 +94,6 @@
     
     $(document).ready(async function() {
 
-        const translations = {
-            en: {
-                from: 'Leaving from',
-                to: 'Final destination'
-            },
-            sr: {
-                from: 'Polazak iz',
-                to: 'Krajnja destinacija'
-            }
-        };
-
         // Postavi početne placeholdere
         $('#from-city').html('<option value="">Mjesto polaska</option>').prop('disabled', true);
         $('#to-city').html('<option value="">Odredište</option>').prop('disabled', true);
@@ -151,8 +140,8 @@
             
             // Različiti placeholderi
             const placeholder = fieldId === 'from-city' 
-                ? 'Leaving from' 
-                : 'Final destination';
+                ? 'Mjesto polaska' 
+                : 'Odredište';
             
             try {
                 // Dodaj praznu opciju kao prvu
