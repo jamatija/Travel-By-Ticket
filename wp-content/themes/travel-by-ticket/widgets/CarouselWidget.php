@@ -594,7 +594,10 @@ class CarouselWidget extends \Elementor\Widget_Base
             <?php if($layout == 'layout_2'):?>
                 <div class="carousel-header">
                      <h2 class="carousel-heading">
-                        <span class="filter-btn active" data-filter="travel-news"><?php if ($title1_desktop !== ''): ?><span class="title-variant title-desktop" aria-hidden="false"><?php echo esc_html($title1_desktop);?></span>
+                        <span class="filter-btn active" data-filter="travel-news">
+                            <?php if ($title1_desktop !== ''): ?>
+                                <span class="title-variant title-desktop" aria-hidden="false">
+                                    <?php echo esc_html($title1_desktop);?></span>
                             <?php endif; ?>
                             <?php if ($title1_mobile !== ''): ?>
                                 <span class="title-variant title-mobile" aria-hidden="true">
