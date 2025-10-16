@@ -5,6 +5,8 @@
  Author:       WeAreAi
  Template:     hello-elementor
  Version:      1.0.0
+ Text Domain:  travel
+
 */
 /* Global rule for elementor button */
 .elementor-element.elementor-widget-button:not(.elementor-hidden-tablet):not(.elementor-hidden-mobile) {
