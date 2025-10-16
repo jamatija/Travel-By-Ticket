@@ -93,9 +93,21 @@
     }
     
     $(document).ready(async function() {
+
+        const translations = {
+            en: {
+                from: 'Leaving from',
+                to: 'Final destination'
+            },
+            sr: {
+                from: 'Polazak iz',
+                to: 'Krajnja destinacija'
+            }
+        };
+
         // Postavi početne placeholdere
-        $('#from-city').html('<option value="">Leaving from</option>').prop('disabled', true);
-        $('#to-city').html('<option value="">Final destination</option>').prop('disabled', true);
+        $('#from-city').html('<option value="">Mjesto polaska</option>').prop('disabled', true);
+        $('#to-city').html('<option value="">Odredište</option>').prop('disabled', true);
         
         const cities = await loadCities();
         
