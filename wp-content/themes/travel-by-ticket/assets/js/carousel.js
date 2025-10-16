@@ -75,6 +75,12 @@ document.addEventListener('DOMContentLoaded', function () {
         if (!btn) return;
         btn.classList.toggle('is-hidden', showTravel);
       });
+
+       if (category === 'travel-news') {
+        document.body.classList.remove('layout_2__blog');
+      } else {
+        document.body.classList.add('layout_2__blog');
+      }
     }
 
       function filterSlides(category) {
@@ -102,7 +108,7 @@ document.addEventListener('DOMContentLoaded', function () {
         });
       });
 
-      // Inicijalno stanje (pošto je prvi filter .active)
+      // Init state
       const activeBtn = wrapper.querySelector('.filter-btn.active');
       const initialCategory = activeBtn ? activeBtn.dataset.filter : 'travel-news';
       toggleButtons(initialCategory);
@@ -110,7 +116,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   });
 
-  // Global event listener samo za next (zadržano iz tvog koda)
+  // Global
   document.addEventListener('click', function (e) {
     const nextBtn = e.target.closest('.carousel-button-next');
     if (!nextBtn) return;
