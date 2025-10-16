@@ -62,6 +62,13 @@
 .bottom-icon{
   align-self: end;
 }
+.testimonial-card svg {
+  visibility: hidden;
+}
+
+.swiper-slide-active.testimonial-card svg {
+  visibility: visible;
+}
 /* =========================
    CAROUSEL BUTTONS POSITION
 ========================= */
