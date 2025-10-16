@@ -594,32 +594,28 @@ class CarouselWidget extends \Elementor\Widget_Base
             <?php if($layout == 'layout_2'):?>
                 <div class="carousel-header">
                      <h2 class="carousel-heading">
-                        <span class="filter-btn active" data-filter="travel-news">
-                        <?php if ($title1_desktop !== ''): ?>
-                            <span class="title-variant title-desktop" aria-hidden="false">
-                            <?php echo esc_html($title1_desktop); ?>
+                        <span class="filter-btn active" data-filter="travel-news"><?php if ($title1_desktop !== ''): ?><span class="title-variant title-desktop" aria-hidden="false"><?php echo esc_html($title1_desktop);?></span>
+                            <?php endif; ?>
+                            <?php if ($title1_mobile !== ''): ?>
+                                <span class="title-variant title-mobile" aria-hidden="true">
+                                <?php echo esc_html($title1_mobile); ?>
+                                </span>
+                            <?php endif; ?>
                             </span>
-                        <?php endif; ?>
-                        <?php if ($title1_mobile !== ''): ?>
-                            <span class="title-variant title-mobile" aria-hidden="true">
-                            <?php echo esc_html($title1_mobile); ?>
-                            </span>
-                        <?php endif; ?>
-                        </span>
 
                         <span class="separator"> / </span>
 
                         <span class="filter-btn" data-filter="our-blog">
-                        <?php if ($title2_desktop !== ''): ?>
-                            <span class="title-variant title-desktop" aria-hidden="false">
-                            <?php echo esc_html($title2_desktop); ?>
-                            </span>
-                        <?php endif; ?>
-                        <?php if ($title2_mobile !== ''): ?>
-                            <span class="title-variant title-mobile" aria-hidden="true">
-                            <?php echo esc_html($title2_mobile); ?>
-                            </span>
-                        <?php endif; ?>
+                            <?php if ($title2_desktop !== ''): ?>
+                                <span class="title-variant title-desktop" aria-hidden="false">
+                                <?php echo esc_html($title2_desktop); ?>
+                                </span>
+                            <?php endif; ?>
+                            <?php if ($title2_mobile !== ''): ?>
+                                <span class="title-variant title-mobile" aria-hidden="true">
+                                <?php echo esc_html($title2_mobile); ?>
+                                </span>
+                            <?php endif; ?>
                         </span>
                     </h2>
                     <a class="dynamic-button-travel elementor-button elementor-button-link elementor-size-sm" href="<?php echo esc_url( $settings['layout_2_button_link_travel']['url'] ); ?>">
@@ -763,7 +759,7 @@ class CarouselWidget extends \Elementor\Widget_Base
             </div>
         </div>
 
-        <?php if($layout == 'layout_2'):?>
+         <?php if($layout == 'layout_2'):?>
             <a class="dynamic-button-travel-mobile elementor-button elementor-button-link elementor-size-sm" href="<?php echo esc_url( $settings['layout_2_button_link_travel']['url'] ); ?>">
                 <?php echo esc_html( sprintf( __('All news', 'travel')) ); ?>
             </a>
