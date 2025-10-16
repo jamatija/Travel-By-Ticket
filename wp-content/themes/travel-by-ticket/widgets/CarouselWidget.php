@@ -763,12 +763,13 @@ class CarouselWidget extends \Elementor\Widget_Base
             </div>
         </div>
 
-        <a class="dynamic-button-travel-mobile elementor-button elementor-button-link elementor-size-sm" href="<?php echo esc_url( $settings['layout_2_button_link_travel']['url'] ); ?>">
-            <?php echo esc_html( sprintf( __('All news', 'travel')) ); ?>
-        </a>
-        <a class="dynamic-button-blog-mobile is-hidden elementor-button elementor-button-link elementor-size-sm" href="<?php echo esc_url( $settings['layout_2_button_link_blog']['url'] ); ?>">
-            <?php echo esc_html( sprintf( __('All articles', 'travel')) ); ?>
-        </a>
-        <?php
+        <?php if($layout == 'layout_2'):?>
+            <a class="dynamic-button-travel-mobile elementor-button elementor-button-link elementor-size-sm" href="<?php echo esc_url( $settings['layout_2_button_link_travel']['url'] ); ?>">
+                <?php echo esc_html( sprintf( __('All news', 'travel')) ); ?>
+            </a>
+            <a class="dynamic-button-blog-mobile is-hidden elementor-button elementor-button-link elementor-size-sm" href="<?php echo esc_url( $settings['layout_2_button_link_blog']['url'] ); ?>">
+                <?php echo esc_html( sprintf( __('All articles', 'travel')) ); ?>
+            </a>
+        <?php endif;
     }
 }
