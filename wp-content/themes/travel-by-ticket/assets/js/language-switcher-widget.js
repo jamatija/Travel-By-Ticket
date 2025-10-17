@@ -15,18 +15,6 @@
                 $dropdown.stop(true, true).slideToggle(200);
             });
 
-            $wrapper.on('mouseenter', function() {
-                if (window.matchMedia('(hover: hover)').matches) {
-                    $wrapper.addClass('active');
-                    $dropdown.stop(true, true).slideDown(200);
-                }
-            }).on('mouseleave', function() {
-                if (window.matchMedia('(hover: hover)').matches) {
-                    $wrapper.removeClass('active');
-                    $dropdown.stop(true, true).slideUp(200);
-                }
-            });
-
             $(document).on('click.languageSwitcher', function(e) {
                 if (!$wrapper.is(e.target) && $wrapper.has(e.target).length === 0) {
                     $wrapper.removeClass('active');
