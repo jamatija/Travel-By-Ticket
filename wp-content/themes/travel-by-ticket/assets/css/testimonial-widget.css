@@ -65,9 +65,12 @@
 .testimonial-card svg {
   visibility: hidden;
 }
-
 .swiper-slide-active.testimonial-card svg {
   visibility: visible;
+}
+a.image-card-title {
+    padding-left: 20px;
+    padding-right: 20px;
 }
 /* =========================
    CAROUSEL BUTTONS POSITION
