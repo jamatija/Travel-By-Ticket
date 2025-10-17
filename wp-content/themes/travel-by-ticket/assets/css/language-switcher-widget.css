@@ -103,3 +103,8 @@
     z-index: 9999;
     border: 1px solid #F4B821;
 }
+@media(max-width: 1024px){
+    .language-item{
+        background-color: var(--e-global-color-primary);
+    }
+}
