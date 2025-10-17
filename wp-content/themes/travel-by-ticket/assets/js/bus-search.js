@@ -108,7 +108,9 @@
     
     function buildBusTicketUrl(formData) {
         const baseUrl = 'https://busticket4.me';
-        const lang = busSearchConfig.lang || 'MNE';
+
+        const currentLang = getCurrentLanguage(); 
+        const lang = currentLang === 'en-US' ? 'EN' : 'MNE';
         
         const fromStationId = formData.fromCityId;
         const toStationId = formData.toCityId;
