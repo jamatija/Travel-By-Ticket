@@ -1,0 +1,110 @@
+.language-switcher-wrapper {
+    position: relative;
+    display: inline-block;
+}
+
+.language-switcher-wrapper button.language-switcher-button{
+    all: unset;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    background: #F4B821;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    font-size: 14px;
+    padding: 10px 15px;
+    border: 1px solid transparent;
+}
+
+.language-switcher-wrapper:hover button.language-switcher-button {
+    background: #F4B821;
+    border: 1px solid #F4B821 !important;
+}
+
+.language-switcher-wrapper button > svg * {
+    transition: all 0.3s ease;
+    opacity: 1 !important;
+}
+
+.language-switcher-wrapper:hover button > svg * {
+    opacity: 1 !important;
+    fill: #ffffff !important;
+}
+
+.lang-flag {
+    width: 20px;
+    height: auto;
+    display: block;
+}
+
+.dropdown-icon {
+    margin-left: 5px;
+    font-size: 12px;
+    transition: transform 0.3s ease;
+}
+
+.language-switcher-wrapper.active .dropdown-icon {
+    transform: rotate(180deg);
+}
+
+.language-dropdown {
+    position: absolute;
+    top: calc(100% + 5px);
+    left: 0;
+    min-width: 100%;
+    border: 1px solid #F4B821 !important;
+    border-top: none !important;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+    z-index: 1000;
+    background-color: #F4B821 !important;
+    color: #ffffff;
+}
+
+.language-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 15px 15px;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+}
+
+.language-item:hover {
+    color: #ffffff !important;
+    background-color: #CE970C;
+}
+
+.language-switcher-wrapper {
+  position: relative;
+  display: inline-block;
+}
+.language-switcher-button {
+  cursor: pointer;
+}
+
+.language-dropdown {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 9999;
+  border: 1px solid #F4B821;
+}
+
+.language-switcher-wrapper:hover .language-dropdown,
+.language-switcher-wrapper:focus-within .language-dropdown {
+  display: block;
+}
+
+button.language-switcher-button {
+  outline: none !important;
+  box-shadow: none !important;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+}
+
