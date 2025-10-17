@@ -400,3 +400,6 @@ input[type="number"]:focus {
     padding: 3px 20px 0 8px !important;
     font-size: 14px;
 }
+.search-btn:focus {
+    background-color: #CE970C !important;
+}
