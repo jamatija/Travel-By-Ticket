@@ -10,16 +10,30 @@
     gap: 8px;
     cursor: pointer;
     background: #F4B821;
-    border-top-left-radius: 8px;
-    border-top-right-radius: 8px;
+    border-radius: 8px;
     font-size: 14px;
     padding: 10px 15px;
     border: 1px solid transparent;
+    transition: all .3s ease;
+
+    outline: none !important;
+    box-shadow: none !important;
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+    cursor: pointer;
 }
 
 .language-switcher-wrapper:hover button.language-switcher-button {
     background: #F4B821;
     border: 1px solid #F4B821 !important;
+}
+
+.language-switcher-wrapper.active button.language-switcher-button {
+    border: 1px solid #F4B821 !important;
+    border-top-left-radius: 8px !important;
+    border-top-right-radius: 8px !important;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
 }
 
 .language-switcher-wrapper button > svg * {
@@ -44,9 +58,6 @@
     transition: transform 0.3s ease;
 }
 
-.language-switcher-wrapper.active .dropdown-icon {
-    transform: rotate(180deg);
-}
 
 .language-dropdown {
     position: absolute;
@@ -66,7 +77,7 @@
     display: flex;
     align-items: center;
     gap: 8px;
-    padding: 15px 15px;
+    padding: 10px 15px;
     text-decoration: none;
     transition: all 0.2s ease;
     white-space: nowrap;
@@ -80,31 +91,15 @@
 }
 
 .language-switcher-wrapper {
-  position: relative;
-  display: inline-block;
-}
-.language-switcher-button {
-  cursor: pointer;
+    position: relative;
+    display: inline-block;
 }
 
 .language-dropdown {
-  display: none;
-  position: absolute;
-  top: 100%;
-  left: 0;
-  z-index: 9999;
-  border: 1px solid #F4B821;
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 9999;
+    border: 1px solid #F4B821;
 }
-
-.language-switcher-wrapper:hover .language-dropdown,
-.language-switcher-wrapper:focus-within .language-dropdown {
-  display: block;
-}
-
-button.language-switcher-button {
-  outline: none !important;
-  box-shadow: none !important;
-  -webkit-tap-highlight-color: transparent;
-  user-select: none;
-}
-
