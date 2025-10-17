@@ -20,7 +20,7 @@ function get_cities_cached($request) {
     if ($cached === false) {
         error_log('BusTicket: Cache MISS for lang: ' . $lang);
         
-        // Pozovi eksterni API
+        // Call bus API
         $response = wp_remote_post('https://busticket4.me/bus/web_servisi/servisi/rest_bus_search.php?name=doCitiesSearch', array(
             'body' => array('jezik' => $lang),
             'timeout' => 30
@@ -164,7 +164,7 @@ function schedule_cities_cache_refresh() {
 
 add_action('refresh_bus_cities_cache', 'refresh_cities_cache');
 function refresh_cities_cache() {
-    $langs = array('MNE', 'EN', 'RU');
+    $langs = array('MNE', 'EN');
     foreach ($langs as $lang) {
         delete_transient('bus_cities_' . $lang . '_v3');
         // Trigger cache rebuild
@@ -177,7 +177,6 @@ add_action('admin_init', function() {
     if (isset($_GET['clear_bus_cache']) && current_user_can('manage_options')) {
         delete_transient('bus_cities_MNE_v3');
         delete_transient('bus_cities_EN_v3');
-        delete_transient('bus_cities_RU_v3');
         wp_die('✅ Bus cities cache cleared! <br><br><a href="' . admin_url() . '">← Back to Dashboard</a>');
     }
 });
