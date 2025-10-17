@@ -3,6 +3,55 @@
     
     let citiesData = null;
     
+    //Translations
+    const translations = {
+        'en-US': {
+            fromPlaceholder: 'Departure city',
+            toPlaceholder: 'Destination',
+            loadError: 'Loading error',
+            noResults: 'No results',
+            searching: 'Searching...',
+            inputTooShort: 'Enter at least 2 characters',
+            selectDepartureCity: 'Please select departure city!',
+            selectDestinationCity: 'Please select destination city!',
+            enterDepartureDate: 'Please enter departure date!',
+            futureDateRequired: 'Departure date must be today or in the future!',
+            returnAfterDeparture: 'Return date must be after departure date!',
+            weekdaysShort: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+            weekdaysLong: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
+            monthsShort: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+            monthsLong: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+        },
+        'default': {
+            fromPlaceholder: 'Mjesto polaska',
+            toPlaceholder: 'Odredište',
+            loadError: 'Greška pri učitavanju',
+            noResults: 'Nema rezultata',
+            searching: 'Pretražujem...',
+            inputTooShort: 'Unesite najmanje 2 karaktera',
+            selectDepartureCity: 'Molimo izaberite grad polaska!',
+            selectDestinationCity: 'Molimo izaberite grad odredišta!',
+            enterDepartureDate: 'Molimo unesite datum polaska!',
+            futureDateRequired: 'Datum polaska mora biti danas ili u budućnosti!',
+            returnAfterDeparture: 'Datum povratka mora biti nakon datuma polaska!',
+            weekdaysShort: ['Ned', 'Pon', 'Uto', 'Sri', 'Čet', 'Pet', 'Sub'],
+            weekdaysLong: ['Nedjelja', 'Ponedjeljak', 'Utorak', 'Srijeda', 'Četvrtak', 'Petak', 'Subota'],
+            monthsShort: ['Jan', 'Feb', 'Mar', 'Apr', 'Maj', 'Jun', 'Jul', 'Avg', 'Sep', 'Okt', 'Nov', 'Dec'],
+            monthsLong: ['Januar', 'Februar', 'Mart', 'April', 'Maj', 'Jun', 'Jul', 'Avgust', 'Septembar', 'Oktobar', 'Novembar', 'Decembar']
+        }
+    };
+    
+    // Detekcija jezika
+    function getCurrentLanguage() {
+        const htmlLang = document.documentElement.lang;
+        return htmlLang === 'en-US' ? 'en-US' : 'default';
+    }
+    
+    function getTranslation(key) {
+        const lang = getCurrentLanguage();
+        return translations[lang][key];
+    }
+    
     async function loadCities() {
         if (citiesData) {
             return citiesData;
@@ -75,7 +124,6 @@
         
         const tripPart = `${isRoundTrip}-${passengers}`;
         
-        
         const fromCityName = cleanCityName(formData.fromCityLabel);
         const toCityName = cleanCityName(formData.toCityLabel);
         const routePart = `${fromCityName}-${toCityName}`;
@@ -94,15 +142,15 @@
     
     $(document).ready(async function() {
 
-        // Postavi početne placeholdere
-        $('#from-city').html('<option value="">Mjesto polaska</option>').prop('disabled', true);
-        $('#to-city').html('<option value="">Odredište</option>').prop('disabled', true);
+        //Placeholder setup
+        $('#from-city').html(`<option value="">${getTranslation('fromPlaceholder')}</option>`).prop('disabled', true);
+        $('#to-city').html(`<option value="">${getTranslation('toPlaceholder')}</option>`).prop('disabled', true);
         
         const cities = await loadCities();
         
         if (cities.length === 0) {
             $('#from-city, #to-city')
-                .html('<option value="">Greška pri učitavanju</option>')
+                .html(`<option value="">${getTranslation('loadError')}</option>`)
                 .prop('disabled', false);
             return;
         }
@@ -133,20 +181,19 @@
                 };
             });
         
-        // Inicijalizuj Select2 sa različitim placeholderima
+        //Select2 init
         $('#from-city, #to-city').each(function() {
             const $select = $(this);
             const fieldId = $select.attr('id');
             
-            // Različiti placeholderi
             const placeholder = fieldId === 'from-city' 
-                ? 'Mjesto polaska' 
-                : 'Odredište';
+                ? getTranslation('fromPlaceholder')
+                : getTranslation('toPlaceholder');
             
             try {
-                // Dodaj praznu opciju kao prvu
+                //empty field as default
                 $select.empty();
-                $select.append('<option value=""></option>'); // Prazna opcija za placeholder
+                $select.append('<option value=""></option>');
                 
                 $select
                     .prop('disabled', false)
@@ -158,13 +205,13 @@
                         minimumInputLength: 2,
                         language: {
                             noResults: function() {
-                                return 'Nema rezultata';
+                                return getTranslation('noResults');
                             },
                             searching: function() {
-                                return 'Pretražujem...';
+                                return getTranslation('searching');
                             },
                             inputTooShort: function() {
-                                return 'Unesite najmanje 2 karaktera';
+                                return getTranslation('inputTooShort');
                             }
                         },
                         templateResult: function(data) {
@@ -179,7 +226,6 @@
                             return data.text;
                         },
                         templateSelection: function(data) {
-                            // Ako je prazna opcija, prikaži placeholder
                             if (!data.id) {
                                 return placeholder;
                             }
@@ -187,9 +233,7 @@
                         }
                     });
                 
-                // Eksplicitno postavi da nema selekcije
                 $select.val(null).trigger('change');
-                
                 
             } catch (error) {
                 console.error('❌ Error initializing Select2:', error);
@@ -197,7 +241,7 @@
         });
         
         
-        // Inicijalizuj Flatpickr za datume
+        //Flatpickr init
         const departDatePicker = flatpickr("#depart-date", {
             altInput: true,
             altFormat: "d.m.Y", 
@@ -208,16 +252,15 @@
             locale: {
                 firstDayOfWeek: 1,
                 weekdays: {
-                    shorthand: ['Ned', 'Pon', 'Uto', 'Sri', 'Čet', 'Pet', 'Sub'],
-                    longhand: ['Nedjelja', 'Ponedjeljak', 'Utorak', 'Srijeda', 'Četvrtak', 'Petak', 'Subota']
+                    shorthand: getTranslation('weekdaysShort'),
+                    longhand: getTranslation('weekdaysLong')
                 },
                 months: {
-                    shorthand: ['Jan', 'Feb', 'Mar', 'Apr', 'Maj', 'Jun', 'Jul', 'Avg', 'Sep', 'Okt', 'Nov', 'Dec'],
-                    longhand: ['Januar', 'Februar', 'Mart', 'April', 'Maj', 'Jun', 'Jul', 'Avgust', 'Septembar', 'Oktobar', 'Novembar', 'Decembar']
+                    shorthand: getTranslation('monthsShort'),
+                    longhand: getTranslation('monthsLong')
                 }
             },
             onChange: function(selectedDates, dateStr, instance) {
-                // Kada se promeni datum polaska, ažuriraj minimum za povratak
                 if (selectedDates.length > 0) {
                     returnDatePicker.set('minDate', selectedDates[0]);
                 }
@@ -233,12 +276,12 @@
             locale: {
                 firstDayOfWeek: 1,
                 weekdays: {
-                    shorthand: ['Ned', 'Pon', 'Uto', 'Sri', 'Čet', 'Pet', 'Sub'],
-                    longhand: ['Nedjelja', 'Ponedjeljak', 'Utorak', 'Srijeda', 'Četvrtak', 'Petak', 'Subota']
+                    shorthand: getTranslation('weekdaysShort'),
+                    longhand: getTranslation('weekdaysLong')
                 },
                 months: {
-                    shorthand: ['Jan', 'Feb', 'Mar', 'Apr', 'Maj', 'Jun', 'Jul', 'Avg', 'Sep', 'Okt', 'Nov', 'Dec'],
-                    longhand: ['Januar', 'Februar', 'Mart', 'April', 'Maj', 'Jun', 'Jul', 'Avgust', 'Septembar', 'Oktobar', 'Novembar', 'Decembar']
+                    shorthand: getTranslation('monthsShort'),
+                    longhand: getTranslation('monthsLong')
                 }
             }
         });
@@ -253,17 +296,17 @@
             const passengers = $('#passengers').val();
             
             if (!fromCity || !fromCity.id) {
-                alert('Molimo izaberite grad polaska!');
+                alert(getTranslation('selectDepartureCity'));
                 return false;
             }
             
             if (!toCity || !toCity.id) {
-                alert('Molimo izaberite grad odredišta!');
+                alert(getTranslation('selectDestinationCity'));
                 return false;
             }
             
             if (!departDate) {
-                alert('Molimo unesite datum polaska!');
+                alert(getTranslation('enterDepartureDate'));
                 return false;
             }
             
@@ -272,14 +315,14 @@
             const selectedDate = new Date(departDate);
             
             if (selectedDate < today) {
-                alert('Datum polaska mora biti danas ili u budućnosti!');
+                alert(getTranslation('futureDateRequired'));
                 return false;
             }
             
             if (returnDate && returnDate.trim() !== '') {
                 const returnDateObj = new Date(returnDate);
                 if (returnDateObj < selectedDate) {
-                    alert('Datum povratka mora biti nakon datuma polaska!');
+                    alert(getTranslation('returnAfterDeparture'));
                     return false;
                 }
             }
