@@ -24,15 +24,29 @@ function initTabWidget() {
         
         let currentIndex = 0; // 0 or 1 - which tab-info is currently active
         let isAnimating = false;
+        let activeTabIndex = 0; // Track which tab content is currently shown
+        let pendingTabIndex = null; // Track if there's a pending tab change
         
         // Function to update tab content with crossfade effect
         function updateTabContent(index) {
             // Check if current item exists
-            if (!items[index] || isAnimating) {
+            if (!items[index]) {
+                return;
+            }
+
+            // If same tab, do nothing
+            if (index === activeTabIndex && !isAnimating) {
+                return;
+            }
+
+            // If animating, queue the next tab
+            if (isAnimating) {
+                pendingTabIndex = index;
                 return;
             }
 
             isAnimating = true;
+            activeTabIndex = index;
             const currentItem = items[index];
             
             // Determine which element is active and which is hidden
@@ -62,16 +76,28 @@ function initTabWidget() {
                 cta.textContent = currentItem.cta_text;
             }
             
-            // Swap active states - crossfade effect
-            activeElement.classList.remove('active');
-            hiddenElement.classList.add('active');
-            
-            // Switch current index
-            currentIndex = currentIndex === 0 ? 1 : 0;
+            // Small delay to ensure content is loaded before transition
+            requestAnimationFrame(() => {
+                // Swap active states - crossfade effect
+                activeElement.classList.remove('active');
+                hiddenElement.classList.add('active');
+                
+                // Switch current index
+                currentIndex = currentIndex === 0 ? 1 : 0;
+            });
             
             // Reset animation lock after transition
             setTimeout(() => {
                 isAnimating = false;
+                
+                // If there's a pending tab change, process it
+                if (pendingTabIndex !== null && pendingTabIndex !== activeTabIndex) {
+                    const nextIndex = pendingTabIndex;
+                    pendingTabIndex = null;
+                    updateTabContent(nextIndex);
+                } else {
+                    pendingTabIndex = null;
+                }
             }, 600); // Match CSS transition duration
         }
         
@@ -80,27 +106,20 @@ function initTabWidget() {
         
         tabHeadings.forEach((heading, index) => {
             heading.addEventListener('click', function() {
-                // Don't do anything if already active
-                if (this.classList.contains('is-active')) return;
-                
-                // Remove active class from all headings
+                // Update UI immediately
                 tabHeadings.forEach(h => h.classList.remove('is-active'));
-                
-                // Add active class to clicked heading
                 this.classList.add('is-active');
                 
-                // Remove active class from all icons
+                // Update icons immediately
                 if (tabIconsContainer) {
                     const allIcons = tabIconsContainer.querySelectorAll('.tab-icon');
                     allIcons.forEach(icon => icon.classList.remove('is-active'));
-                    
-                    // Add active class to corresponding icon
                     if (allIcons[index]) {
                         allIcons[index].classList.add('is-active');
                     }
                 }
                 
-                // Update content with crossfade effect
+                // Update content (may be queued if animating)
                 updateTabContent(index);
             });
         });
@@ -111,24 +130,17 @@ function initTabWidget() {
             
             tabIcons.forEach((icon, index) => {
                 icon.addEventListener('click', function() {
-                    // Don't do anything if already active
-                    if (this.classList.contains('is-active')) return;
-                    
-                    // Remove active class from all icons
+                    // Update UI immediately
                     tabIcons.forEach(i => i.classList.remove('is-active'));
-                    
-                    // Add active class to clicked icon
                     this.classList.add('is-active');
                     
-                    // Remove active class from all headings
+                    // Update headings immediately
                     tabHeadings.forEach(h => h.classList.remove('is-active'));
-                    
-                    // Add active class to corresponding heading
                     if (tabHeadings[index]) {
                         tabHeadings[index].classList.add('is-active');
                     }
                     
-                    // Update content with crossfade effect
+                    // Update content (may be queued if animating)
                     updateTabContent(index);
                 });
             });
