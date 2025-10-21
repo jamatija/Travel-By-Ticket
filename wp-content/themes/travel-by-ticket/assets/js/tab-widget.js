@@ -18,40 +18,61 @@ function initTabWidget() {
             return;
         }
         
-        // Function to update tab content
+        // Get both tab-info elements
+        const tabInfoElements = container.querySelectorAll('.tab-info');
+        if (tabInfoElements.length < 2) return;
+        
+        let currentIndex = 0; // 0 or 1 - which tab-info is currently active
+        let isAnimating = false;
+        
+        // Function to update tab content with crossfade effect
         function updateTabContent(index) {
             // Check if current item exists
-            if (!items[index]) {
+            if (!items[index] || isAnimating) {
                 return;
             }
 
+            isAnimating = true;
             const currentItem = items[index];
             
-            // Update image
-            const image = container.querySelector('.tab-image');
+            // Determine which element is active and which is hidden
+            const activeElement = tabInfoElements[currentIndex];
+            const hiddenElement = tabInfoElements[currentIndex === 0 ? 1 : 0];
+            
+            // Update hidden element with new content
+            const image = hiddenElement.querySelector('.tab-image');
             if (image) {
                 image.src = currentItem.image;
                 image.alt = currentItem.title;
             }
 
-            // Update heading
-            const heading = container.querySelector('.tab-heading');
+            const heading = hiddenElement.querySelector('.tab-heading');
             if (heading) {
                 heading.textContent = currentItem.title;
             }
 
-            // Update text
-            const text = container.querySelector('.text');
+            const text = hiddenElement.querySelector('.text');
             if (text) {
                 text.innerHTML = currentItem.text;
             }
 
-            // Update link and link text
-            const cta = container.querySelector('.cta');
+            const cta = hiddenElement.querySelector('.cta');
             if (cta) {
                 cta.href = currentItem.link;
                 cta.textContent = currentItem.cta_text;
             }
+            
+            // Swap active states - crossfade effect
+            activeElement.classList.remove('active');
+            hiddenElement.classList.add('active');
+            
+            // Switch current index
+            currentIndex = currentIndex === 0 ? 1 : 0;
+            
+            // Reset animation lock after transition
+            setTimeout(() => {
+                isAnimating = false;
+            }, 600); // Match CSS transition duration
         }
         
         // Handle desktop tab headings click
@@ -59,6 +80,9 @@ function initTabWidget() {
         
         tabHeadings.forEach((heading, index) => {
             heading.addEventListener('click', function() {
+                // Don't do anything if already active
+                if (this.classList.contains('is-active')) return;
+                
                 // Remove active class from all headings
                 tabHeadings.forEach(h => h.classList.remove('is-active'));
                 
@@ -76,7 +100,7 @@ function initTabWidget() {
                     }
                 }
                 
-                // Update content
+                // Update content with crossfade effect
                 updateTabContent(index);
             });
         });
@@ -87,6 +111,9 @@ function initTabWidget() {
             
             tabIcons.forEach((icon, index) => {
                 icon.addEventListener('click', function() {
+                    // Don't do anything if already active
+                    if (this.classList.contains('is-active')) return;
+                    
                     // Remove active class from all icons
                     tabIcons.forEach(i => i.classList.remove('is-active'));
                     
@@ -101,7 +128,7 @@ function initTabWidget() {
                         tabHeadings[index].classList.add('is-active');
                     }
                     
-                    // Update content
+                    // Update content with crossfade effect
                     updateTabContent(index);
                 });
             });
