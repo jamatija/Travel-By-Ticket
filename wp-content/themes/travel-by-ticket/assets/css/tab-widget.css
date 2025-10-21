@@ -69,7 +69,6 @@
 .tab-item__heading:hover:not(.is-active) {
     background-color: #FBF3FF;
     border-radius: 8px;
-    opacity: 0.8;
 }
 
 .tab-text-box {
