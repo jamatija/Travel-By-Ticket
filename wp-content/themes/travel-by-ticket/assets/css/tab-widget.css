@@ -83,7 +83,7 @@
     padding: 36px 30px;
     opacity: 0;
     transform: translateY(20px);
-    transition: opacity 600ms ease-in-out, transform 600ms ease-in-out;
+    transition: opacity 700ms ease-in-out, transform 600ms ease-in-out;
 }
 
 .tab-info.active .tab-text-box {
