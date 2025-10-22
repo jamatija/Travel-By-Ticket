@@ -151,6 +151,17 @@
         return citiesCache[lang] || [];
     }
     
+    // Normalizacija teksta (uklanja dijakritike)
+    function normalizeText(text) {
+        if (!text) return '';
+        return text
+            .toLowerCase()
+            .normalize('NFD')
+            .replace(/[\u0300-\u036f]/g, '') // Uklanja dijakritičke znakove
+            .replace(/đ/g, 'd')
+            .replace(/Đ/g, 'd');
+    }
+    
     // AUTOCOMPLETE FUNKCIONALNOST
     class CityAutocomplete {
         constructor(inputElement, hiddenInputElement) {
@@ -199,13 +210,18 @@
         
         search(query) {
             const cities = getCurrentCities();
-            const lowerQuery = query.toLowerCase();
+            const normalizedQuery = normalizeText(query);
             
             const results = cities
                 .filter(city => {
-                    const cityLabel = (city.city_label || city.city_primary_name || '').toLowerCase();
-                    const stateName = (city.state_name || city.city_state || '').toLowerCase();
-                    return cityLabel.includes(lowerQuery) || stateName.includes(lowerQuery);
+                    const cityLabel = city.city_label || city.city_primary_name || '';
+                    const stateName = city.state_name || city.city_state || '';
+                    
+                    const normalizedCity = normalizeText(cityLabel);
+                    const normalizedState = normalizeText(stateName);
+                    
+                    return normalizedCity.includes(normalizedQuery) || 
+                           normalizedState.includes(normalizedQuery);
                 })
                 .slice(0, 10); // Max 10 rezultata
             
