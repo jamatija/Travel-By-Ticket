@@ -28,12 +28,14 @@
 .testimonial-job {
   margin: 0;
 }
-.testimonial-text {
+.testimonialCarousel .swiper-slide .testimonial-text {
   font-size: 1.375rem !important;
   transition: font-size 0.4s ease;
+  line-height: 1.625rem !important;
 }
 .testimonialCarousel .swiper-slide-active .testimonial-text {
-  font-size: 1.625rem !important;
+  font-size: 1.5rem !important;
+  line-height: 2rem !important;
 }
 .testimonialCarousel .swiper-slide{
   transition: all 0.5s ease;
