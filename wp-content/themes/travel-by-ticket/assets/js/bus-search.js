@@ -4,23 +4,22 @@
     // Cache config
     const CACHE_KEY = 'bus_cities_cache';
     const CACHE_VERSION = 'v1';
-    const CACHE_DURATION = 24 * 60 * 60 * 1000; // 24h
+    const CACHE_DURATION = 24 * 60 * 60 * 1000;
     
-    // Cache 
     let citiesCache = {
         MNE: null,
         EN: null
     };
     
-    //Translations
+    // Translations
     const translations = {
         'en-US': {
             fromPlaceholder: 'Departure city',
             toPlaceholder: 'Destination',
             loadError: 'Loading error',
-            noResults: 'No results',
+            noResults: 'No results found',
             searching: 'Searching...',
-            inputTooShort: 'Enter at least 2 characters',
+            startTyping: 'Start typing to search...',
             selectDepartureCity: 'Please select departure city!',
             selectDestinationCity: 'Please select destination city!',
             enterDepartureDate: 'Please enter departure date!',
@@ -37,7 +36,7 @@
             loadError: 'Greška pri učitavanju',
             noResults: 'Nema rezultata',
             searching: 'Pretražujem...',
-            inputTooShort: 'Unesite najmanje 2 karaktera',
+            startTyping: 'Počnite kucati za pretragu...',
             selectDepartureCity: 'Molimo izaberite grad polaska!',
             selectDestinationCity: 'Molimo izaberite grad odredišta!',
             enterDepartureDate: 'Molimo unesite datum polaska!',
@@ -50,7 +49,6 @@
         }
     };
     
-    // Get lang
     function getCurrentLanguage() {
         const htmlLang = document.documentElement.lang;
         return htmlLang === 'en-US' ? 'en-US' : 'default';
@@ -66,7 +64,6 @@
         return translations[lang][key];
     }
     
-    // localStorage helper
     function saveToLocalStorage(data) {
         try {
             const cacheData = {
@@ -75,7 +72,6 @@
                 data: data
             };
             localStorage.setItem(CACHE_KEY, JSON.stringify(cacheData));
-            console.log('✅ Cache saved to localStorage');
         } catch (error) {
             console.warn('⚠️ Could not save to localStorage:', error);
         }
@@ -84,54 +80,36 @@
     function loadFromLocalStorage() {
         try {
             const cached = localStorage.getItem(CACHE_KEY);
-            if (!cached) {
-                console.log('📦 No localStorage cache found');
-                return null;
-            }
+            if (!cached) return null;
             
             const cacheData = JSON.parse(cached);
             
-            // Check version
             if (cacheData.version !== CACHE_VERSION) {
-                console.log('🔄 Cache version mismatch, clearing...');
                 localStorage.removeItem(CACHE_KEY);
                 return null;
             }
             
-            // Check cache lifetime
             const age = Date.now() - cacheData.timestamp;
             if (age > CACHE_DURATION) {
-                console.log('⏰ Cache expired, clearing...');
                 localStorage.removeItem(CACHE_KEY);
                 return null;
             }
             
-            console.log('✅ Cache loaded from localStorage (age: ' + Math.round(age / 1000 / 60) + ' min)');
             return cacheData.data;
-            
         } catch (error) {
             console.warn('⚠️ Could not load from localStorage:', error);
             return null;
         }
     }
     
-    // Load lang
     async function loadAllCities() {
-        // try from local storage
         const cachedData = loadFromLocalStorage();
         if (cachedData && cachedData.MNE && cachedData.EN) {
             citiesCache = cachedData;
-            console.log('🚀 Using localStorage cache:', {
-                MNE: citiesCache.MNE.length,
-                EN: citiesCache.EN.length
-            });
             return true;
         }
         
         try {
-            console.log('🌐 Fetching from API...');
-            
-            // Load lang
             const [mneResponse, enResponse] = await Promise.all([
                 fetch(busSearchConfig.apiUrl + 'MNE', {
                     headers: { 'X-WP-Nonce': busSearchConfig.nonce }
@@ -146,15 +124,11 @@
                 enResponse.json()
             ]);
             
-            // Data normalization
             citiesCache.MNE = normalizeData(mneData);
             citiesCache.EN = normalizeData(enData);
             
-            // Save in localStorage
             saveToLocalStorage(citiesCache);
-            
             return true;
-            
         } catch (error) {
             console.error('❌ Error loading cities:', error);
             return false;
@@ -172,26 +146,138 @@
         return [];
     }
     
-    // Get cities for current lang
     function getCurrentCities() {
         const lang = getApiLanguage();
         return citiesCache[lang] || [];
     }
     
+    // AUTOCOMPLETE FUNKCIONALNOST
+    class CityAutocomplete {
+        constructor(inputElement, hiddenInputElement) {
+            this.$input = $(inputElement);
+            this.$hidden = $(hiddenInputElement);
+            this.$dropdown = null;
+            this.selectedCity = null;
+            this.init();
+        }
+        
+        init() {
+            // Kreiraj dropdown
+            this.$dropdown = $('<div class="city-autocomplete-dropdown"></div>');
+            this.$input.after(this.$dropdown);
+            
+            // Events
+            this.$input.on('input', (e) => this.handleInput(e));
+            this.$input.on('focus', (e) => this.handleFocus(e));
+            
+            // Zatvori dropdown kad kliknes van
+            $(document).on('click', (e) => {
+                if (!$(e.target).closest('.form-field').length) {
+                    this.hideDropdown();
+                }
+            });
+        }
+        
+        handleInput(e) {
+            const query = this.$input.val().trim();
+            
+            if (query.length < 2) {
+                this.hideDropdown();
+                this.clearSelection();
+                return;
+            }
+            
+            this.search(query);
+        }
+        
+        handleFocus(e) {
+            const query = this.$input.val().trim();
+            if (query.length >= 2) {
+                this.search(query);
+            }
+        }
+        
+        search(query) {
+            const cities = getCurrentCities();
+            const lowerQuery = query.toLowerCase();
+            
+            const results = cities
+                .filter(city => {
+                    const cityLabel = (city.city_label || city.city_primary_name || '').toLowerCase();
+                    const stateName = (city.state_name || city.city_state || '').toLowerCase();
+                    return cityLabel.includes(lowerQuery) || stateName.includes(lowerQuery);
+                })
+                .slice(0, 10); // Max 10 rezultata
+            
+            this.showResults(results, query);
+        }
+        
+        showResults(results, query) {
+            if (results.length === 0) {
+                this.$dropdown.html(`<div class="autocomplete-item no-results">${getTranslation('noResults')}</div>`);
+                this.$dropdown.addClass('active');
+                return;
+            }
+            
+            const html = results.map(city => {
+                const cityId = city.city_id || city.id;
+                const cityLabel = city.city_label || city.city_primary_name;
+                const stateName = city.state_name || city.city_state || '';
+                
+                const displayText = stateName 
+                    ? `${cityLabel} <span class="state">(${stateName})</span>`
+                    : cityLabel;
+                
+                return `<div class="autocomplete-item" data-city-id="${cityId}" data-city-label="${cityLabel}">
+                    ${displayText}
+                </div>`;
+            }).join('');
+            
+            this.$dropdown.html(html);
+            this.$dropdown.addClass('active');
+            
+            // Klik na item
+            this.$dropdown.find('.autocomplete-item').not('.no-results').on('click', (e) => {
+                const $item = $(e.currentTarget);
+                this.selectCity({
+                    id: $item.data('city-id'),
+                    label: $item.data('city-label')
+                });
+            });
+        }
+        
+        selectCity(city) {
+            this.selectedCity = city;
+            this.$input.val(city.label);
+            this.$hidden.val(city.id);
+            this.hideDropdown();
+        }
+        
+        clearSelection() {
+            this.selectedCity = null;
+            this.$hidden.val('');
+        }
+        
+        hideDropdown() {
+            this.$dropdown.removeClass('active');
+        }
+        
+        showDropdown() {
+            this.$dropdown.addClass('active');
+        }
+    }
+    
     function formatDate(dateString) {
         if (!dateString) return '';
-        
         const date = new Date(dateString);
         const day = String(date.getDate()).padStart(2, '0');
         const month = String(date.getMonth() + 1).padStart(2, '0');
         const year = date.getFullYear();
-        
         return `${day}-${month}-${year}`;
     }
     
     function cleanCityName(cityName) {
         if (!cityName) return '';
-        
         return cityName
             .trim()
             .replace(/\s+/g, '-')
@@ -202,7 +288,7 @@
     
     function buildBusTicketUrl(formData) {
         const baseUrl = 'https://busticket4.me';
-        const lang = getApiLanguage(); // EN ili MNE
+        const lang = getApiLanguage();
         
         const fromStationId = formData.fromCityId;
         const toStationId = formData.toCityId;
@@ -234,117 +320,23 @@
         return url;
     }
     
-    // Prepare for select2
-    function prepareOptions(cities) {
-        return cities
-            .filter(city => {
-                const hasLabel = city.city_label || city.city_primary_name;
-                if (!hasLabel) {
-                    console.warn('⚠️ City without label:', city);
-                }
-                return hasLabel;
-            })
-            .map(city => {
-                const cityId = city.city_id || city.id;
-                const cityLabel = city.city_label || city.city_primary_name;
-                const stateName = city.state_name || city.city_state || '';
-                
-                const displayText = stateName 
-                    ? `${cityLabel} (${stateName})`
-                    : cityLabel;
-                
-                return {
-                    id: String(cityId),
-                    text: String(displayText),
-                    cityLabel: cityLabel.trim(),
-                    stateName: stateName,
-                    cityData: city
-                };
-            });
-    }
-    
     $(document).ready(async function() {
-
-        // Placeholder setup
-        $('#from-city').html(`<option value="">${getTranslation('fromPlaceholder')}</option>`).prop('disabled', true);
-        $('#to-city').html(`<option value="">${getTranslation('toPlaceholder')}</option>`).prop('disabled', true);
-        
-        // Load both versions
+        // Load cities
         const loaded = await loadAllCities();
         
         if (!loaded || getCurrentCities().length === 0) {
-            $('#from-city, #to-city')
-                .html(`<option value="">${getTranslation('loadError')}</option>`)
-                .prop('disabled', false);
+            alert(getTranslation('loadError'));
             return;
         }
         
-        // prepare data for current lang
-        const options = prepareOptions(getCurrentCities());
+        // Initialize autocomplete
+        const fromAutocomplete = new CityAutocomplete('#from-city', '#from-city-id');
+        const toAutocomplete = new CityAutocomplete('#to-city', '#to-city-id');
         
-        // Select2 init
-        $('#from-city, #to-city').each(function() {
-            const $select = $(this);
-            const fieldId = $select.attr('id');
-            
-            const placeholder = fieldId === 'from-city' 
-                ? getTranslation('fromPlaceholder')
-                : getTranslation('toPlaceholder');
-            
-            try {
-                $select.empty();
-                $select.append('<option value=""></option>');
-                
-                $select
-                    .prop('disabled', false)
-                    .select2({
-                        data: options,
-                        placeholder: placeholder,
-                        allowClear: true,
-                        width: '100%',
-                        minimumInputLength: 2,
-                        language: {
-                            noResults: function() {
-                                return getTranslation('noResults');
-                            },
-                            searching: function() {
-                                return getTranslation('searching');
-                            },
-                            inputTooShort: function() {
-                                return getTranslation('inputTooShort');
-                            }
-                        },
-                        templateResult: function(data) {
-                            if (!data.id) {
-                                return data.text;
-                            }
-                            
-                            const parts = data.text.split('(');
-                            if (parts.length > 1) {
-                                return $('<span><strong>' + parts[0].trim() + '</strong> <small>(' + parts[1] + '</small></span>');
-                            }
-                            return data.text;
-                        },
-                        templateSelection: function(data) {
-                            if (!data.id) {
-                                return placeholder;
-                            }
-                            return data.text;
-                        }
-                    });
-                
-                $select.val(null).trigger('change');
-                
-            } catch (error) {
-                console.error('❌ Error initializing Select2:', error);
-            }
-        });
-        
-        
-        // Flatpickr init
+        // Flatpickr
         const departDatePicker = flatpickr("#depart-date", {
             altInput: true,
-            altFormat: "d.m.Y", 
+            altFormat: "d.m.Y",
             dateFormat: "Y-m-d",
             minDate: "today",
             defaultDate: new Date(),
@@ -360,7 +352,7 @@
                     longhand: getTranslation('monthsLong')
                 }
             },
-            onChange: function(selectedDates, dateStr, instance) {
+            onChange: function(selectedDates) {
                 if (selectedDates.length > 0) {
                     returnDatePicker.set('minDate', selectedDates[0]);
                 }
@@ -369,7 +361,7 @@
         
         const returnDatePicker = flatpickr("#return-date", {
             altInput: true,
-            altFormat: "d.m.Y", 
+            altFormat: "d.m.Y",
             dateFormat: "Y-m-d",
             minDate: "today",
             disableMobile: true,
@@ -386,21 +378,24 @@
             }
         });
         
+        // Form submit
         $('.bus-form').on('submit', function(e) {
             e.preventDefault();
             
-            const fromCity = $('#from-city').select2('data')[0];
-            const toCity = $('#to-city').select2('data')[0];
+            const fromCityId = $('#from-city-id').val();
+            const fromCityLabel = $('#from-city').val();
+            const toCityId = $('#to-city-id').val();
+            const toCityLabel = $('#to-city').val();
             const departDate = $('#depart-date').val();
             const returnDate = $('#return-date').val();
             const passengers = $('#passengers').val();
             
-            if (!fromCity || !fromCity.id) {
+            if (!fromCityId) {
                 alert(getTranslation('selectDepartureCity'));
                 return false;
             }
             
-            if (!toCity || !toCity.id) {
+            if (!toCityId) {
                 alert(getTranslation('selectDestinationCity'));
                 return false;
             }
@@ -428,24 +423,22 @@
             }
             
             const formData = {
-                fromCityId: fromCity.id,
-                fromCityLabel: fromCity.cityLabel,
-                toCityId: toCity.id,
-                toCityLabel: toCity.cityLabel,
+                fromCityId: fromCityId,
+                fromCityLabel: fromCityLabel,
+                toCityId: toCityId,
+                toCityLabel: toCityLabel,
                 departDate: departDate,
                 returnDate: returnDate && returnDate.trim() !== '' ? returnDate : null,
                 passengers: passengers
             };
             
             const busTicketUrl = buildBusTicketUrl(formData);
-            
             window.open(busTicketUrl, '_blank');
             
             return false;
         });
     });
     
-    // Manual cache clear
     window.clearBusCitiesCache = function() {
         localStorage.removeItem(CACHE_KEY);
         console.log('Bus cities cache cleared!');
