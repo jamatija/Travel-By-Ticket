@@ -54,15 +54,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
     function toggleButtons(category) {
-      console.log('toggleButtons called with category:', category);
-      
+
       const travelBtn = wrapper.querySelector('.dynamic-button-travel');
       const blogBtn = wrapper.querySelector('.dynamic-button-blog');
       
       const travelBtnMobile = document.querySelector('.dynamic-button-travel-mobile');
       const blogBtnMobile = document.querySelector('.dynamic-button-blog-mobile');
-
-      console.log('Found buttons:', { travelBtn, blogBtn, travelBtnMobile, blogBtnMobile });
 
       const showTravel = category === 'travel-news';
 

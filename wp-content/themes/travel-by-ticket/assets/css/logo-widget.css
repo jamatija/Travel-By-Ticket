@@ -1,0 +1,33 @@
+.logo-hover-wrapper {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.logo-image {
+    display: block;
+    width: 100%;
+    height: auto;
+    transition: opacity 0.3s ease;
+}
+
+.logo-light {
+    position: relative;
+    z-index: 2;
+}
+
+.logo-dark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    z-index: 1;
+}
+
+.logo-hover-wrapper:hover .logo-light {
+    opacity: 0;
+}
+
+.logo-hover-wrapper:hover .logo-dark {
+    opacity: 1;
+}

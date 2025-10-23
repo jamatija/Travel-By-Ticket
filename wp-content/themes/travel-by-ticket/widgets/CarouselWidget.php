@@ -678,7 +678,7 @@ class CarouselWidget extends \Elementor\Widget_Base
                         <a href="<?php echo esc_url( get_permalink( $p ) ); ?>" class="card">
                             <?php if ( has_post_thumbnail( $p ) ) : ?>
                                 <figure class="card-media">
-                                <?php echo get_the_post_thumbnail( $p, 'medium' ); ?>
+                                <?php echo get_the_post_thumbnail( $p, 'full' ); ?>
                                 </figure>
                             <?php endif; ?>
 

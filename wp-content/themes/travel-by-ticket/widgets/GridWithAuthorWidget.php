@@ -650,9 +650,6 @@ class GridWithAuthorWidget extends \Elementor\Widget_Base
                 <h3 class="grid-static-title"><?php echo esc_html($settings['static_title']); ?></h3>
                 <p class="grid-static-text"><?php echo esc_html($settings['static_text']); ?></p>
                 <a class="grid-view-map" href="<?php echo esc_url( $settings['static_link']['url'] ); ?>"<?php echo $target . $nofollow; ?>>
-                    <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M12.2507 17.5835L5.75065 15.3085L1.46309 16.9668C1.18539 17.0697 0.927741 17.0396 0.69013 16.8763C0.452699 16.7131 0.333984 16.4835 0.333984 16.1876V2.93764C0.333984 2.74462 0.380839 2.56831 0.474547 2.4087C0.568255 2.24891 0.704755 2.13778 0.884047 2.0753L5.75065 0.416992L12.2507 2.69199L16.5382 1.03368C16.8159 0.930762 17.0736 0.950533 17.3112 1.09299C17.5486 1.23527 17.6673 1.44742 17.6673 1.72945V15.146C17.6673 15.3529 17.61 15.5328 17.4953 15.6858C17.3809 15.8385 17.2271 15.9461 17.0341 16.0086L12.2507 17.5835ZM11.709 16.2626V3.58764L6.29232 1.69614V14.3711L11.709 16.2626ZM12.7923 16.2626L16.584 15.0127V2.17524L12.7923 3.58764V16.2626ZM1.41732 15.8252L5.20898 14.3711V1.69614L1.41732 2.98774V15.8252Z" fill="#E3AA1A"/>
-                    </svg>
                      <span class="link-text-desktop">
                         <?php echo esc_html( $settings['static_link_text'] ?: __( 'View Map', 'travel' ) ); ?>
                     </span>
