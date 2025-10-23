@@ -1,7 +1,7 @@
 'use strict';
 
 function initTabWidget() {
-    const tabContainers = document.querySelectorAll('.tab-container');
+    const tabContainers = document.querySelectorAll('.tab-wrapper');
     
     tabContainers.forEach((container) => {
         // Get items data from tab-items container
@@ -125,26 +125,26 @@ function initTabWidget() {
         });
         
         // Handle mobile tab icons click
-        if (tabIconsContainer) {
-            const tabIcons = tabIconsContainer.querySelectorAll('.tab-icon');
+        // if (tabIconsContainer) {
+        //     const tabIcons = tabIconsContainer.querySelectorAll('.tab-icon');
             
-            tabIcons.forEach((icon, index) => {
-                icon.addEventListener('click', function() {
-                    // Update UI immediately
-                    tabIcons.forEach(i => i.classList.remove('is-active'));
-                    this.classList.add('is-active');
+        //     tabIcons.forEach((icon, index) => {
+        //         icon.addEventListener('click', function() {
+        //             // Update UI immediately
+        //             tabIcons.forEach(i => i.classList.remove('is-active'));
+        //             this.classList.add('is-active');
                     
-                    // Update headings immediately
-                    tabHeadings.forEach(h => h.classList.remove('is-active'));
-                    if (tabHeadings[index]) {
-                        tabHeadings[index].classList.add('is-active');
-                    }
+        //             // Update headings immediately
+        //             tabHeadings.forEach(h => h.classList.remove('is-active'));
+        //             if (tabHeadings[index]) {
+        //                 tabHeadings[index].classList.add('is-active');
+        //             }
                     
-                    // Update content (may be queued if animating)
-                    updateTabContent(index);
-                });
-            });
-        }
+        //             // Update content (may be queued if animating)
+        //             updateTabContent(index);
+        //         });
+        //     });
+        // }
     });
 }
 
@@ -161,5 +161,45 @@ window.addEventListener('elementor/frontend/init', function() {
         elementorFrontend.hooks.addAction('frontend/element_ready/tab-widget.default', function() {
             initTabWidget();
         });
+    }
+});
+
+const swiper = new Swiper('.tabSwiperMobile',{
+    slidesPerView: 1,
+    loop: true,
+    speed: 500,
+    simulateTouch: true,
+    allowTouchMove: true,
+    spaceBetween: 24,
+    pagination: {
+        el: '.tabPagination',
+        clickable: true,
+        type: 'custom', 
+        renderCustom: function (swiper, current, total) {
+            let bullets = '';
+            for (let i = 1; i <= total; i++) {
+                bullets += `
+                    <span class="tab-icon ${i === current ? 'active' : ''}" data-index="${i - 1}">
+                        <svg width="23" height="19" viewBox="0 0 23 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path opacity="${i === current ? '1' : '0.22'}" d="M21.4143 0.00173743L17.5979 0C17.3342 1.12041 16.3474 1.95246 15.1683 1.95246C13.9892 1.95246 13.0024 1.12041 12.7386 0H11.3282C10.6714 0 10.0776 0.39605 9.81218 1.00923L3.04897 16.6654L0 16.6689V19H5.39695C5.66068 17.8796 6.64751 17.0475 7.8266 17.0475C9.0057 17.0475 9.99253 17.8796 10.2563 19H12.1261C12.7829 19 13.3767 18.604 13.6421 17.9908L20.4053 2.33809H23V0H21.4143V0.00173743Z" fill="#480E66"/>
+                        </svg>
+                    </span>`;
+            }
+            return bullets;
+        }
+    },
+    lazy: {
+      enabled: true,
+      loadPrevNext: true,
+      loadPrevNextAmount: 1,
+      loadOnTransitionStart: true,
+    },  
+});
+
+document.querySelector('.tabPagination').addEventListener('click', function(e) {
+    const bullet = e.target.closest('.tab-icon');
+    if (bullet) {
+        const index = parseInt(bullet.getAttribute('data-index'));
+        swiper.slideToLoop(index);
     }
 });

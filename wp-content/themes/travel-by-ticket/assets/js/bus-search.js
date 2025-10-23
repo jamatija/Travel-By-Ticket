@@ -51,32 +51,12 @@
     
     function getCurrentLanguage() {
         const htmlLang = document.documentElement.lang;
-        console.log('🌐 Detected HTML lang:', htmlLang);
-        
-        // Proveri da li je engleski (bilo koji varijanta)
-        if (htmlLang && htmlLang.toLowerCase().startsWith('en')) {
-            console.log('📝 Using translation set: en-US');
-            return 'en-US';
-        }
-        
-        // Sve ostalo je default (crnogorski/srpski/bosanski)
-        console.log('📝 Using translation set: default');
-        return 'default';
+        return htmlLang === 'en-US' ? 'en-US' : 'default';
     }
     
     function getApiLanguage() {
         const htmlLang = document.documentElement.lang;
-        console.log('🌐 API Language detection for:', htmlLang);
-        
-        // Proveri da li je engleski
-        if (htmlLang && htmlLang.toLowerCase().startsWith('en')) {
-            console.log('📡 Using API lang: EN');
-            return 'EN';
-        }
-        
-        // Sve ostalo koristi MNE API
-        console.log('📡 Using API lang: MNE');
-        return 'MNE';
+        return htmlLang === 'en-US' ? 'EN' : 'MNE';
     }
     
     function getTranslation(key) {
@@ -177,7 +157,7 @@
         return text
             .toLowerCase()
             .normalize('NFD')
-            .replace(/[\u0300-\u036f]/g, '')
+            .replace(/[\u0300-\u036f]/g, '') // Uklanja dijakritičke znakove
             .replace(/đ/g, 'd')
             .replace(/Đ/g, 'd');
     }
@@ -193,12 +173,15 @@
         }
         
         init() {
+            // Kreiraj dropdown
             this.$dropdown = $('<div class="city-autocomplete-dropdown"></div>');
             this.$input.after(this.$dropdown);
             
+            // Events
             this.$input.on('input', (e) => this.handleInput(e));
             this.$input.on('focus', (e) => this.handleFocus(e));
             
+            // Zatvori dropdown kad kliknes van
             $(document).on('click', (e) => {
                 if (!$(e.target).closest('.form-field').length) {
                     this.hideDropdown();
@@ -240,7 +223,7 @@
                     return normalizedCity.includes(normalizedQuery) || 
                            normalizedState.includes(normalizedQuery);
                 })
-                .slice(0, 10);
+                .slice(0, 10); // Max 10 rezultata
             
             this.showResults(results, query);
         }
@@ -269,6 +252,7 @@
             this.$dropdown.html(html);
             this.$dropdown.addClass('active');
             
+            // Klik na item
             this.$dropdown.find('.autocomplete-item').not('.no-results').on('click', (e) => {
                 const $item = $(e.currentTarget);
                 this.selectCity({
@@ -353,6 +337,7 @@
     }
     
     $(document).ready(async function() {
+        // Load cities
         const loaded = await loadAllCities();
         
         if (!loaded || getCurrentCities().length === 0) {
@@ -360,9 +345,11 @@
             return;
         }
         
+        // Initialize autocomplete
         const fromAutocomplete = new CityAutocomplete('#from-city', '#from-city-id');
         const toAutocomplete = new CityAutocomplete('#to-city', '#to-city-id');
         
+        // Flatpickr
         const departDatePicker = flatpickr("#depart-date", {
             altInput: true,
             altFormat: "d.m.Y",
@@ -407,6 +394,7 @@
             }
         });
         
+        // Form submit
         $('.bus-form').on('submit', function(e) {
             e.preventDefault();
             
