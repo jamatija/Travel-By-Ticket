@@ -315,7 +315,7 @@ protected function register_controls() {
     $first = $items[0];
 ?>
 
-    <div class="tab-container">
+    <div class="tab-container tab-wrapper">
         <div class="tab-info-wrapper">
             <!-- Current visible content -->
             <div class="tab-info active">
@@ -365,6 +365,29 @@ protected function register_controls() {
         </div>
     </div>    
 
+
+    <div class="tab-container tab-wrapper-mobile">
+        <div class="swiper tabSwiperMobile">
+            <div class="tab-info-wrapper swiper-wrapper">
+
+            <?php foreach ( $items as $index => $item ) : ?>
+                <div class="swiper-slide">
+                    <img class="tab-image" src="<?php echo esc_url( $item['image'] ); ?>" alt="<?php echo esc_attr( $item['title'] ); ?>">
+                    <div class="tab-text-box">
+                        <span class="tab-heading"><?php echo esc_html( $item['title'] ); ?></span>
+                        <p class="text"><?php echo wp_kses_post( $item['text'] ); ?></p>
+                        <a class="cta" href="<?php echo esc_url( $item['link'] ); ?>">
+                            <?php echo esc_html( $item['cta_text'] ); ?>
+                        </a>
+                    </div>
+                </div>
+            <?php endforeach ?>
+            </div>
+        </div>
+        
+        <div class="tab-icons swiper-pagination tabPagination">
+        </div>
+    </div>   
 <?php
 }
 }

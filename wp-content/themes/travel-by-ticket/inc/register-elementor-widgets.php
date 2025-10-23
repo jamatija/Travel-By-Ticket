@@ -18,7 +18,7 @@ function travel_tickets_pulse_register_widget_scripts()
     wp_register_script('carousel-widget', get_stylesheet_directory_uri() . '/assets/js/carousel.js', ['swiper'], false, true);
     wp_register_script('image-carousel-widget', get_stylesheet_directory_uri() . '/assets/js/image-carousel.js', ['swiper'], false, true);
     wp_register_script('testimonial-widget', get_stylesheet_directory_uri() . '/assets/js/testimonial-carousel.js', ['swiper'], false, true);
-    wp_register_script('tab-widget', get_stylesheet_directory_uri() . '/assets/js/tab-widget.js', [],false, true);
+    wp_register_script('tab-widget', get_stylesheet_directory_uri() . '/assets/js/tab-widget.js', ['swiper'],false, true);
     wp_register_script('language-switcher-widget', get_stylesheet_directory_uri() . '/assets/js/language-switcher-widget.js', [],false, true);
 }
 add_action('wp_enqueue_scripts', 'travel_tickets_pulse_register_widget_scripts');
