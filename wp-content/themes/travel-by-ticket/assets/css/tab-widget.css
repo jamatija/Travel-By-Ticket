@@ -5,13 +5,13 @@
     border-radius: 8px;
 }
 
-.tab-info-wrapper {
+.tab-wrapper .tab-info-wrapper {
     position: relative;
     width: 70%;
     overflow: hidden;
 }
 
-.tab-info {
+.tab-wrapper .tab-info {
     position: absolute;
     top: 0;
     left: 0;
@@ -22,13 +22,13 @@
     pointer-events: none;
 }
 
-.tab-info.active {
+.tab-wrapper .tab-info.active {
     opacity: 1;
     pointer-events: auto;
     position: relative;
 }
 
-.tab-info .tab-image {
+.tab-wrapper .tab-info .tab-image {
     width: 100%;
     display: block;
     object-fit: cover;
@@ -71,7 +71,7 @@
     border-radius: 8px;
 }
 
-.tab-text-box {
+.tab-wrapper .tab-text-box {
     position: absolute;
     bottom: 26px;
     left: 26px;
@@ -118,14 +118,18 @@
     transition: all 0.3s ease;
 }
 
-.tab-icon:hover {
-    opacity: 0.8;
+.tab-wrapper-mobile {
+    display: none;
 }
 
 /* Mobile responsive */
 @media (max-width: 1024px) {
     .tab-items {
         display: none;
+    }
+
+    .tab-wrapper-mobile {
+        display: block;
     }
 
     .tab-info-wrapper {
@@ -137,7 +141,7 @@
         height: 100%;
     }
 
-    .tab-text-box {
+    .tab-wrapper .tab-text-box {
         max-width: unset;
         left: 16px !important;
         right: 16px !important;
@@ -152,7 +156,7 @@
         padding: 16px 0;
     }
 
-    .tab-icon.is-active svg path {
+    .tab-icon.active svg path {
         fill: #E3AA1A;
         opacity: 1;
     }
@@ -160,4 +164,48 @@
     .tab-container {
         flex-direction: column;
     }
+    .tab-wrapper {
+        display: none;
+    }
+}
+
+.tab-wrapper-mobile .swiper-slide {
+  position: relative;     /* NE absolute */
+  opacity: 1;
+  pointer-events: auto;
+  height: auto;
+}
+
+.tab-wrapper-mobile .tab-text-box {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    transition: opacity 300ms ease-in-out;
+    pointer-events: none;
+    background-color: #ffffff;
+    margin: 32px 16px;
+    padding: 26px;
+    border-radius: 8px;
+}
+
+.tab-wrapper-mobile .tab-info {
+  position: static;       /* poništi absolute */
+  opacity: 1;
+  pointer-events: auto;
+  height: auto;
+}
+
+.tab-wrapper-mobile .tab-image {
+  width: auto;
+  height: 100%;           /* NE 100% ako roditelj nema fiksnu visinu */
+  object-fit: cover;
+}
+
+/* Dimenzije samog Swipera na mobu */
+.tab-wrapper-mobile .swiper {
+  width: 100%;
+}
+
+.tabPagination{
+    bottom: -112px !important;
 }
