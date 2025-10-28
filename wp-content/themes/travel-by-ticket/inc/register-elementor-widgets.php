@@ -9,6 +9,7 @@ function travel_tickets_widget_styles()
     wp_register_style('tab-widget', get_stylesheet_directory_uri() . '/assets/css/tab-widget.css');
     wp_register_style('language-switcher-widget', get_stylesheet_directory_uri() . '/assets/css/language-switcher-widget.css');
     wp_register_style('logo-hover-widget', get_stylesheet_directory_uri() . '/assets/css/logo-widget.css');
+    wp_register_style('category-widget', get_stylesheet_directory_uri() . '/assets/css/category.css');
 }
 add_action('wp_enqueue_scripts', 'travel_tickets_widget_styles');
 
@@ -21,6 +22,7 @@ function travel_tickets_pulse_register_widget_scripts()
     wp_register_script('testimonial-widget', get_stylesheet_directory_uri() . '/assets/js/testimonial-carousel.js', ['swiper'], false, true);
     wp_register_script('tab-widget', get_stylesheet_directory_uri() . '/assets/js/tab-widget.js', ['swiper'],false, true);
     wp_register_script('language-switcher-widget', get_stylesheet_directory_uri() . '/assets/js/language-switcher-widget.js', [],false, true);
+    wp_register_script('category-widget', get_stylesheet_directory_uri() . '/assets/js/category.js', [],false, true);
 }
 add_action('wp_enqueue_scripts', 'travel_tickets_pulse_register_widget_scripts');
 
@@ -37,6 +39,7 @@ function register_widgets($widgets_manager)
     require_once(__DIR__ . '/../widgets/TabWidget.php');
     require_once(__DIR__ . '/../widgets/LanguageSwitcherWidget.php');
     require_once(__DIR__ . '/../widgets/LogoWidget.php');
+    require_once(__DIR__ . '/../widgets/CategoryWidget.php');
     
     $widgets_manager->register(new \LinkWidget());
     $widgets_manager->register(new \CarouselWidget());
@@ -47,6 +50,7 @@ function register_widgets($widgets_manager)
     $widgets_manager->register(new \TabWidget());
     $widgets_manager->register(new \LanguageSwitcherWidget());
     $widgets_manager->register(new \LogoWidget());
+    $widgets_manager->register(new \CategoryWidget());
 }
 add_action('elementor/widgets/register', 'register_widgets');
 
