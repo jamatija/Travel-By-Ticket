@@ -9,7 +9,8 @@ function travel_tickets_widget_styles()
     wp_register_style('tab-widget', get_stylesheet_directory_uri() . '/assets/css/tab-widget.css');
     wp_register_style('language-switcher-widget', get_stylesheet_directory_uri() . '/assets/css/language-switcher-widget.css');
     wp_register_style('logo-hover-widget', get_stylesheet_directory_uri() . '/assets/css/logo-widget.css');
-    wp_register_style('category-widget', get_stylesheet_directory_uri() . '/assets/css/category.css');
+    wp_register_style('category-widget', get_stylesheet_directory_uri() . '/assets/css/category-widget.css');
+    wp_register_style('posts-loop-widget', get_stylesheet_directory_uri() . '/assets/css/posts-loop-widget.css', array('grid-with-author'));
 }
 add_action('wp_enqueue_scripts', 'travel_tickets_widget_styles');
 
@@ -40,6 +41,7 @@ function register_widgets($widgets_manager)
     require_once(__DIR__ . '/../widgets/LanguageSwitcherWidget.php');
     require_once(__DIR__ . '/../widgets/LogoWidget.php');
     require_once(__DIR__ . '/../widgets/CategoryWidget.php');
+    require_once(__DIR__ . '/../widgets/PostsLoopWidget.php');
     
     $widgets_manager->register(new \LinkWidget());
     $widgets_manager->register(new \CarouselWidget());
@@ -51,6 +53,7 @@ function register_widgets($widgets_manager)
     $widgets_manager->register(new \LanguageSwitcherWidget());
     $widgets_manager->register(new \LogoWidget());
     $widgets_manager->register(new \CategoryWidget());
+    $widgets_manager->register(new \PostsLoopWidget());
 }
 add_action('elementor/widgets/register', 'register_widgets');
 

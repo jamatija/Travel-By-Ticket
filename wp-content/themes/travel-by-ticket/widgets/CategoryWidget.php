@@ -22,7 +22,7 @@ class CategoryWidget extends \Elementor\Widget_Base
 
     public function get_title()
     {
-        return __('Post Categories', 'eks');
+        return __('Post Categories', 'travel');
     }
 
     public function get_icon()
@@ -32,7 +32,7 @@ class CategoryWidget extends \Elementor\Widget_Base
 
     public function get_categories()
     {
-        return ['Eks'];
+        return ['Travel'];
     }
 
     protected function render()
@@ -40,7 +40,7 @@ class CategoryWidget extends \Elementor\Widget_Base
         $categories = get_categories();
         
         if (empty($categories)) {
-            echo '<p>' . __('No categories found.', 'eks') . '</p>';
+            echo '<p>' . __('No categories found.', 'travel') . '</p>';
             return;
         }
 
@@ -59,7 +59,7 @@ class CategoryWidget extends \Elementor\Widget_Base
             '<a href="%s" class="%s">%s</a>',
             esc_url(get_permalink(get_option('page_for_posts'))),
             esc_attr($all_class),
-            __('All', 'eks')
+            __('All', 'travel')
         );
 
         // Category links
@@ -89,7 +89,7 @@ class CategoryWidget extends \Elementor\Widget_Base
         $all_links[] = [
             'url' => get_permalink(get_option('page_for_posts')),
             'class' => $all_class,
-            'text' => __('All', 'eks')
+            'text' => __('All', 'travel')
         ];
 
         foreach ($categories as $category) {
