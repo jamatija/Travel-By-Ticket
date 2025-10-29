@@ -162,34 +162,78 @@
   gap: 0.5rem;
   margin-top: 3rem;
   flex-wrap: wrap;
+  margin-bottom: 1rem;
 }
 
 .posts-pagination .page-numbers {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 20px;
   min-width: 40px;
   height: 40px;
   padding: 0 0.75rem;
   border-radius: 8px;
-  color: #1a1a1a;
+  color: var(--e-global-color-primary);
   text-decoration: none;
   font-weight: 500;
   list-style: none;
   transition: all 0.3s ease;
+  font-size: 16px !important;
+  padding: 24px;
 }
 
-.posts-pagination .page-numbers:hover {
-  background: #38c1f2;
+.posts-pagination .page-numbers .prev,
+.posts-pagination .page-numbers .next {
+  display: inline-flex;
+  gap: 16px !important;
+  background-color: #ffffff;
+  border: 1px solid #E8E1D1;
+  transition: all .3s ease;
+}
+
+.posts-pagination .page-numbers .prev:hover,
+.posts-pagination .page-numbers .next:hover {
+  background-color: #f5f5f5 !important;
+  color: var(--e-global-color-primary);
+}
+
+.posts-pagination .page-numbers .prev{
+  margin-right: 20px;
+}
+
+.posts-pagination .page-numbers .next{
+  margin-left: 20px;
+}
+
+.prev svg path,
+.next svg path{
+  transition: all .3s ease;
+  margin-bottom: -20px;
+}
+
+
+.prev svg,
+.next svg{
+  margin-bottom: -1px;
+}
+
+.prev:hover svg path,
+.next:hover svg path{
+  fill: var(--e-global-color-primary);
+  opacity: 1 !important;
+}
+
+ul .page-numbers:hover {
+  background: var(--e-global-color-primary);
   color: #ffffff;
-  border-color: #38c1f2;
+  border-color: var(--e-global-color-primary);
 }
 
 .posts-pagination .page-numbers.current {
-  background: #38c1f2;
+  background: var(--e-global-color-primary);
   color: #ffffff;
-  border-color: #38c1f2;
+  border-color: var(--e-global-color-primary);
+  font-size: 16px !important;
 }
 
 .posts-pagination .page-numbers.dots {

@@ -1,41 +1,4 @@
 <?php
-// Omogući paginaciju na Pages
-// function enable_page_pagination() {
-//     global $wp_rewrite;
-//     $wp_rewrite->use_verbose_page_rules = true;
-// }
-// add_action('init', 'enable_page_pagination');
-
-// // Dodaj page var u query vars
-// function add_page_query_var($vars) {
-//     $vars[] = 'page';
-//     return $vars;
-// }
-// add_filter('query_vars', 'add_page_query_var');
-
-// // Flush rewrite rules (samo jednom)
-// function flush_rewrite_on_activation() {
-//     enable_page_pagination();
-//     flush_rewrite_rules();
-// }
-// register_activation_hook(__FILE__, 'flush_rewrite_on_activation');
-
-add_action('pre_get_posts', function( WP_Query $q ){
-    if ( is_admin() || ! $q->is_main_query() ) return;
-
-    // "Posts page" (home) kada je postavljena u Settings > Reading 
-    if ( $q->is_home() ) {
-        $ppp = 7;
-
-
-        if ( $ppp > 0 ) {
-            $q->set('posts_per_page', $ppp);
-            $q->set('ignore_sticky_posts', true);
-        }
-    }
-});
-
-
 require_once __DIR__ . '/inc/register-elementor-widgets.php';
 require_once __DIR__ . '/inc/load-assets.php';
 require_once __DIR__ . '/inc/form-cities.php';

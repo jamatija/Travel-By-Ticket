@@ -3,11 +3,17 @@
   display: none;
   flex-wrap: nowrap;
   align-items: center;
-  justify-content: end;
+  justify-content: start;
   gap: 1rem;
   overflow-x: auto;
   padding-bottom: 0.5rem;
   cursor: grab;
+  scrollbar-width: none;      
+  -ms-overflow-style: none; 
+}
+
+.scroll-container::-webkit-scrollbar {
+  display: none;             
 }
 
 .scroll-container.active,
@@ -83,6 +89,9 @@
   cursor: pointer;
   transition: all 0.3s ease;
   font-size: 20px !important;
+  -webkit-user-drag: none;
+  user-select: none;     
+  pointer-events: auto;  
 }
 
 /* Hover state */
