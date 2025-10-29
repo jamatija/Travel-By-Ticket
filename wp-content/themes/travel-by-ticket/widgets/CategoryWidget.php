@@ -3,6 +3,8 @@ if (!defined('ABSPATH')) {
     exit; // Exit if accessed directly.
 }
 
+use Elementor\Group_Control_Typography;
+
 class CategoryWidget extends \Elementor\Widget_Base
 {
     public function get_name()
@@ -70,6 +72,14 @@ class CategoryWidget extends \Elementor\Widget_Base
             ]
         );
 
+        $this->add_group_control(
+            Group_Control_Typography::get_type(),
+            [
+                'name' => 'date_typography',
+                'selector' => '{{WRAPPER}} .scroll-container .filter',
+            ]
+        );
+
         $this->end_controls_section();
     }
 
@@ -107,7 +117,7 @@ class CategoryWidget extends \Elementor\Widget_Base
             '<a href="%s" class="%s">%s</a>',
             esc_url(get_permalink(get_option('page_for_posts'))),
             esc_attr($all_class),
-            __('All', 'travel')
+            __('All articles', 'travel')
         );
 
         // Category links
