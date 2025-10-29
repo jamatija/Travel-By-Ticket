@@ -50,3 +50,7 @@ add_action('init', function () {
 }, 11);
 
 add_action('after_switch_theme', function () { flush_rewrite_rules(); });
+
+add_filter('post_link', function($permalink, $post){
+    return '#';
+}, 10, 2);
