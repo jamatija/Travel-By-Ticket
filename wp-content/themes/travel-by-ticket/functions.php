@@ -23,7 +23,7 @@ function filter_posts_by_category_in_elementor($query)
 }
 add_action('elementor/query/posts_from_category', 'filter_posts_by_category_in_elementor');
 
-//Enable same base slug for posts archive and category archive
+//Enable hierarhical url structure: blog/category/article
 add_action('init', function () {
     $blog_page_id = (int) get_option('page_for_posts');
     if (!$blog_page_id) {
@@ -41,7 +41,6 @@ add_action('init', function () {
         'index.php?page_id=' . $blog_page_id . '&paged=$matches[1]',
         'top'
     );
-
 
     add_rewrite_rule(
         '^blog/([^/]+)/([^/]+)/?$',
