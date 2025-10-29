@@ -230,9 +230,9 @@ ul .page-numbers:hover {
 }
 
 .posts-pagination .page-numbers.current {
-  background: var(--e-global-color-primary);
+  background: #480E66;
   color: #ffffff;
-  border-color: var(--e-global-color-primary);
+  border-color: #480E66;
   font-size: 16px !important;
 }
 
