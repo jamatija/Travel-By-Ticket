@@ -35,10 +35,58 @@ class CategoryWidget extends \Elementor\Widget_Base
         return ['Travel'];
     }
 
+    /**
+     * Dodaj Elementor kontrole
+     */
+    protected function register_controls()
+    {
+        $this->start_controls_section(
+            'content_section',
+            [
+                'label' => __('Categories Settings', 'travel'),
+                'tab'   => \Elementor\Controls_Manager::TAB_CONTENT,
+            ]
+        );
+
+        // Uzimamo sve kategorije kao opcije
+        $categories = get_categories([
+            'hide_empty' => false,
+        ]);
+
+        $options = [];
+        foreach ($categories as $cat) {
+            $options[$cat->term_id] = $cat->name;
+        }
+
+        $this->add_control(
+            'selected_categories',
+            [
+                'label'       => __('Select Categories', 'travel'),
+                'type'        => \Elementor\Controls_Manager::SELECT2,
+                'options'     => $options,
+                'multiple'    => true,
+                'label_block' => true,
+                'description' => __('Select which categories to show. Leave empty to show all.', 'travel'),
+            ]
+        );
+
+        $this->end_controls_section();
+    }
+
     protected function render()
     {
-        $categories = get_categories();
-        
+        $settings = $this->get_settings_for_display();
+
+        // Ako korisnik izabere kategorije → filtriraj
+        if (!empty($settings['selected_categories'])) {
+            $categories = get_categories([
+                'include' => $settings['selected_categories'],
+                'orderby' => 'include', // čuva redoslijed koji je korisnik izabrao
+            ]);
+        } else {
+            $categories = get_categories();
+        }
+
         if (empty($categories)) {
             echo '<p>' . __('No categories found.', 'travel') . '</p>';
             return;
@@ -87,9 +135,9 @@ class CategoryWidget extends \Elementor\Widget_Base
         // Prepare all links
         $all_links = [];
         $all_links[] = [
-            'url' => get_permalink(get_option('page_for_posts')),
+            'url'   => get_permalink(get_option('page_for_posts')),
             'class' => $all_class,
-            'text' => __('All', 'travel')
+            'text'  => __('All', 'travel'),
         ];
 
         foreach ($categories as $category) {
@@ -101,14 +149,14 @@ class CategoryWidget extends \Elementor\Widget_Base
             $class = $is_current ? $default_classes . ' current-category' : $default_classes;
 
             $all_links[] = [
-                'url' => get_category_link($category->term_id),
+                'url'   => get_category_link($category->term_id),
                 'class' => $class,
-                'text' => $category->name
+                'text'  => $category->name,
             ];
         }
 
         // Split into two groups
-        $half = ceil(count($all_links) / 2);
+        $half   = ceil(count($all_links) / 2);
         $group1 = array_slice($all_links, 0, $half);
         $group2 = array_slice($all_links, $half);
 
