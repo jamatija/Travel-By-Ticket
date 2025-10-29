@@ -19,7 +19,7 @@ class PostsLoopWidget extends \Elementor\Widget_Base
 
     public function get_title()
     {
-        return __('Posts Loop', 'eks');
+        return __('Posts Loop', 'travel');
     }
 
     public function get_icon()
@@ -29,7 +29,7 @@ class PostsLoopWidget extends \Elementor\Widget_Base
 
     public function get_categories()
     {
-        return ['Eks'];
+        return ['travel'];
     }
 
     protected function register_controls()
@@ -38,29 +38,18 @@ class PostsLoopWidget extends \Elementor\Widget_Base
         $this->start_controls_section(
             'content_section',
             [
-                'label' => __('Query Settings', 'eks'),
+                'label' => __('Query Settings', 'travel'),
                 'tab' => Controls_Manager::TAB_CONTENT,
-            ]
-        );
-
-        $this->add_control(
-            'posts_per_page',
-            [
-                'label' => __('Posts Per Page', 'eks'),
-                'type' => Controls_Manager::NUMBER,
-                'default' => 6,
-                'min' => 1,
-                'max' => 100,
             ]
         );
 
         $this->add_control(
             'show_pagination',
             [
-                'label' => __('Show Pagination', 'eks'),
+                'label' => __('Show Pagination', 'travel'),
                 'type' => Controls_Manager::SWITCHER,
-                'label_on' => __('Yes', 'eks'),
-                'label_off' => __('No', 'eks'),
+                'label_on' => __('Yes', 'travel'),
+                'label_off' => __('No', 'travel'),
                 'return_value' => 'yes',
                 'default' => 'yes',
             ]
@@ -69,14 +58,14 @@ class PostsLoopWidget extends \Elementor\Widget_Base
         $this->add_control(
             'columns',
             [
-                'label' => __('Columns', 'eks'),
+                'label' => __('Columns', 'travel'),
                 'type' => Controls_Manager::SELECT,
                 'default' => '3',
                 'options' => [
-                    '1' => __('1 Column', 'eks'),
-                    '2' => __('2 Columns', 'eks'),
-                    '3' => __('3 Columns', 'eks'),
-                    '4' => __('4 Columns', 'eks'),
+                    '1' => __('1 Column', 'travel'),
+                    '2' => __('2 Columns', 'travel'),
+                    '3' => __('3 Columns', 'travel'),
+                    '4' => __('4 Columns', 'travel'),
                 ],
             ]
         );
@@ -84,10 +73,10 @@ class PostsLoopWidget extends \Elementor\Widget_Base
         $this->add_control(
             'show_excerpt',
             [
-                'label' => __('Show Excerpt', 'eks'),
+                'label' => __('Show Excerpt', 'travel'),
                 'type' => Controls_Manager::SWITCHER,
-                'label_on' => __('Yes', 'eks'),
-                'label_off' => __('No', 'eks'),
+                'label_on' => __('Yes', 'travel'),
+                'label_off' => __('No', 'travel'),
                 'return_value' => 'yes',
                 'default' => 'yes',
             ]
@@ -96,7 +85,7 @@ class PostsLoopWidget extends \Elementor\Widget_Base
         $this->add_control(
             'excerpt_length',
             [
-                'label' => __('Excerpt Length', 'eks'),
+                'label' => __('Excerpt Length', 'travel'),
                 'type' => Controls_Manager::NUMBER,
                 'default' => 20,
                 'condition' => [
@@ -108,10 +97,10 @@ class PostsLoopWidget extends \Elementor\Widget_Base
         $this->add_control(
             'show_date',
             [
-                'label' => __('Show Date', 'eks'),
+                'label' => __('Show Date', 'travel'),
                 'type' => Controls_Manager::SWITCHER,
-                'label_on' => __('Yes', 'eks'),
-                'label_off' => __('No', 'eks'),
+                'label_on' => __('Yes', 'travel'),
+                'label_off' => __('No', 'travel'),
                 'return_value' => 'yes',
                 'default' => 'yes',
             ]
@@ -120,10 +109,10 @@ class PostsLoopWidget extends \Elementor\Widget_Base
         $this->add_control(
             'show_author',
             [
-                'label' => __('Show Author', 'eks'),
+                'label' => __('Show Author', 'travel'),
                 'type' => Controls_Manager::SWITCHER,
-                'label_on' => __('Yes', 'eks'),
-                'label_off' => __('No', 'eks'),
+                'label_on' => __('Yes', 'travel'),
+                'label_off' => __('No', 'travel'),
                 'return_value' => 'yes',
                 'default' => 'yes',
             ]
@@ -132,10 +121,10 @@ class PostsLoopWidget extends \Elementor\Widget_Base
         $this->add_control(
             'show_categories',
             [
-                'label' => __('Show Categories', 'eks'),
+                'label' => __('Show Categories', 'travel'),
                 'type' => Controls_Manager::SWITCHER,
-                'label_on' => __('Yes', 'eks'),
-                'label_off' => __('No', 'eks'),
+                'label_on' => __('Yes', 'travel'),
+                'label_off' => __('No', 'travel'),
                 'return_value' => 'yes',
                 'default' => 'yes',
             ]
@@ -316,22 +305,25 @@ class PostsLoopWidget extends \Elementor\Widget_Base
     {
         $settings = $this->get_settings_for_display();
 
-        $paged = max(1, (int) get_query_var('paged'), (int) get_query_var('page'));
+        $paged = max( 1, (int) get_query_var('paged'), (int) get_query_var('page') );
 
-
-        $args = wp_parse_args(
-            [
+        
+        if ( is_home() || is_archive() || is_search() ) {
+            global $wp_query;
+            $query = $wp_query;
+        } else {
+            $query = new WP_Query([
+                'post_type'           => 'post',
                 'posts_per_page'      => 7,
-                'ignore_sticky_posts' => true,
                 'paged'               => $paged,
-                'no_found_rows'       => false, 
-            ],
-        );
+                'ignore_sticky_posts' => true,
+                'no_found_rows'       => false,
+            ]);
+        }
 
-        $query = new \WP_Query( $args );
     
         if (!$query->have_posts()) {
-            echo '<p class="no-posts-found">' . __('No posts found.', 'eks') . '</p>';
+            echo '<p class="no-posts-found">' . __('No posts found.', 'travel') . '</p>';
             return;
         }
 
@@ -364,7 +356,7 @@ class PostsLoopWidget extends \Elementor\Widget_Base
                     <?php
                     $is_mobile = wp_is_mobile();
                     echo paginate_links([
-                        'total'     => $is_mobile ? min(3, (int) $query->max_num_pages) : (int) $query->max_num_pages,
+                        'total'     => $query->max_num_pages,
                         'current'   => max(1, $paged),
                         'prev_text' => $is_mobile ? __('<svg width="7" height="13" viewBox="0 0 7 13" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                 <path d="M-3.9879e-07 6.54492C-3.97361e-07 6.66469 0.0429707 6.76736 0.128913 6.85291L6.17495 12.8717C6.2609 12.9572 6.36403 13 6.48435 13C6.60467 13 6.7078 12.9572 6.79374 12.8717C6.87968 12.7861 6.92265 12.6834 6.92265 12.5637C6.92265 12.4439 6.87968 12.3412 6.79374 12.2557L1.05709 6.54492L6.88398 0.744324C6.96133 0.658769 7 0.556104 7 0.436328C7 0.316552 6.96133 0.213886 6.88398 0.128332C6.84101 0.0855545 6.79159 0.0534715 6.73573 0.0320829C6.67986 0.0106943 6.62615 4.4581e-09 6.57459 5.07302e-09C6.51443 5.79041e-09 6.45641 0.0106943 6.40055 0.0320829C6.34469 0.0534715 6.29527 0.0855545 6.2523 0.128332L0.128913 6.23692C0.0429707 6.32247 -4.00218e-07 6.42514 -3.9879e-07 6.54492Z" fill="#480E66"/>
