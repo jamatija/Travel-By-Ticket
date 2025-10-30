@@ -6,7 +6,6 @@
   justify-content: start;
   gap: 1rem;
   overflow-x: auto;
-  padding-bottom: 0.5rem;
   cursor: grab;
   scrollbar-width: none;      
   -ms-overflow-style: none; 
