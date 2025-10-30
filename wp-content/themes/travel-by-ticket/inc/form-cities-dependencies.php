@@ -1,6 +1,5 @@
 <?php
 function page_has_shortcode_anywhere( $shortcode ) {
-    if ( !is_singular() ) return false;
     $post = get_post();
     if ( !$post ) return false;
 
@@ -13,7 +12,7 @@ function page_has_shortcode_anywhere( $shortcode ) {
     return false;
 }
 function enqueue_bus_search_scripts2() {
-    if ( is_singular() && page_has_shortcode_anywhere('bus_search_form') ) {
+    if ( page_has_shortcode_anywhere('bus_search_form') ) {
         // Select2 CSS
         wp_enqueue_style(
             'select2',
