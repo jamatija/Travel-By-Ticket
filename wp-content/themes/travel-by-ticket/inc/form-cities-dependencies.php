@@ -1,5 +1,6 @@
 <?php
 function page_has_shortcode_anywhere( $shortcode ) {
+    if ( !is_singular() ) return false;
     $post = get_post();
     if ( !$post ) return false;
 
@@ -12,7 +13,16 @@ function page_has_shortcode_anywhere( $shortcode ) {
     return false;
 }
 function enqueue_bus_search_scripts2() {
-    if ( page_has_shortcode_anywhere('bus_search_form') ) {
+      $should_enqueue = false;
+    
+    if ( (is_archive() || is_home() || is_search()) && class_exists('\Elementor\Plugin') ) {
+        $should_enqueue = true;
+    }
+    elseif ( page_has_shortcode_anywhere('bus_search_form') ) {
+        $should_enqueue = true;
+    }
+    
+    if ( $should_enqueue ) {
         // Select2 CSS
         wp_enqueue_style(
             'select2',
