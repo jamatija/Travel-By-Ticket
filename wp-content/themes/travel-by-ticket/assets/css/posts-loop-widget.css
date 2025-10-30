@@ -193,8 +193,8 @@
 
 .posts-pagination .page-numbers .prev:hover,
 .posts-pagination .page-numbers .next:hover {
-  background-color: #f5f5f5 !important;
-  color: var(--e-global-color-primary);
+  background-color: var(--e-global-color-primary);
+  color: var(--e-global-color-accent);
 }
 
 .posts-pagination .page-numbers .prev{
@@ -219,14 +219,13 @@
 
 .prev:hover svg path,
 .next:hover svg path{
-  fill: var(--e-global-color-primary);
+  fill: var(--e-global-color-accent);
   opacity: 1 !important;
 }
 
 ul .page-numbers:hover {
-  background: var(--e-global-color-primary);
-  color: #ffffff;
-  border-color: var(--e-global-color-primary);
+  background: #F0E3C0;
+  color: var(--e-global-color-primary);
 }
 
 .posts-pagination .page-numbers.current {
@@ -303,4 +302,8 @@ ul .page-numbers:hover {
   display: flex;
   gap: 20px;
   justify-content: start;
+}
+
+.article-wrapper .grid-post-card .post-card-info{
+  padding: 0 !important;
 }
