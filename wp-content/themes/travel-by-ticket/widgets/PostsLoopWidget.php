@@ -44,6 +44,15 @@ class PostsLoopWidget extends \Elementor\Widget_Base
         );
 
         $this->add_control(
+            'prefix_text',
+            [
+                'label' => __( 'First row prefix text', 'travel' ),
+                'type' => Controls_Manager::TEXT,
+                'placeholder' => __( 'Enter prefix text', 'travel' ),
+            ]
+        );
+
+        $this->add_control(
             'show_pagination',
             [
                 'label' => __('Show Pagination', 'travel'),
@@ -392,7 +401,7 @@ class PostsLoopWidget extends \Elementor\Widget_Base
                 <div class="post-card-info">
                         <?php if ($i < 4): ?>
                             <span class="grid-post-date">
-                                <?php echo 'From the blog, ' . get_the_date('d.m.Y'); ?>
+                                <?php echo esc_html( $settings['prefix_text'] ) . ' ' . get_the_date('d.m.Y'); ?>
                             </span>
                         <?php else: ?>
                             <span class="grid-post-date">
