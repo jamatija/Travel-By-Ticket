@@ -279,7 +279,7 @@ ul .page-numbers:hover {
 }
 
 .grid-row-button:hover {
-  background-color: #f5f5f5 !important;
+  background-color: var(--e-global-color-primary) !important;
 }
 
 .article-wrapper {
@@ -294,4 +294,8 @@ ul .page-numbers:hover {
 
 .article-wrapper .grid-post-card .post-card-info{
   padding: 0 !important;
+}
+
+a.filter {
+  font-size: 15px !important;
 }
