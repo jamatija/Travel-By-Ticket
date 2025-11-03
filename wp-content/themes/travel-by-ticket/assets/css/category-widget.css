@@ -94,8 +94,8 @@
 
 /* Hover state */
 .filter:hover {
-  background-color: var(--e-global-color-accent);
-  color: #ffffff;
+  background-color: #F0E3C0;
+  color: var(--e-global-color-primary);
 }
 
 /* Current/Active category */
