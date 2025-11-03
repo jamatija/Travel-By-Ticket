@@ -278,18 +278,6 @@ ul .page-numbers:hover {
   height: 245px !important;
 }
 
-.grid-row-button {
-  all: unset !important;
-  padding: 14px 28px !important;
-  border: 1px solid #E8E1D1 !important;
-  border-radius: 8px !important;
-  background-color: #ffffff !important;
-  font-size: 20px !important;
-  display: inline-block !important; 
-  color: var(--e-global-color-primary) !important;
-  transition: background-color .3s ease-in-out !important;
-}
-
 .grid-row-button:hover {
   background-color: #f5f5f5 !important;
 }

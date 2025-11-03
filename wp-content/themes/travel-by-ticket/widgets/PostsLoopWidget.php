@@ -308,6 +308,39 @@ class PostsLoopWidget extends \Elementor\Widget_Base
         );
 
         $this->end_controls_section();
+
+        $this->start_controls_section(
+            'section_button_style',
+            [
+                'label' => __( 'Button Style', 'travel' ),
+                'tab' => Controls_Manager::TAB_STYLE,
+            ]
+        );
+
+        $this->add_responsive_control(
+            'button_padding',
+            [
+                'label' => __( 'Padding', 'travel' ),
+                'type' => Controls_Manager::DIMENSIONS,
+                'size_units' => [ 'px', 'em', '%' ],
+                'selectors' => [
+                    '{{WRAPPER}} .article-wrapper .grid-row-button' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}} !important;',
+                ],
+            ]
+        );
+
+        $this->add_group_control(
+            Group_Control_Typography::get_type(),
+            [
+                'name' => 'button_typography',
+                'label' => __( 'Typography', 'travel' ),
+                'selector' => '{{WRAPPER}} .article-wrapper .grid-row-button',
+            ]
+        );
+
+
+
+        $this->end_controls_section();
     }
 
     protected function render()
