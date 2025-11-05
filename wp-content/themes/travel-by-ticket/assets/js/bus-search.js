@@ -213,20 +213,16 @@
             const normalizedQuery = normalizeText(query);
             
             const results = cities
-                .filter(city => {
-                    const cityLabel = city.city_label || city.city_primary_name || '';
-                    const stateName = city.state_name || city.city_state || '';
-                    
-                    const normalizedCity = normalizeText(cityLabel);
-                    const normalizedState = normalizeText(stateName);
-                    
-                    return normalizedCity.includes(normalizedQuery) || 
-                           normalizedState.includes(normalizedQuery);
-                })
-                .slice(0, 10); // Max 10 rezultata
-            
-            this.showResults(results, query);
-        }
+                    .filter(city => {
+                        const cityLabel = city.city_label || city.city_primary_name || '';
+                        const normalizedCity = normalizeText(cityLabel);
+                        
+                        return normalizedCity.startsWith(normalizedQuery);
+                    })
+                    .slice(0, 9999); 
+                
+                this.showResults(results, query);
+            }
         
         showResults(results, query) {
             if (results.length === 0) {
@@ -332,6 +328,9 @@
             const returnDate = formatDate(formData.returnDate);
             url += `${returnDate}/`;
         }
+
+        const utmParms = '?utm_source=website&utm_medium=forma&utm_campaign=travel_by_ticket';
+        url += utmParms;
         
         return url;
     }
