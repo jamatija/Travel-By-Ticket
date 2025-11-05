@@ -474,7 +474,7 @@ class PostsLoopWidget extends \Elementor\Widget_Base
                     <?php endif; ?>
                 </div>
             </div>
-            <?php echo ($i < 4) ? '<button class="grid-row-button" href="#">Read more</button>' : ''; ?>
+            <?php echo ($i < 4) ? '<button class="grid-row-button">' . __('Read more', 'travel') . '</button>' : ''; ?>
         </a>
        </article>
         <?php

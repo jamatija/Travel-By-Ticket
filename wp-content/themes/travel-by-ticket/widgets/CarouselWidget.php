@@ -186,16 +186,59 @@ class CarouselWidget extends \Elementor\Widget_Base
         );
 
         
-        // Kontrola za Travel News kategoriju
+        // Travel News - Kategorija ili Tag
+        $this->add_control(
+            'travel_news_taxonomy_type',
+            [
+                'label'   => __( 'Travel News Taxonomy Type', 'travel' ),
+                'type'    => Controls_Manager::SELECT,
+                'options' => [
+                    'category' => __( 'Category', 'travel' ),
+                    'post_tag' => __( 'Tag', 'travel' ),
+                ],
+                'default' => 'category',
+            ]
+        );
+
         $this->add_control(
             'travel_news_category',
             [
                 'label'   => __( 'Travel News Category', 'travel' ),
                 'type'    => Controls_Manager::SELECT2,
-                'options' => $this->get_category_options(),
+                'options' => $this->get_terms_by_taxonomy('category'),
                 'default' => '',
                 'multiple' => false,
-                'description' => __( 'Select category for Travel News filter', 'travel' ),
+                'condition' => [
+                    'travel_news_taxonomy_type' => 'category',
+                ],
+            ]
+        );
+
+        $this->add_control(
+            'travel_news_tag',
+            [
+                'label'   => __( 'Travel News Tag', 'travel' ),
+                'type'    => Controls_Manager::SELECT2,
+                'options' => $this->get_terms_by_taxonomy('post_tag'),
+                'default' => '',
+                'multiple' => false,
+                'condition' => [
+                    'travel_news_taxonomy_type' => 'post_tag',
+                ],
+            ]
+        );
+
+        // Our Blog - Kategorija ili Tag
+        $this->add_control(
+            'our_blog_taxonomy_type',
+            [
+                'label'   => __( 'Our Blog Taxonomy Type', 'travel' ),
+                'type'    => Controls_Manager::SELECT,
+                'options' => [
+                    'category' => __( 'Category', 'travel' ),
+                    'post_tag' => __( 'Tag', 'travel' ),
+                ],
+                'default' => 'category',
             ]
         );
 
@@ -204,14 +247,30 @@ class CarouselWidget extends \Elementor\Widget_Base
             [
                 'label'   => __( 'Our Blog Category', 'travel' ),
                 'type'    => Controls_Manager::SELECT2,
-                'options' => $this->get_category_options(),
+                'options' => $this->get_terms_by_taxonomy('category'),
                 'default' => '',
                 'multiple' => false,
-                'description' => __( 'Select category for Our Blog filter', 'travel' ),
+                'condition' => [
+                    'our_blog_taxonomy_type' => 'category',
+                ],
             ]
         );
 
-                $this->add_control(
+        $this->add_control(
+            'our_blog_tag',
+            [
+                'label'   => __( 'Our Blog Tag', 'travel' ),
+                'type'    => Controls_Manager::SELECT2,
+                'options' => $this->get_terms_by_taxonomy('post_tag'),
+                'default' => '',
+                'multiple' => false,
+                'condition' => [
+                    'our_blog_taxonomy_type' => 'post_tag',
+                ],
+            ]
+        );
+
+        $this->add_control(
             'layout_2_title_desktop_1',
             [
                 'label' => __( 'Title 1 (Desktop)', 'travel' ),
@@ -484,6 +543,23 @@ class CarouselWidget extends \Elementor\Widget_Base
         return $options;
     }
 
+    // Nova metoda - dohvata termine samo za određenu taksonomiju
+    public function get_terms_by_taxonomy($taxonomy_name = 'category') {
+        $terms = get_terms([
+            'taxonomy' => $taxonomy_name, 
+            'hide_empty' => false, 
+        ]);
+
+        $options = [];
+        if ($terms && !is_wp_error($terms)) {
+            foreach ($terms as $term) {
+                $options[$term->term_id] = $term->name;
+            }
+        }
+
+        return $options;
+    }
+
 
     public function get_post_type_options() {
         $post_types = get_post_types(['public' => true], 'objects');
@@ -496,25 +572,8 @@ class CarouselWidget extends \Elementor\Widget_Base
         return $options;
     }
 
-       public function get_category_options() {
-        $taxonomies = get_taxonomies(['public' => true], 'objects');
-        
-        $options = [];
-
-        foreach ($taxonomies as $taxonomy) {
-            $terms = get_terms([
-                'taxonomy' => $taxonomy->name, 
-                'hide_empty' => false, 
-            ]);
-
-            if ($terms && !is_wp_error($terms)) {
-                foreach ($terms as $term) {
-                    $options[$term->term_id] = $term->name;
-                }
-            }
-        }
-
-        return $options;
+    public function get_category_options() {
+        return $this->get_terms_by_taxonomy('category');
     }
 
     protected function render()
@@ -528,38 +587,109 @@ class CarouselWidget extends \Elementor\Widget_Base
 
         $selected_cpt = $settings['cpt']; 
         $selected_taxonomy = $settings['taxonomy'];
-        $travel_news_cat_id = (int) $settings['travel_news_category'] ?: 0;
-        $our_blog_cat_id = (int) $settings['our_blog_category'] ?: 0;  
         $excluded_categories = $settings['exclude_categories'];
 
         $layout = $settings['layout']; 
 
-        if ($layout == 'layout_2' && ($travel_news_cat_id || $our_blog_cat_id)) {
-                $categories_to_include = array_filter([$travel_news_cat_id, $our_blog_cat_id]);
+        // Layout 2 - Prikupljanje podataka o taksonomijama
+        $travel_news_terms = [];
+        $our_blog_terms = [];
+        
+        if ($layout == 'layout_2') {
+            // Travel News
+            $travel_news_tax_type = $settings['travel_news_taxonomy_type'] ?? 'category';
+            if ($travel_news_tax_type === 'category') {
+                $travel_news_term_id = (int) ($settings['travel_news_category'] ?? 0);
+                if ($travel_news_term_id) {
+                    $travel_news_terms = [
+                        'taxonomy' => 'category',
+                        'term_id' => $travel_news_term_id
+                    ];
+                }
+            } else {
+                $travel_news_term_id = (int) ($settings['travel_news_tag'] ?? 0);
+                if ($travel_news_term_id) {
+                    $travel_news_terms = [
+                        'taxonomy' => 'post_tag',
+                        'term_id' => $travel_news_term_id
+                    ];
+                }
+            }
+
+            // Our Blog
+            $our_blog_tax_type = $settings['our_blog_taxonomy_type'] ?? 'category';
+            if ($our_blog_tax_type === 'category') {
+                $our_blog_term_id = (int) ($settings['our_blog_category'] ?? 0);
+                if ($our_blog_term_id) {
+                    $our_blog_terms = [
+                        'taxonomy' => 'category',
+                        'term_id' => $our_blog_term_id
+                    ];
+                }
+            } else {
+                $our_blog_term_id = (int) ($settings['our_blog_tag'] ?? 0);
+                if ($our_blog_term_id) {
+                    $our_blog_terms = [
+                        'taxonomy' => 'post_tag',
+                        'term_id' => $our_blog_term_id
+                    ];
+                }
+            }
+        }
+
+        // Formiranje query argumenta
+        if ($layout == 'layout_2' && (!empty($travel_news_terms) || !empty($our_blog_terms))) {
+            $tax_queries = [];
+            
+            if (!empty($travel_news_terms) && !empty($our_blog_terms)) {
+                // Ako su obe taksonomije različite, koristimo OR relation
+                $tax_queries['relation'] = 'OR';
                 
-                $args = [
-                    'post_type' => $selected_cpt,  
-                    'post_status' => 'publish',
-                    'orderby' => 'date',
-                    'order' => 'DESC',
-                    'numberposts' => -1,
-                    'tax_query' => [
-                        [
-                            'taxonomy' => 'category',
-                            'field' => 'term_id',
-                            'terms' => $categories_to_include,
-                            'operator' => 'IN',
-                        ]
-                    ],
-                    'suppress_filters' => false
+                $tax_queries[] = [
+                    'taxonomy' => $travel_news_terms['taxonomy'],
+                    'field' => 'term_id',
+                    'terms' => [$travel_news_terms['term_id']],
+                    'operator' => 'IN',
                 ];
+                
+                $tax_queries[] = [
+                    'taxonomy' => $our_blog_terms['taxonomy'],
+                    'field' => 'term_id',
+                    'terms' => [$our_blog_terms['term_id']],
+                    'operator' => 'IN',
+                ];
+            } elseif (!empty($travel_news_terms)) {
+                $tax_queries[] = [
+                    'taxonomy' => $travel_news_terms['taxonomy'],
+                    'field' => 'term_id',
+                    'terms' => [$travel_news_terms['term_id']],
+                    'operator' => 'IN',
+                ];
+            } elseif (!empty($our_blog_terms)) {
+                $tax_queries[] = [
+                    'taxonomy' => $our_blog_terms['taxonomy'],
+                    'field' => 'term_id',
+                    'terms' => [$our_blog_terms['term_id']],
+                    'operator' => 'IN',
+                ];
+            }
+
+            $args = [
+                'post_type' => $selected_cpt,  
+                'post_status' => 'publish',
+                'orderby' => 'date',
+                'order' => 'DESC',
+                'posts_per_page' => -1,
+                'tax_query' => $tax_queries,
+                'suppress_filters' => false
+            ];
         } else {
             $args = [
                 'post_type' => $selected_cpt,  
                 'post_status' => 'publish',
                 'orderby' => 'date',
                 'order' => 'DESC',
-                'numberposts' => -1,  
+                'posts_per_page' => -1,  
                 'tax_query' => [],
                 'suppress_filters' => false
             ];
@@ -643,13 +773,34 @@ class CarouselWidget extends \Elementor\Widget_Base
                         $data_category = '';            
                         
                         if ( $layout == 'layout_2' ) {
-                            $categories = wp_get_post_terms( $p->ID, 'category', [ 'fields' => 'ids' ] );
+                            // Proveravamo i kategorije i tagove
+                            $post_categories = wp_get_post_terms( $p->ID, 'category', [ 'fields' => 'ids' ] );
+                            $post_tags = wp_get_post_terms( $p->ID, 'post_tag', [ 'fields' => 'ids' ] );
                             
-                            if ($travel_news_cat_id && in_array($travel_news_cat_id, $categories, true)) {
-                                $data_category = 'travel-news';
-                            } elseif ($our_blog_cat_id && in_array($our_blog_cat_id, $categories, true)) {
-                                $data_category = 'our-blog';
-                            } else {
+                            // Provera Travel News
+                            if (!empty($travel_news_terms)) {
+                                if ($travel_news_terms['taxonomy'] === 'category' && 
+                                    in_array($travel_news_terms['term_id'], $post_categories, true)) {
+                                    $data_category = 'travel-news';
+                                } elseif ($travel_news_terms['taxonomy'] === 'post_tag' && 
+                                          in_array($travel_news_terms['term_id'], $post_tags, true)) {
+                                    $data_category = 'travel-news';
+                                }
+                            }
+                            
+                            // Provera Our Blog (ako nije već travel-news)
+                            if (empty($data_category) && !empty($our_blog_terms)) {
+                                if ($our_blog_terms['taxonomy'] === 'category' && 
+                                    in_array($our_blog_terms['term_id'], $post_categories, true)) {
+                                    $data_category = 'our-blog';
+                                } elseif ($our_blog_terms['taxonomy'] === 'post_tag' && 
+                                          in_array($our_blog_terms['term_id'], $post_tags, true)) {
+                                    $data_category = 'our-blog';
+                                }
+                            }
+                            
+                            // Fallback ako nije pronađena kategorija
+                            if (empty($data_category)) {
                                 $data_category = 'our-blog';
                             }
                         }
@@ -667,8 +818,8 @@ class CarouselWidget extends \Elementor\Widget_Base
                         }
                     ?>
 
-                        <?php   $initial_filter = ($layout == 'layout_2' && $travel_news_cat_id) ? 'travel-news' : '';
-                                $display = ($layout == 'layout_2' && $travel_news_cat_id)
+                        <?php   $initial_filter = ($layout == 'layout_2' && !empty($travel_news_terms)) ? 'travel-news' : '';
+                                $display = ($layout == 'layout_2' && !empty($travel_news_terms))
                                     ? (($data_category === $initial_filter) ? 'block' : 'none')
                                     : 'block';?>
                     <div class="swiper-slide" <?php if (!empty($data_category)) : ?>
@@ -705,11 +856,12 @@ class CarouselWidget extends \Elementor\Widget_Base
                                     <p class="card-price">
                                         <?php echo esc_html( sprintf( __('from %s €', 'travel'), $from_price ) ); ?>
                                     </p>
-                                <?php else: ?>
+                               <?php else: ?>
                                     <p class="card-tag">
-                                        <?php echo esc_html($excerpt) ?>
+                                        <?php echo esc_html( mb_strimwidth($excerpt, 0, 100, '...') ); ?>
                                     </p>
-                                <?php endif?>
+                                <?php endif; ?>
+
                             </div>
                         </a>
                     </div>
@@ -772,3 +924,4 @@ class CarouselWidget extends \Elementor\Widget_Base
         <?php endif;
     }
 }
+?>
