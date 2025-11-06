@@ -305,7 +305,7 @@
         const fromStationId = formData.fromCityId;
         const toStationId = formData.toCityId;
         const cassiopeiaId = '132';
-        const affiliateId = '0';
+        const affiliateId = '724';
         const zero = '0';
         
         const stationPart = `${fromStationId}-${toStationId}-${cassiopeiaId}-${affiliateId}-${zero}`;
