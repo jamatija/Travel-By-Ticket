@@ -17,16 +17,18 @@ add_action( 'wp_enqueue_scripts', function() {
 
 //Load swiper assets
 function travel_enqueue_swiper_assets() {
+    // CSS
     wp_enqueue_style(
         'swiper-css',
-        'https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.css',
+        get_stylesheet_directory_uri() . '/assets/css/swiper-bundle.min.css',
         [],
-        '12.0.2',
+        '12.0.2'
     );
 
-    wp_register_script(
-        'swiper',
-        'https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.js',
+    // JS
+    wp_enqueue_script(
+        'swiper-js',
+        get_stylesheet_directory_uri() . '/assets/js/swiper-bundle.min.js',
         [],
         '12.0.2',
         true
