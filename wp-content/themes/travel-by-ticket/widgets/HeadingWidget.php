@@ -42,6 +42,19 @@ class HeadingWidget extends \Elementor\Widget_Base
             ]
         );
 
+            $this->add_control(
+            'content_source',
+            [
+                'label'   => __( 'Content Source', 'travel' ),
+                'type'    => Controls_Manager::SELECT,
+                'default' => 'static',
+                'options' => [
+                    'static'  => __( 'Static Text', 'travel' ),
+                    'dynamic' => __( 'Dynamic (Page/Post Title)', 'travel' ),
+                ],
+            ]
+        );
+
         // Prvi dio teksta
         $this->add_control(
             'heading_text_first',
@@ -50,6 +63,9 @@ class HeadingWidget extends \Elementor\Widget_Base
                 'type'        => Controls_Manager::TEXT,
                 'default'     => __( 'Main text', 'travel' ),
                 'label_block' => true,
+                'condition'   => [
+                    'content_source' => 'static', 
+                ],
             ]
         );
 
@@ -61,6 +77,9 @@ class HeadingWidget extends \Elementor\Widget_Base
                 'type'        => Controls_Manager::TEXT,
                 'default'     => __( 'Highlighted text', 'travel' ),
                 'label_block' => true,
+                'condition'   => [
+                    'content_source' => 'static', 
+                ],
             ]
         );
 
@@ -220,16 +239,30 @@ class HeadingWidget extends \Elementor\Widget_Base
     }
 
 
-    protected function render()
-    {
+    protected function render(){
         $settings = $this->get_settings_for_display();
+        
         $sep = ( ! empty( $settings['break_line_between_parts'] ) && $settings['break_line_between_parts'] === 'yes' )
-        ? '<br>'
-        : ' ';
+            ? '<br>'
+            : ' ';
 
-        $tag   = $settings['heading_tag'] ?: 'h3';
-        $first = $settings['heading_text_first'];
-        $second= $settings['heading_text_second'];
+        $tag = $settings['heading_tag'] ?: 'h3';
+
+        if ( $settings['content_source'] === 'dynamic' ) {
+            $full_text = get_the_title();
+            
+            $words = explode( ' ', $full_text );
+            $word_count = count( $words );
+            $half = ceil( $word_count / 2 );
+            
+            $first  = implode( ' ', array_slice( $words, 0, $half ) );
+            $second = implode( ' ', array_slice( $words, $half ) );
+            
+        } else {
+            // Koristi statički tekst
+            $first  = $settings['heading_text_first'];
+            $second = $settings['heading_text_second'];
+        }
 
         echo sprintf(
             '<%1$s class="heading-widget__title">%2$s%4$s<span class="heading-widget__title-2">%3$s</span></%1$s>',
@@ -238,6 +271,5 @@ class HeadingWidget extends \Elementor\Widget_Base
             esc_html( $second ),
             $sep 
         );
-        
     }
 }
