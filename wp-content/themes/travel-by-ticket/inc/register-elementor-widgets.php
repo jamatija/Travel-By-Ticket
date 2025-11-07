@@ -11,6 +11,7 @@ function travel_tickets_widget_styles()
     wp_register_style('logo-hover-widget', get_stylesheet_directory_uri() . '/assets/css/logo-widget.css');
     wp_register_style('category-widget', get_stylesheet_directory_uri() . '/assets/css/category-widget.css');
     wp_register_style('posts-loop-widget', get_stylesheet_directory_uri() . '/assets/css/posts-loop-widget.css', array('grid-with-author'));
+    wp_register_style('shaped-image-widget', get_stylesheet_directory_uri() . '/assets/css/shaped-image-widget.css');
 }
 add_action('wp_enqueue_scripts', 'travel_tickets_widget_styles');
 
@@ -42,6 +43,7 @@ function register_widgets($widgets_manager)
     require_once(__DIR__ . '/../widgets/LogoWidget.php');
     require_once(__DIR__ . '/../widgets/CategoryWidget.php');
     require_once(__DIR__ . '/../widgets/PostsLoopWidget.php');
+    require_once(__DIR__ . '/../widgets/ShapedImageWidget.php');
     
     $widgets_manager->register(new \LinkWidget());
     $widgets_manager->register(new \CarouselWidget());
@@ -54,6 +56,7 @@ function register_widgets($widgets_manager)
     $widgets_manager->register(new \LogoWidget());
     $widgets_manager->register(new \CategoryWidget());
     $widgets_manager->register(new \PostsLoopWidget());
+    $widgets_manager->register(new \ShapedImageWidget());
 }
 add_action('elementor/widgets/register', 'register_widgets');
 
