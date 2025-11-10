@@ -766,6 +766,7 @@ class CarouselWidget extends \Elementor\Widget_Base
                 <div class="swiper-wrapper">
                 <?php foreach ( $posts as $p ) : 
                         $from_price = get_field('from_price', $p->ID);
+                        $vertical_image_url = get_field('vertical_image', $p);
                         $title      = get_the_title( $p );
                         $excerpt    = get_the_excerpt($p);
 
@@ -827,11 +828,16 @@ class CarouselWidget extends \Elementor\Widget_Base
                                                 <?php endif; ?> style="display: <?php echo esc_attr($display); ?>;">
 
                         <a href="<?php echo esc_url( get_permalink( $p ) ); ?>" class="card">
-                            <?php if ( has_post_thumbnail( $p ) ) : ?>
-                                <figure class="card-media">
-                                <?php echo get_the_post_thumbnail( $p, 'full' ); ?>
-                                </figure>
-                            <?php endif; ?>
+                            <figure class="card-media">
+                                <?php if ( !empty($vertical_image_url) ) : ?>
+                                    <img src="<?php echo esc_url($vertical_image_url); ?>" alt="<?php echo esc_attr(get_the_title($p)); ?>" loading="lazy" decoding="async">
+                                <?php else : ?>
+                                    <?php echo get_the_post_thumbnail( $p, 'full', [
+                                        'loading'  => 'lazy',
+                                        'decoding' => 'async',
+                                    ] ); ?>
+                                <?php endif; ?>
+                            </figure>
 
                             <div class="text">
 
