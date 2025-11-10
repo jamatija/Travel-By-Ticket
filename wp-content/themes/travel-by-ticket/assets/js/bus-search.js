@@ -1,5 +1,31 @@
 (function($) {
     'use strict';
+
+    const PREFERRED_STATE_ORDER = [
+        208, // SRB
+        42,  // MNE
+        86,  // HRV
+        31,  // BIH
+        4,   // ALB
+        170, // MKD
+        205, // SVN
+        254, // KOS
+        36,  // BGR
+        74,  // GRC
+        187  // ROU
+    ];
+
+    const STATE_RANK = new Map(PREFERRED_STATE_ORDER.map((id, idx) => [String(id), idx]));
+
+    function getStateRank(city) {
+        const sid = city?.state_id != null ? String(city.state_id) : '';
+        return STATE_RANK.has(sid) ? STATE_RANK.get(sid) : Number.POSITIVE_INFINITY;
+    }
+
+    function getCityLabel(city) {
+        return (city.city_label || city.city_primary_name || '').trim();
+    }
+
     
     // Cache config
     const CACHE_KEY = 'bus_cities_cache';
@@ -151,18 +177,17 @@
         return citiesCache[lang] || [];
     }
     
-    // Normalizacija teksta (uklanja dijakritike)
     function normalizeText(text) {
         if (!text) return '';
         return text
             .toLowerCase()
             .normalize('NFD')
-            .replace(/[\u0300-\u036f]/g, '') // Uklanja dijakritičke znakove
+            .replace(/[\u0300-\u036f]/g, '') 
             .replace(/đ/g, 'd')
             .replace(/Đ/g, 'd');
     }
     
-    // AUTOCOMPLETE FUNKCIONALNOST
+    // AUTOCOMPLETE 
     class CityAutocomplete {
         constructor(inputElement, hiddenInputElement) {
             this.$input = $(inputElement);
@@ -173,7 +198,6 @@
         }
         
         init() {
-            // Kreiraj dropdown
             this.$dropdown = $('<div class="city-autocomplete-dropdown"></div>');
             this.$input.after(this.$dropdown);
             
@@ -181,7 +205,6 @@
             this.$input.on('input', (e) => this.handleInput(e));
             this.$input.on('focus', (e) => this.handleFocus(e));
             
-            // Zatvori dropdown kad kliknes van
             $(document).on('click', (e) => {
                 if (!$(e.target).closest('.form-field').length) {
                     this.hideDropdown();
@@ -211,44 +234,54 @@
         search(query) {
             const cities = getCurrentCities();
             const normalizedQuery = normalizeText(query);
-            
-            const results = cities
-                    .filter(city => {
-                        const cityLabel = city.city_label || city.city_primary_name || '';
-                        const normalizedCity = normalizeText(cityLabel);
-                        
-                        return normalizedCity.startsWith(normalizedQuery);
-                    })
-                    .slice(0, 9999); 
-                
-                this.showResults(results, query);
-            }
-        
+
+            let results = cities.filter(city => {
+                const cityLabel = getCityLabel(city);
+                const normalizedCity = normalizeText(cityLabel);
+                return normalizedCity.startsWith(normalizedQuery);
+            });
+
+            results.sort((a, b) => {
+                const ra = getStateRank(a);
+                const rb = getStateRank(b);
+                if (ra !== rb) return ra - rb;
+
+                const la = getCityLabel(a).toLowerCase();
+                const lb = getCityLabel(b).toLowerCase();
+                if (la < lb) return  -1;
+                if (la > lb) return   1;
+                return 0;
+            });
+
+            results = results.slice(0, 999);
+
+            this.showResults(results, query);
+        }
+
         showResults(results, query) {
             if (results.length === 0) {
                 this.$dropdown.html(`<div class="autocomplete-item no-results">${getTranslation('noResults')}</div>`);
                 this.$dropdown.addClass('active');
                 return;
             }
-            
+
             const html = results.map(city => {
                 const cityId = city.city_id || city.id;
-                const cityLabel = city.city_label || city.city_primary_name;
-                const stateName = city.state_name || city.city_state || '';
-                
-                const displayText = stateName 
+                const cityLabel = getCityLabel(city);
+                const stateName = city.state_name || '';
+                const stateCode = city.state_code || '';
+                const displayText = stateName
                     ? `${cityLabel} <span class="state">(${stateName})</span>`
                     : cityLabel;
-                
+
                 return `<div class="autocomplete-item" data-city-id="${cityId}" data-city-label="${cityLabel}">
                     ${displayText}
                 </div>`;
             }).join('');
-            
+
             this.$dropdown.html(html);
             this.$dropdown.addClass('active');
-            
-            // Klik na item
+
             this.$dropdown.find('.autocomplete-item').not('.no-results').on('click', (e) => {
                 const $item = $(e.currentTarget);
                 this.selectCity({
@@ -257,6 +290,7 @@
                 });
             });
         }
+
         
         selectCity(city) {
             this.selectedCity = city;
