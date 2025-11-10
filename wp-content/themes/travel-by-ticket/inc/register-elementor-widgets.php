@@ -12,6 +12,7 @@ function travel_tickets_widget_styles()
     wp_register_style('category-widget', get_stylesheet_directory_uri() . '/assets/css/category-widget.css');
     wp_register_style('posts-loop-widget', get_stylesheet_directory_uri() . '/assets/css/posts-loop-widget.css', array('grid-with-author'));
     wp_register_style('shaped-image-widget', get_stylesheet_directory_uri() . '/assets/css/shaped-image-widget.css');
+    wp_register_style('bus-stations-map', get_stylesheet_directory_uri() . '/assets/css/leaflet.css');
 }
 add_action('wp_enqueue_scripts', 'travel_tickets_widget_styles');
 
@@ -25,6 +26,7 @@ function travel_tickets_pulse_register_widget_scripts()
     wp_register_script('tab-widget', get_stylesheet_directory_uri() . '/assets/js/tab-widget.js', ['swiper'],false, true);
     wp_register_script('language-switcher-widget', get_stylesheet_directory_uri() . '/assets/js/language-switcher-widget.js', [],false, true);
     wp_register_script('category-widget', get_stylesheet_directory_uri() . '/assets/js/category.js', [],false, true);
+    wp_register_script('bus-stations-map', get_stylesheet_directory_uri() . '/assets/js/leaflet.js', [],false, true);
 }
 add_action('wp_enqueue_scripts', 'travel_tickets_pulse_register_widget_scripts');
 
@@ -44,6 +46,7 @@ function register_widgets($widgets_manager)
     require_once(__DIR__ . '/../widgets/CategoryWidget.php');
     require_once(__DIR__ . '/../widgets/PostsLoopWidget.php');
     require_once(__DIR__ . '/../widgets/ShapedImageWidget.php');
+    require_once(__DIR__ . '/../widgets/TravelMapWidget.php');
     
     $widgets_manager->register(new \LinkWidget());
     $widgets_manager->register(new \CarouselWidget());
@@ -57,6 +60,7 @@ function register_widgets($widgets_manager)
     $widgets_manager->register(new \CategoryWidget());
     $widgets_manager->register(new \PostsLoopWidget());
     $widgets_manager->register(new \ShapedImageWidget());
+    $widgets_manager->register(new \TravelMapWidget());
 }
 add_action('elementor/widgets/register', 'register_widgets');
 
