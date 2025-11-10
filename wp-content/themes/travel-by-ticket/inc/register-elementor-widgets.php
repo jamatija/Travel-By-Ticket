@@ -1,34 +1,39 @@
 <?php
-function travel_tickets_widget_styles()
-{
-    wp_register_style('link-widget', get_stylesheet_directory_uri() . '/assets/css/link-widget.css');
-    wp_register_style('carousel-widget', get_stylesheet_directory_uri() . '/assets/css/carousel-widget.css');
-    wp_register_style('image-carousel-widget', get_stylesheet_directory_uri() . '/assets/css/image-carousel-widget.css');
-    wp_register_style('testimonial-widget', get_stylesheet_directory_uri() . '/assets/css/testimonial-widget.css');
-    wp_register_style('grid-with-author', get_stylesheet_directory_uri() . '/assets/css/grid-with-author.css');
-    wp_register_style('tab-widget', get_stylesheet_directory_uri() . '/assets/css/tab-widget.css');
-    wp_register_style('language-switcher-widget', get_stylesheet_directory_uri() . '/assets/css/language-switcher-widget.css');
-    wp_register_style('logo-hover-widget', get_stylesheet_directory_uri() . '/assets/css/logo-widget.css');
-    wp_register_style('category-widget', get_stylesheet_directory_uri() . '/assets/css/category-widget.css');
-    wp_register_style('posts-loop-widget', get_stylesheet_directory_uri() . '/assets/css/posts-loop-widget.css', array('grid-with-author'));
-    wp_register_style('shaped-image-widget', get_stylesheet_directory_uri() . '/assets/css/shaped-image-widget.css');
-    wp_register_style('bus-stations-map', get_stylesheet_directory_uri() . '/assets/css/leaflet.css');
+function travel_tickets_widget_styles() {
+    $css = get_stylesheet_directory_uri() . '/assets/css/';
+
+    wp_register_style('link-widget',               $css . 'link-widget.css');
+    wp_register_style('carousel-widget',           $css . 'carousel-widget.css');
+    wp_register_style('image-carousel-widget',     $css . 'image-carousel-widget.css');
+    wp_register_style('testimonial-widget',        $css . 'testimonial-widget.css');
+    wp_register_style('grid-with-author',          $css . 'grid-with-author.css');
+    wp_register_style('tab-widget',                $css . 'tab-widget.css');
+    wp_register_style('language-switcher-widget',  $css . 'language-switcher-widget.css');
+    wp_register_style('logo-hover-widget',         $css . 'logo-widget.css');
+    wp_register_style('category-widget',           $css . 'category-widget.css');
+    wp_register_style('posts-loop-widget',         $css . 'posts-loop-widget.css', ['grid-with-author']);
+    wp_register_style('shaped-image-widget',       $css . 'shaped-image-widget.css');
+
+    wp_register_style('bus-stations-map',       $css . 'travel-map-widge.css');
+    wp_register_style('leaflet-lib',               $css . 'leaflet.css', [], '1.9.4');
 }
 add_action('wp_enqueue_scripts', 'travel_tickets_widget_styles');
 
+function travel_tickets_pulse_register_widget_scripts() {
+    $js = get_stylesheet_directory_uri() . '/assets/js/';
 
+    wp_register_script('carousel-widget',          $js . 'carousel.js', ['swiper'], false, true);
+    wp_register_script('image-carousel-widget',    $js . 'image-carousel.js', ['swiper'], false, true);
+    wp_register_script('testimonial-widget',       $js . 'testimonial-carousel.js', ['swiper'], false, true);
+    wp_register_script('tab-widget',               $js . 'tab-widget.js', ['swiper'], false, true);
+    wp_register_script('language-switcher-widget', $js . 'language-switcher-widget.js', [], false, true);
+    wp_register_script('category-widget',          $js . 'category.js', [], false, true);
 
-function travel_tickets_pulse_register_widget_scripts()
-{
-    wp_register_script('carousel-widget', get_stylesheet_directory_uri() . '/assets/js/carousel.js', ['swiper'], false, true);
-    wp_register_script('image-carousel-widget', get_stylesheet_directory_uri() . '/assets/js/image-carousel.js', ['swiper'], false, true);
-    wp_register_script('testimonial-widget', get_stylesheet_directory_uri() . '/assets/js/testimonial-carousel.js', ['swiper'], false, true);
-    wp_register_script('tab-widget', get_stylesheet_directory_uri() . '/assets/js/tab-widget.js', ['swiper'],false, true);
-    wp_register_script('language-switcher-widget', get_stylesheet_directory_uri() . '/assets/js/language-switcher-widget.js', [],false, true);
-    wp_register_script('category-widget', get_stylesheet_directory_uri() . '/assets/js/category.js', [],false, true);
-    wp_register_script('bus-stations-map', get_stylesheet_directory_uri() . '/assets/js/leaflet.js', [],false, true);
+    wp_register_script('leaflet-lib',              $js . 'leaflet.js', [], '1.9.4', true);
+    wp_register_script('bus-stations-map',         $js . 'travel-map-widget.js', ['leaflet-lib'], false, true);
 }
 add_action('wp_enqueue_scripts', 'travel_tickets_pulse_register_widget_scripts');
+
 
 
 
