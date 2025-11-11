@@ -409,7 +409,9 @@ class PostsLoopWidget extends \Elementor\Widget_Base
                 <div class="posts-pagination">
                     <?php
                     $is_mobile = wp_is_mobile();
-                    echo paginate_links([
+                    
+                    // For mobile, adjust pagination parameters
+                    $pagination_args = [
                         'total'     => $query->max_num_pages,
                         'current'   => max(1, $paged),
                         'prev_text' => $is_mobile ? __('<svg width="7" height="13" viewBox="0 0 7 13" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -420,10 +422,45 @@ class PostsLoopWidget extends \Elementor\Widget_Base
                                                 prev', 'travel'),
                         'next_text' => $is_mobile ? __('<svg width="7" height="13" viewBox="0 0 7 13" fill="none" xmlns="http://www.w3.org/2000/svg"> <path d="M7 6.45508C7 6.33531 6.95703 6.23264 6.87109 6.14709L0.825046 0.128331C0.739103 0.042777 0.635972 -2.77993e-08 0.515653 -2.25399e-08C0.395334 -1.72806e-08 0.292203 0.042777 0.206261 0.128331C0.120319 0.213885 0.0773475 0.316551 0.0773475 0.436327C0.0773475 0.556104 0.120319 0.658769 0.206261 0.744324L5.94291 6.45508L0.116022 12.2557C0.038674 12.3412 -2.43081e-08 12.4439 -1.90725e-08 12.5637C-1.38369e-08 12.6834 0.038674 12.7861 0.116022 12.8717C0.158993 12.9144 0.20841 12.9465 0.264273 12.9679C0.320135 12.9893 0.373849 13 0.425414 13C0.485574 13 0.543585 12.9893 0.599448 12.9679C0.65531 12.9465 0.704727 12.9144 0.747698 12.8717L6.87109 6.76308C6.95703 6.67753 7 6.57486 7 6.45508Z" fill="#480E66"/> </svg>', 'travel') : __('next <svg width="7" height="13" viewBox="0 0 7 13" fill="none" xmlns="http://www.w3.org/2000/svg"> <path d="M7 6.45508C7 6.33531 6.95703 6.23264 6.87109 6.14709L0.825046 0.128331C0.739103 0.042777 0.635972 -2.77993e-08 0.515653 -2.25399e-08C0.395334 -1.72806e-08 0.292203 0.042777 0.206261 0.128331C0.120319 0.213885 0.0773475 0.316551 0.0773475 0.436327C0.0773475 0.556104 0.120319 0.658769 0.206261 0.744324L5.94291 6.45508L0.116022 12.2557C0.038674 12.3412 -2.43081e-08 12.4439 -1.90725e-08 12.5637C-1.38369e-08 12.6834 0.038674 12.7861 0.116022 12.8717C0.158993 12.9144 0.20841 12.9465 0.264273 12.9679C0.320135 12.9893 0.373849 13 0.425414 13C0.485574 13 0.543585 12.9893 0.599448 12.9679C0.65531 12.9465 0.704727 12.9144 0.747698 12.8717L6.87109 6.76308C6.95703 6.67753 7 6.57486 7 6.45508Z" fill="#480E66"/> </svg>', 'travel'),
                         'type'      => 'list',
-                        'mid_size'  => $is_mobile ? 1 : 2,
-                        'end_size'  => $is_mobile ? 1 : 2,
                         'base'      => str_replace(999999, '%#%', esc_url( get_pagenum_link(999999) )),
-                    ]);
+                    ];
+                    
+                    // Adjust parameters based on device
+                    if ($is_mobile) {
+                        // For mobile: show only 3 page numbers total
+                        // This creates pattern like: prev 1 2 ... 10 next (when on page 1 or 2)
+                        // or prev 1 ... 9 10 next (when on last pages)
+                        // or prev 1 ... 5 ... 10 next (when on middle pages)
+                        
+                        if ($query->max_num_pages <= 5) {
+                            // If we have 5 or fewer pages, show them all
+                            $pagination_args['show_all'] = true;
+                        } else {
+                            // More than 5 pages - apply special logic
+                            if ($paged <= 2) {
+                                // Near the beginning: show first 2 pages and last page
+                                $pagination_args['mid_size'] = 0;
+                                $pagination_args['end_size'] = 1;
+                                $pagination_args['show_all'] = false;
+                            } elseif ($paged >= $query->max_num_pages - 1) {
+                                // Near the end: show first page and last 2 pages
+                                $pagination_args['mid_size'] = 0;
+                                $pagination_args['end_size'] = 1;
+                                $pagination_args['show_all'] = false;
+                            } else {
+                                // In the middle: show first, current, and last
+                                $pagination_args['mid_size'] = 0;
+                                $pagination_args['end_size'] = 1;
+                                $pagination_args['show_all'] = false;
+                            }
+                        }
+                    } else {
+                        // Desktop settings
+                        $pagination_args['mid_size'] = 1;
+                        $pagination_args['end_size'] = 1;
+                    }
+                    
+                    echo paginate_links($pagination_args);
                     ?>
                 </div>
             <?php endif; ?>

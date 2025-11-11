@@ -179,7 +179,7 @@
   list-style: none;
   transition: all 0.3s ease;
   font-size: 16px !important;
-  padding: 24px;
+  padding: 22px;
 }
 
 .posts-pagination .page-numbers .prev,
@@ -311,4 +311,19 @@ a.filter {
 .page-numbers svg{
   width: 7px !important;
   height: 13px !important;
+}
+
+@media(max-width: 416px){
+  .posts-pagination .page-numbers  {
+    padding: 18px;
+  }
+
+  .posts-pagination .page-numbers .next,
+  .posts-pagination .page-numbers .prev {
+    margin: 0;
+  }
+
+  .posts-pagination .page-numbers.dots {
+    padding: 0;
+  }
 }
