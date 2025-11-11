@@ -279,7 +279,7 @@ ul .page-numbers:hover {
 }
 
 .posts-grid-3 .article-wrapper .grid-row-button {
-  border: 1px solid var(--e-global-color-primary) !important;
+  border: 1px solid #E8E1D1 !important;
   background-color: #ffffff !important;
   transition: all .3s ease;
   color: var(--e-global-color-primary) !important;
@@ -306,4 +306,9 @@ ul .page-numbers:hover {
 
 a.filter {
   font-size: 15px !important;
+}
+
+.page-numbers svg{
+  width: 7px !important;
+  height: 13px !important;
 }
