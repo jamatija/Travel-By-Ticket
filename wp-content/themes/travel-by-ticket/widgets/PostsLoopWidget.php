@@ -425,13 +425,7 @@ class PostsLoopWidget extends \Elementor\Widget_Base
                         'base'      => str_replace(999999, '%#%', esc_url( get_pagenum_link(999999) )),
                     ];
                     
-                    // Adjust parameters based on device
                     if ($is_mobile) {
-                        // For mobile: show only 3 page numbers total
-                        // This creates pattern like: prev 1 2 ... 10 next (when on page 1 or 2)
-                        // or prev 1 ... 9 10 next (when on last pages)
-                        // or prev 1 ... 5 ... 10 next (when on middle pages)
-                        
                         if ($query->max_num_pages <= 5) {
                             // If we have 5 or fewer pages, show them all
                             $pagination_args['show_all'] = true;
